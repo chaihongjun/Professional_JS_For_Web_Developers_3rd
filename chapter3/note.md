@@ -210,6 +210,155 @@ alert(NaN==NaN); //false
 ```
 alert(isNaN(NaN)); //true,NaN不能变成数值
 alert(isNaN(10)); //false ,10本身是数值
+alert(isNaN("10")); //false ,"10"可以转换成数值
 alert(isNaN("blue")); //true，字符串不能转换成数值
 alert(isNaN(true)); //false， 可以转成成数值1
 ```
+
+### 数值转换
+```
+//针对任意类型数据
+Number()
+//将字符串转换成数值
+parseInt() //字符串转换成整数
+parseFloat()  //字符串转换成浮点数
+以上三个函数可以将非数值转换成数值
+```
+#### Number() 转换规则
+>1. 如果参数的布尔值，则`true`和`false`分别被转换成`1`和`0`
+2. 如果参数是数值，则是简单的传入和返回。
+3. 如果是`null`,返回`0`
+4. 如果是`undefined`，返回`NaN`
+5. 如果是字符串，纯数字或者是十六进制格式，则会转换成对应的十进制（前导0会忽略），如果是空字符串，则会转换成0，如果字符串包含其他字符，则转换成NaN
+6. 如果是对象，则调用对象的valueOf(),然后按照前面的规则转换；如果转换的结果是NaN，则用toString()，再按照前面的规则转换。
+
+
+```
+var num1=Number("Hello world!");  //NaN
+var num2=Number("");  //0,空字符串
+var num3=Number("000011");  //11
+var num4=Number(true);  //1
+```
+
+#### parseInt() 的转换规则
+```
+var num1=parseInt("1234blue"); // 1234
+var num2=parseInt(""); //NaN
+var num3=parseInt("0xA"); //10 (十进制数)
+var num4=parseInt(22.5); //22
+ ** var num5=parseInt("070"); //56 (八进制) ECMAScript3 **
+ ** var num5=parseInt("070"); //70(八进制)  ECMAScript5 无法解析八进制数值** 
+var num6=parseInt("70"); //70 (十进制)
+var num7=parseInt("0xf"); //15 (十六进制数)
+```
+ECMAScript3和ECMAScript5中parseInt()对八进制的解析结果不一致，ECMAScript5无法解析八进制，因此可以使用parseInt()第二个参数指明需要转换的的进制
+
+```
+var num=parseInt("0xAF",16); //175
+var num1=parseInt("AF",16); //175，明确了是16进制，所以AF就是0xAF
+var num2=parseInt("AF"); //NaN ，不知道是什么进制，AF无法转换
+```
+当指明了是16进制需要转换，则前面的“0x”可以省略。所以，**为了保证不出现出错，建议无论什么情况下都明确指定基数（进制）**
+
+#### parseFloat() 的转换规则
+与parseInt()类似，但是总忽略被转换的字符串前导0，并且会过略忽略字符串第二个以外的小数点。
+16进制字符串始终转换结果是0
+```
+var num1=parseFloat("1234blue");   //1234
+var num2=parseFloat("0xA"); //0 , 16进制始终转换结果是0
+var num3=parseFloat("22.5"); //22
+var num4=parseFloat("22.34.5"); //22.34
+var num5=parseFloat("0908.5"); //908.5
+var num6=parseFloat("3.125e7"); /31250000
+```
+
+## String 类型
+**字符串类型可以由双引号`""`或者单引号`''`表示，并且，这两种语法形式没有区别**
+
+### 字符串字面量 （转义序列，表示非打印字符，具有其他的用途）
+| 字面量 |含义|
+|--------|-----|
+|  \n |  换行|
+| \t  | 制表|
+| \b| 退格|
+| \r| 回车|
+| \f| 进纸|
+| \\| 斜杠|
+| \'| 单引号(')，在用单引号表示的字符串中使用。例如：'He said,\'hey.\''|
+| \"| 双引号(")，在用单双引号表示的字符串中使用。例如："He said,\"hey.\""|
+| \xnn| 以十六进制代码nn表示的一个字符串(其中n为0~F)。例如：\x41表示"A"|
+|\unnn| 以十六进制代码nnn表示的一个unicode字符（其中n为0～F）。例如，\u03a3表示希腊字母Σ|
+
+字符串长度可以通过字符串属性`length`获得
+
+### 字符串的特点
+字符串不可变，一旦创建，字符串的值就不能改变
+### 转换为字符串
+```
+方法1：
+几乎每个值都有的toString()方法，但是null和undefined没有。默认toString()是按照十进制格式返回数值的字符串表示，
+通过传入的参数可以控制转换的进制
+var num=10;
+alert(num.toString());  //"10"
+alert(num.toString(2));  //"1010"   二进制   
+alert(num.toString(8));  //"12"       八进制
+alert(num.toString(10));  //"10"  十进制
+alert(num.toString(16));  //"a"  十六进制
+```
+方法2：使用String()
+String()的转换规则如下：
+1. 如果有toString()方法，则调用toString()并返回相应的结果
+2. 如果值是null，则返回"null"
+3. 如果值是undefined，则返回"undefined"
+```
+var value1=10;
+var value2=true;
+var value3=null;
+var value4;
+alert(String(vaule1));  //"10"
+alert(String(vaule2));  //"true"
+alert(String(vaule3));  //"null"
+alert(String(vaule4));  //"undefined"
+```
+
+## Object 类型
+ECMAScript中的对象其实是一组数据和功能的集合。
+```
+var o=new Object();
+var o=new Object; // 有效，但不推荐
+```
+Object的实例都有下面的属性和方法:
+```
+constructor:构造函数，保留用户创建对象的函数
+hasOwnProperty(propertyName):检查给定的属性propertyName是否在对象实例当中
+isPrototypeOf(object):检查实例对象是否是当前对象的原型
+propertyIsEnumerable(propertyName)检查属性是否可以使用for-in 语句来枚举
+toLocalString():返回对象的字符串表示，对应执行环境的地区对应
+toString():返回对象的字符串表示
+vauleOf():返回对象的字符串，数值或者布尔值表示。一般和toString()返回结果相同
+```
+**ECMAScript中Object是所有对象的基础，所以所有对象都有这些基本属性和方法**
+
+## 操作符
+包含算术操作符，位操作符，关系操作符和相等操作符等等
+### 一元操作符
+只能操作一个值的
+#### 递增和递减操作符
+```
+var age=29;
+//以下两种等价
+++age;
+age=age+1;
+//以下两种等价
+--age;
+age=age-1;
+```
+**前置递增或者递减有副效应，变量的值在语句被求值以前改变的，即前置递增或者递减操作符会让变量先改变，
+然后再改变语句**
+```
+var age=29;
+var anotherAge=--age+2;
+alert(age);    //28,--29
+alert(anotherAge);   //30, --29+2,28+2
+```
+

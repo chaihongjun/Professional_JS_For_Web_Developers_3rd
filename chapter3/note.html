@@ -1,6 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
-  /* max-width: 980px; */
-  width:80%; 
+  max-width: 980px;
   border: 1px solid #ddd;
   outline: 1300px solid #fff;
   margin: 16px auto;
@@ -1015,96 +1014,7 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*github*/
-.codehilite {background-color:#fff;color:#333333;}
-.codehilite .hll {background-color:#ffffcc;}
-.codehilite .c{color:#999988;font-style:italic}
-.codehilite .err{color:#a61717;background-color:#e3d2d2}
-.codehilite .k{font-weight:bold}
-.codehilite .o{font-weight:bold}
-.codehilite .cm{color:#999988;font-style:italic}
-.codehilite .cp{color:#999999;font-weight:bold}
-.codehilite .c1{color:#999988;font-style:italic}
-.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
-.codehilite .gd{color:#000000;background-color:#ffdddd}
-.codehilite .ge{font-style:italic}
-.codehilite .gr{color:#aa0000}
-.codehilite .gh{color:#999999}
-.codehilite .gi{color:#000000;background-color:#ddffdd}
-.codehilite .go{color:#888888}
-.codehilite .gp{color:#555555}
-.codehilite .gs{font-weight:bold}
-.codehilite .gu{color:#800080;font-weight:bold}
-.codehilite .gt{color:#aa0000}
-.codehilite .kc{font-weight:bold}
-.codehilite .kd{font-weight:bold}
-.codehilite .kn{font-weight:bold}
-.codehilite .kp{font-weight:bold}
-.codehilite .kr{font-weight:bold}
-.codehilite .kt{color:#445588;font-weight:bold}
-.codehilite .m{color:#009999}
-.codehilite .s{color:#dd1144}
-.codehilite .n{color:#333333}
-.codehilite .na{color:teal}
-.codehilite .nb{color:#0086b3}
-.codehilite .nc{color:#445588;font-weight:bold}
-.codehilite .no{color:teal}
-.codehilite .ni{color:purple}
-.codehilite .ne{color:#990000;font-weight:bold}
-.codehilite .nf{color:#990000;font-weight:bold}
-.codehilite .nn{color:#555555}
-.codehilite .nt{color:navy}
-.codehilite .nv{color:teal}
-.codehilite .ow{font-weight:bold}
-.codehilite .w{color:#bbbbbb}
-.codehilite .mf{color:#009999}
-.codehilite .mh{color:#009999}
-.codehilite .mi{color:#009999}
-.codehilite .mo{color:#009999}
-.codehilite .sb{color:#dd1144}
-.codehilite .sc{color:#dd1144}
-.codehilite .sd{color:#dd1144}
-.codehilite .s2{color:#dd1144}
-.codehilite .se{color:#dd1144}
-.codehilite .sh{color:#dd1144}
-.codehilite .si{color:#dd1144}
-.codehilite .sx{color:#dd1144}
-.codehilite .sr{color:#009926}
-.codehilite .s1{color:#dd1144}
-.codehilite .ss{color:#990073}
-.codehilite .bp{color:#999999}
-.codehilite .vc{color:teal}
-.codehilite .vg{color:teal}
-.codehilite .vi{color:teal}
-.codehilite .il{color:#009999}
-.codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX"],
-  tex2jax: {
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: false
-  },
-  TeX: {
-    extensions: ["AMSmath.js", "AMSsymbols.js"],
-    TagSide: "right",
-    TagIndent: ".8em",
-    MultLineWidth: "85%",
-    equationNumbers: {
-      autoNumber: "AMS",
-    },
-    unicode: {
-      fonts: "STIXGeneral,'Arial Unicode MS'"
-    }
-  },
-  showProcessingMessages: false
-});
-</script>
-<title>note</title></head><body><article class="markdown-body"><div class="toc">
+</style><title>note</title></head><body><article class="markdown-body"><div class="toc">
 <ul>
 <li><a href="#js">JS基本概念</a><ul>
 <li><a href="#js_1">JS区分大小写</a></li>
@@ -1136,6 +1046,26 @@ MathJax.Hub.Config({
 </li>
 </ul>
 </li>
+<li><a href="#_12">数值转换</a><ul>
+<li><a href="#number_1">Number() 转换规则</a></li>
+<li><a href="#parseint">parseInt() 的转换规则</a></li>
+<li><a href="#parsefloat">parseFloat() 的转换规则</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#string">String 类型</a><ul>
+<li><a href="#_13">字符串字面量 （转义序列，表示非打印字符，具有其他的用途）</a></li>
+<li><a href="#_14">字符串的特点</a></li>
+<li><a href="#_15">转换为字符串</a></li>
+</ul>
+</li>
+<li><a href="#object">Object 类型</a></li>
+<li><a href="#_16">操作符</a><ul>
+<li><a href="#_17">一元操作符</a><ul>
+<li><a href="#_18">递增和递减操作符</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1149,54 +1079,49 @@ MathJax.Hub.Config({
 <li>变量，函数，属性，参数等标识符第一个字符必须是一个字母，或者下划线(_)或者一个美元符号($)</li>
 <li>其他字符可以是字母，数字，下划线(_)或者美元符号($)</li>
 <li>标识符推荐使用驼峰大小写格式<br />
-<div class="codehilite"><pre>e.g:
+<pre><code>e.g:
 firstSecond
 myCar
 doSomethingImportant
-</pre></div>
-</li>
+</code></pre></li>
 <li>JS保留的关键词不可作为标识符</li>
 </ol>
 <h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>注释</h2>
-<div class="codehilite"><pre>//单行注释
+<pre><code>//单行注释
 /*
 这这里面是代码，
 适合多行或者块级注释
  */
-</pre></div>
-
+</code></pre>
 
 <h2 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>严格模式</h2>
 <p>在ECMAScript5中，引入了严格模式(strict mode),会对ECMAScript3中一些不安全操作抛出错误，对一些不确定行为处理。<br />
 如果要对整个脚本启用严格模式，在代码顶部添加：<br />
-<div class="codehilite"><pre>&quot;use strict&quot;;
-</pre></div>
-<br />
+<pre><code>&quot;use strict&quot;;
+</code></pre><br />
 如果是想对某个函数内启用严格模式，也可以在函数内容运用：<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">doSomething</span><span class="p">(){</span>
-    <span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
-    <span class="c1">//函数内容</span>
-<span class="p">}</span>
-</pre></div>
-</p>
+<pre><code>function doSomething(){
+    &quot;use strict&quot;;
+    //函数内容
+}
+</code></pre></p>
 <h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>语句</h2>
 <p>ECMAScript中的语句以分号<code>;</code>作为结尾，如果不添加分号，则解析器会去确定语句的结尾，增加解析器的消耗。</p>
 <h2 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>关键字和保留字</h2>
 <h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>关键字</h3>
 <p>ECMA-262描述了关键字，这些关键字用来表示控制语句的开始和结束，或者执行特定操作。关键字也是保留字，不能作为标识符。<br />
-<div class="codehilite"><pre><span class="c1">//ECMAScript的全部的关键字，*为5中新增的</span>
-<span class="k">break</span>       <span class="k">do</span>       <span class="k">instanceof</span>     <span class="k">typeof</span> 
-<span class="k">case</span>        <span class="k">else</span>        <span class="k">new</span>     <span class="kd">var</span>
-<span class="k">catch</span>       <span class="k">finally</span>     <span class="k">return</span>      <span class="k">void</span>
-<span class="k">continue</span>        <span class="k">for</span>     <span class="k">switch</span>      <span class="k">while</span>
-<span class="kr">debugger</span><span class="o">*</span>        <span class="kd">function</span>       <span class="k">this</span>         <span class="kd">with</span>               
-<span class="k">default</span>     <span class="k">if</span>      <span class="k">throw</span>               
-<span class="k">delete</span>      <span class="k">in</span>      <span class="k">try</span>
-</pre></div>
-</p>
+<pre><code>//ECMAScript的全部的关键字，*为5中新增的
+break       do       instanceof     typeof 
+case        else        new     var
+catch       finally     return      void
+continue        for     switch      while
+debugger*        function       this         with               
+default     if      throw               
+delete      in      try
+</code></pre></p>
 <h3 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>保留字</h3>
 <p>ECMA-262 还有另外一组不能作为标识符的<strong>保留字</strong>,目前做任何用途，但是未来可能被作为关键字，以下是<strong>ECMA3</strong>的全部保留字：<br />
-<div class="codehilite"><pre>abstract        enum        int     short
+<pre><code>abstract        enum        int     short
 boolean     export      interface       static
 byte        extends     long        super
 char        final       native      synchronized
@@ -1204,121 +1129,103 @@ class       float       package     throws
 const       goto        private     transient
 debugger        implements      protected       volatile
 double      important       public
-</pre></div>
-<br />
+</code></pre><br />
 <strong>ECMA5</strong>非严格模式下的保留字：<br />
-<div class="codehilite"><pre><span class="k">class</span>       <span class="n">enmu</span>        <span class="n">extends</span>     <span class="n">super</span>
-<span class="n">const</span>       <span class="k">export</span>      <span class="n">import</span>
-</pre></div>
-<br />
+<pre><code>class       enmu        extends     super
+const       export      import
+</code></pre><br />
 <strong>ECMA5</strong>严格模式对以下保留字做了限制：<br />
-<div class="codehilite"><pre>implements      package     public
+<pre><code>implements      package     public
 interface       private     static
 let     protected       yield
-</pre></div>
-<br />
+</code></pre><br />
 另外，<strong>ECMA5</strong>严格模式还对以下两个做了限制，不可作为标识符：<br />
-<div class="codehilite"><pre>eval        arguments
-</pre></div>
-</p>
+<pre><code>eval        arguments
+</code></pre></p>
 <h2 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>变量</h2>
 <p>ECMAScript的变量是松散类型的，可以保持任意类型的数据。</p>
 <h3 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>变量定义方法</h3>
-<p><div class="codehilite"><pre>var 标识符;
-</pre></div>
-<br />
+<p><pre><code>var 标识符;
+</code></pre><br />
 比如：<br />
-<div class="codehilite"><pre>var message;
-</pre></div>
-<br />
+<pre><code>var message;
+</code></pre><br />
 未初始化变量值的变量，会先保存一个特殊的值<code>undefined</code>，这里<code>message</code>的值就是<code>undefined</code>。<br />
 <strong>使用<code>var</code>定义的变量，成为了定义该变量的作用域中的局部变量。</strong><br />
-<div class="codehilite"><pre><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="o">:</span>
-<span class="kd">function</span> <span class="nx">test</span><span class="p">(){</span>
-        <span class="kd">var</span> <span class="nx">message</span><span class="o">=</span><span class="s2">&quot;hi&quot;</span><span class="p">;</span><span class="c1">//局部变量</span>
-<span class="p">}</span>
-<span class="nx">test</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span><span class="c1">//错误，无法调用test()内的局部变量</span>
-</pre></div>
-<br />
+<pre><code>e.g:
+function test(){
+        var message=&quot;hi&quot;;//局部变量
+}
+test();
+alert(message);//错误，无法调用test()内的局部变量
+</code></pre><br />
 这里的<code>message</code>变量通过<code>var</code>定义在函数<code>test</code>内,所以<code>message</code>是局部变量，如果想使上面的代码可行，只需去掉声明前面的<code>var</code>:<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">test</span><span class="p">(){</span>
-        <span class="nx">message</span><span class="o">=</span><span class="s2">&quot;hi&quot;</span><span class="p">;</span><span class="c1">//全局变量</span>
-<span class="p">}</span>
-<span class="nx">test</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span><span class="c1">//不会报错，正确</span>
-</pre></div>
-<br />
+<pre><code>function test(){
+        message=&quot;hi&quot;;//全局变量
+}
+test();
+alert(message);//不会报错，正确
+</code></pre><br />
 另外，还可以同时初始化多个变量：<br />
-<div class="codehilite"><pre>var message=&quot;hi&quot;,found=false,age=29;
-</pre></div>
-<br />
+<pre><code>var message=&quot;hi&quot;,found=false,age=29;
+</code></pre><br />
 <strong>严格模式下，不能定义以<code>eval</code>或者<code>arguments</code>为名字的变量，否则语法错误。</strong></p>
 <h2 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>数据类型</h2>
 <p>ECMAScript5有五种简单的数据类型(基本数据类型):<br />
-<div class="codehilite"><pre>1. undefined
+<pre><code>1. undefined
 2. Null
 3. Boolean
 4. Number
 5. String
-</pre></div>
-<br />
+</code></pre><br />
 和一种复杂的数据类型:<br />
-<div class="codehilite"><pre>Object
-</pre></div>
-<br />
+<pre><code>Object
+</code></pre><br />
 <strong><code>Object</code>本质是一组无序的名值对组成的。</strong><br />
 ECMAScript不支持创建自定义的数据类型，所有的最终值都是以上的6种类型之一。</p>
 <h3 id="typeof"><a name="user-content-typeof" href="#typeof" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>typeof 操作符</h3>
 <p>使用<code>typeof</code>可以判断变量值的类型<br />
-<div class="codehilite"><pre>var message=&quot;some string&quot;;
+<pre><code>var message=&quot;some string&quot;;
 var ok=true;
 alert(typeof message);  //&quot;string&quot;
 alert(typeof(message));  //&quot;string&quot;
 alert(typeof 95); //&quot;number&quot;
 alert(typeof ok); // &quot;boolean&quot;
-</pre></div>
-<br />
+</code></pre><br />
 <strong><code>typeof</code>是一个操作符而不是函数</strong>，因此<br />
-<div class="codehilite"><pre>typeof message 
+<pre><code>typeof message 
 typeof (message)
-</pre></div>
-<br />
+</code></pre><br />
 都可以，但是后面的<code>（）</code>不是必须的</p>
 <h3 id="undefined"><a name="user-content-undefined" href="#undefined" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>undefined类型</h3>
 <p><strong>变量声明但未初始化值就是<code>undefined</code>，不过包含<code>undefined</code>值的变量与没定义的变量还是不一样的</strong><br />
-<div class="codehilite"><pre>//声明一个变量
+<pre><code>//声明一个变量
 var message;
 //下面这个变量没有声明
 //var age
 alert(message);  //undefined;
 alert(age); //产生错误
-</pre></div>
-</p>
+</code></pre></p>
 <h3 id="null"><a name="user-content-null" href="#null" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Null类型</h3>
 <p>nulll类型是一个object（对象），null值表示一个空对象指针：<br />
-<div class="codehilite"><pre>var car=null;
+<pre><code>var car=null;
 alert(typeof car); // &quot;object&quot;
-</pre></div>
-<br />
+</code></pre><br />
 <strong>如果定义的变量准备存储对象，那么最好将变量初始化为null,这样方便检测对应的变量是否保存了对象的引用。</strong><br />
-<div class="codehilite"><pre>if(car!=null){
+<pre><code>if(car!=null){
     //对car 对象执行某些操作
 }
-</pre></div>
-<br />
+</code></pre><br />
 由于<code>undefined</code>值是派生于<code>null</code>值，因此，他们的相等性检测是true:<br />
-<div class="codehilite"><pre>alert(null==undefined) //true
-</pre></div>
-</p>
+<pre><code>alert(null==undefined) //true
+</code></pre></p>
 <h2 id="boolean"><a name="user-content-boolean" href="#boolean" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Boolean值</h2>
 <p><strong>Boolean的字面值是<code>true</code>和<code>false</code>，并且区分大小写，因此TRUE,False等等都不是Boolean值，他们都是标识符</strong><br />
 ECMAScript其他类型的值都有与这两个布尔值等价的值，如果想转化成布尔值，可以通过Boolean()函数：<br />
-<div class="codehilite"><pre>var message=&quot;hello world!&quot;;
+<pre><code>var message=&quot;hello world!&quot;;
 var messageAsBoolean=Boolean(message);   
 alert(messageAsBoolean); //true
-</pre></div>
-</p>
+</code></pre></p>
 <blockquote>
 <table>
 <thead>
@@ -1358,25 +1265,191 @@ alert(messageAsBoolean); //true
 </table>
 </blockquote>
 <h2 id="number"><a name="user-content-number" href="#number" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Number 类型</h2>
-<p><div class="codehilite"><pre>十进制字面量（0-9）
+<p><pre><code>十进制字面量（0-9）
 八进制字面量（0-7）：011，056
 十六进制字面量（0-9，A-F）：0xAF，0x19
-</pre></div>
-<br />
+</code></pre><br />
 <strong>严格模式下八进制字面量是无效的</strong></p>
 <h3 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>浮点数</h3>
 <p><strong>数值中包含一个小数点，且小数点后面至少有一位数字，浮点数最高精度是17位小数</strong></p>
 <h4 id="nan"><a name="user-content-nan" href="#nan" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>NaＮ</h4>
 <p>NaN(Not a Number)是一个特殊的值，非数值。表示一个本来要返回数值的操作数未返回数值的情况。<br />
 <strong>NaN与任何值都不想等，包括NaN本身</strong><br />
-<div class="codehilite"><pre>alert(NaN==NaN); //false 
-</pre></div>
-</p>
+<pre><code>alert(NaN==NaN); //false 
+</code></pre></p>
 <h5 id="isnan"><a name="user-content-isnan" href="#isnan" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>isNaN()</h5>
 <p>这个函数将会尝试将接收的参数转换成数值，并判断接收的参数是否&rdquo;不是数&rdquo;，<strong>任何不能转换成数值的值都会返回true</strong><br />
-<div class="codehilite"><pre>alert(isNaN(NaN)); //true,NaN不能变成数值
+<pre><code>alert(isNaN(NaN)); //true,NaN不能变成数值
 alert(isNaN(10)); //false ,10本身是数值
+alert(isNaN(&quot;10&quot;)); //false ,&quot;10&quot;可以转换成数值
 alert(isNaN(&quot;blue&quot;)); //true，字符串不能转换成数值
 alert(isNaN(true)); //false， 可以转成成数值1
-</pre></div>
-</p></article></body></html>
+</code></pre></p>
+<h3 id="_12"><a name="user-content-_12" href="#_12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>数值转换</h3>
+<pre><code>//针对任意类型数据
+Number()
+//将字符串转换成数值
+parseInt() //字符串转换成整数
+parseFloat()  //字符串转换成浮点数
+以上三个函数可以将非数值转换成数值
+</code></pre>
+
+<h4 id="number_1"><a name="user-content-number_1" href="#number_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Number() 转换规则</h4>
+<blockquote>
+<ol>
+<li>如果参数的布尔值，则<code>true</code>和<code>false</code>分别被转换成<code>1</code>和<code>0</code></li>
+<li>如果参数是数值，则是简单的传入和返回。</li>
+<li>如果是<code>null</code>,返回<code>0</code></li>
+<li>如果是<code>undefined</code>，返回<code>NaN</code></li>
+<li>如果是字符串，纯数字或者是十六进制格式，则会转换成对应的十进制（前导0会忽略），如果是空字符串，则会转换成0，如果字符串包含其他字符，则转换成NaN</li>
+<li>如果是对象，则调用对象的valueOf(),然后按照前面的规则转换；如果转换的结果是NaN，则用toString()，再按照前面的规则转换。</li>
+</ol>
+</blockquote>
+<pre><code>var num1=Number(&quot;Hello world!&quot;);  //NaN
+var num2=Number(&quot;&quot;);  //0,空字符串
+var num3=Number(&quot;000011&quot;);  //11
+var num4=Number(true);  //1
+</code></pre>
+
+<h4 id="parseint"><a name="user-content-parseint" href="#parseint" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>parseInt() 的转换规则</h4>
+<p><pre><code>var num1=parseInt(&quot;1234blue&quot;); // 1234
+var num2=parseInt(&quot;&quot;); //NaN
+var num3=parseInt(&quot;0xA&quot;); //10 (十进制数)
+var num4=parseInt(22.5); //22
+ ** var num5=parseInt(&quot;070&quot;); //56 (八进制) ECMAScript3 **
+ ** var num5=parseInt(&quot;070&quot;); //70(八进制)  ECMAScript5 无法解析八进制数值** 
+var num6=parseInt(&quot;70&quot;); //70 (十进制)
+var num7=parseInt(&quot;0xf&quot;); //15 (十六进制数)
+</code></pre><br />
+ECMAScript3和ECMAScript5中parseInt()对八进制的解析结果不一致，ECMAScript5无法解析八进制，因此可以使用parseInt()第二个参数指明需要转换的的进制</p>
+<p><pre><code>var num=parseInt(&quot;0xAF&quot;,16); //175
+var num1=parseInt(&quot;AF&quot;,16); //175，明确了是16进制，所以AF就是0xAF
+var num2=parseInt(&quot;AF&quot;); //NaN ，不知道是什么进制，AF无法转换
+</code></pre><br />
+当指明了是16进制需要转换，则前面的“0x”可以省略。所以，<strong>为了保证不出现出错，建议无论什么情况下都明确指定基数（进制）</strong></p>
+<h4 id="parsefloat"><a name="user-content-parsefloat" href="#parsefloat" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>parseFloat() 的转换规则</h4>
+<p>与parseInt()类似，但是总忽略被转换的字符串前导0，并且会过略忽略字符串第二个以外的小数点。<br />
+16进制字符串始终转换结果是0<br />
+<pre><code>var num1=parseFloat(&quot;1234blue&quot;);   //1234
+var num2=parseFloat(&quot;0xA&quot;); //0 , 16进制始终转换结果是0
+var num3=parseFloat(&quot;22.5&quot;); //22
+var num4=parseFloat(&quot;22.34.5&quot;); //22.34
+var num5=parseFloat(&quot;0908.5&quot;); //908.5
+var num6=parseFloat(&quot;3.125e7&quot;); /31250000
+</code></pre></p>
+<h2 id="string"><a name="user-content-string" href="#string" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>String 类型</h2>
+<p><strong>字符串类型可以由双引号<code>""</code>或者单引号<code>''</code>表示，并且，这两种语法形式没有区别</strong></p>
+<h3 id="_13"><a name="user-content-_13" href="#_13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>字符串字面量 （转义序列，表示非打印字符，具有其他的用途）</h3>
+<table>
+<thead>
+<tr>
+<th>字面量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\n</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>退格</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>进纸</td>
+</tr>
+<tr>
+<td>\</td>
+<td>斜杠</td>
+</tr>
+<tr>
+<td>'</td>
+<td>单引号(&lsquo;)，在用单引号表示的字符串中使用。例如：&rsquo;He said,'hey.'&lsquo;</td>
+</tr>
+<tr>
+<td>"</td>
+<td>双引号(&ldquo;)，在用单双引号表示的字符串中使用。例如：&rdquo;He said,"hey."&ldquo;</td>
+</tr>
+<tr>
+<td>\xnn</td>
+<td>以十六进制代码nn表示的一个字符串(其中n为0~F)。例如：\x41表示&rdquo;A&rdquo;</td>
+</tr>
+<tr>
+<td>\unnn</td>
+<td>以十六进制代码nnn表示的一个unicode字符（其中n为0～F）。例如，\u03a3表示希腊字母Σ</td>
+</tr>
+</tbody>
+</table>
+<p>字符串长度可以通过字符串属性<code>length</code>获得</p>
+<h3 id="_14"><a name="user-content-_14" href="#_14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>字符串的特点</h3>
+<p>字符串不可变，一旦创建，字符串的值就不能改变</p>
+<h3 id="_15"><a name="user-content-_15" href="#_15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>转换为字符串</h3>
+<p><pre><code>方法1：
+几乎每个值都有的toString()方法，但是null和undefined没有。默认toString()是按照十进制格式返回数值的字符串表示，
+通过传入的参数可以控制转换的进制
+var num=10;
+alert(num.toString());  //&quot;10&quot;
+alert(num.toString(2));  //&quot;1010&quot;   二进制   
+alert(num.toString(8));  //&quot;12&quot;       八进制
+alert(num.toString(10));  //&quot;10&quot;  十进制
+alert(num.toString(16));  //&quot;a&quot;  十六进制
+</code></pre><br />
+方法2：使用String()<br />
+String()的转换规则如下：<br />
+1. 如果有toString()方法，则调用toString()并返回相应的结果<br />
+2. 如果值是null，则返回&rdquo;null&rdquo;<br />
+3. 如果值是undefined，则返回&rdquo;undefined&rdquo;<br />
+<pre><code>var value1=10;
+var value2=true;
+var value3=null;
+var value4;
+alert(String(vaule1));  //&quot;10&quot;
+alert(String(vaule2));  //&quot;true&quot;
+alert(String(vaule3));  //&quot;null&quot;
+alert(String(vaule4));  //&quot;undefined&quot;
+</code></pre></p>
+<h2 id="object"><a name="user-content-object" href="#object" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Object 类型</h2>
+<p>ECMAScript中的对象其实是一组数据和功能的集合。<br />
+<pre><code>var o=new Object();
+var o=new Object; // 有效，但不推荐
+</code></pre><br />
+Object的实例都有下面的属性和方法:<br />
+<pre><code>constructor:构造函数，保留用户创建对象的函数
+hasOwnProperty(propertyName):检查给定的属性propertyName是否在对象实例当中
+isPrototypeOf(object):检查实例对象是否是当前对象的原型
+propertyIsEnumerable(propertyName)检查属性是否可以使用for-in 语句来枚举
+toLocalString():返回对象的字符串表示，对应执行环境的地区对应
+toString():返回对象的字符串表示
+vauleOf():返回对象的字符串，数值或者布尔值表示。一般和toString()返回结果相同
+</code></pre><br />
+<strong>ECMAScript中Object是所有对象的基础，所以所有对象都有这些基本属性和方法</strong></p>
+<h2 id="_16"><a name="user-content-_16" href="#_16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>操作符</h2>
+<p>包含算术操作符，位操作符，关系操作符和相等操作符等等</p>
+<h3 id="_17"><a name="user-content-_17" href="#_17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>一元操作符</h3>
+<p>只能操作一个值的</p>
+<h4 id="_18"><a name="user-content-_18" href="#_18" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>递增和递减操作符</h4>
+<p><pre><code>var age=29;
+//以下两种等价
+++age;
+age=age+1;
+//以下两种等价
+--age;
+age=age-1;
+</code></pre><br />
+<strong>前置递增或者递减有副效应，变量的值在语句被求值以前改变的，即前置递增或者递减操作符会让变量先改变，<br />
+然后再改变语句</strong><br />
+<pre><code>var age=29;
+var anotherAge=--age+2;
+alert(age);    //28,--29
+alert(anotherAge);   //30, --29+2,28+2
+</code></pre></p></article></body></html>
