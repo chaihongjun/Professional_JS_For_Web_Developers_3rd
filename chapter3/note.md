@@ -794,3 +794,4 @@ doAdd(1,2);
 7. ECMAScript函数无需指定返回值，如果未指定，则返回的是undefined
 8. ECMAScript没有函数签名概念，函数参数是一个数组形式的对象arguments
 9. ECMAscript无法实现重载
+[TOC]
