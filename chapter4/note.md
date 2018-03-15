@@ -71,3 +71,33 @@ Object
 | - | :-: | 
 | obj2 | (Object类型) |
 | obj1 | (Object类型) |
+
+
+### 传递参数
+**ECMAScript 中所有的函数的参数都是按值传递的**，也就是把函数外部的值复制给函数内部的参数，就和把值从一个变量复制到另外一个变量一样。
+向参数传递基本类型的值时，被传递的值会被复制给一个局部变量。向参数传递引用类型的值时，会把这个值的地址复制给一个局部变量，所以，这个局部变量的变化会在函数外部反映出来
+```
+function addTen(num){
+            num +=10;
+            return num;
+}
+var count=20;
+var result=addTen(count);
+alert(count);   //20
+alert(result);    //30
+```
+变量count的值20被复制给函数内部参数num,然后num变量又被加上10，num=20+10=30,然而，传入的参数count的值仍然是20没有变化。
+另外一个关于对象的例子（引用传递）
+```
+function setName(obj){
+        obj.name="Nicholas";
+}
+var person=new Object();
+setName(person);
+alert(person.name);    //"Nicholas"
+```
+这个段代码，函数内的obj参数和person都引用的同一个对象。
+
+
+
+[TOC]
