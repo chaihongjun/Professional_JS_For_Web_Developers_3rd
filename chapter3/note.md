@@ -343,7 +343,7 @@ vauleOf():返回对象的字符串，数值或者布尔值表示。一般和toSt
 包含算术操作符，位操作符，关系操作符和相等操作符等等
 ### 一元操作符
 只能操作一个值的
-#### 递增和递减操作符
+#### 前置递增和递减操作符 
 ```
 var age=29;
 //以下两种等价
@@ -353,12 +353,444 @@ age=age+1;
 --age;
 age=age-1;
 ```
-**前置递增或者递减有副效应，变量的值在语句被求值以前改变的，即前置递增或者递减操作符会让变量先改变，
-然后再改变语句**
+**前置递增或者递减有副效应，变量的值在语句被求值以前改变的，即前置递增或者递减操作符会让变量先改变，然后再改变语句**
 ```
 var age=29;
 var anotherAge=--age+2;
 alert(age);    //28,--29
 alert(anotherAge);   //30, --29+2,28+2
 ```
+#### 后置递增和递减操作符
+**后置与递增或递减和前置非常重要的区别，后置的递增或递减操作在包含他们的语句被求值之后才执行。**
+```
+var num1=2;
+var num2=20;
+var num3=num1-- + nun2; //22,       2--  +20
+var num4=num1+num2; //21,      1+ 20
+```
+对于不同值的递增或递减规则：
+>1. 应用于数字字符串时，先转换成数值，再执行加减操作，最后保留为数值类型
+2. 应用于非数字字符串时，无论加减，均返回`NaN`
+3. 应用于布尔值时，先转换成数值0或者1（如果布尔值是false或者true），然后再加减操作，最后保留数值
+4. 应用于对象时，先调用valueOf()方法，取得一个可操作的值，然后对于加减操作，如果返回的是NaN，则再调用toString()之后再次执行加减操作
 
+```
+var s1="2";
+var s2="z";
+var b=false;
+var f=1.1;
+var o={
+    valueOf:function(){
+        return -1;
+    }
+};
+s1++;   //  s1的值3,"2"++ ->2++  
+s2++;  // s2的值NaN,"z"++
+b++;   // b的值1,fasle++ -> 0++
+f--;  //f的值0.1xxxxxxxxx ,1.1--
+o--;  // o的值 -2,  valueOf(-1)--  ->   -1--
+```
+
+### 位操作符
+ECMAScript将64位值转换成32位操作，然后，再转换回64位。
+有符号的整数：
+第一位是符号位（0表示正数，1表示负数）
+**想获得一个负整数，可以使用该对应正整数的“取反加一”方法**
+>取反加一：
+1. 首先将正整数所有位的数值0和1互相对换，0换成1，1换成0。（取反）
+2. 然后在最后一位加一。（加一）
+
+```
+18的二进制：
+0000 0000 0000 0000 0000 0000 0001 0010
+取反：
+1111 1111 1111 1111 1111 1111 1110 1101
+加1：
+1111 1111 1111 1111 1111 1111 1110 1101
++                                     1
+得到-18的二进制：
+1111 1111 1111 1111 1111 1111 1110 1110
+```
+
+#### 按位非由波浪线(~)表示(NOT)
+**按位非由波浪线(~)表示,取得当前位的反码。按位非操作的本质是操作数的负值减一**
+#### 按位与(AND)
+**按位与由和符号(&)表示，两个操作数按位对齐，然后按照规则执行AND，只有对应的两个位都是1才返回1**
+#### 按位或(OR)
+**按位或由竖线符号(|)表示，两个操作数按位对齐，然后按照规则执行OR，对应的两个位只要有1个是1就返回1**
+#### 按位异或(XOR)
+**按位异或由插入符号(^)表示，两个操作数按位对齐，然后按照规则执行XOR，对应的两个位互异的时候才返回1**
+#### 左移
+**操作符号由两个小于号组成(<<)，所有的位向左移动指定的位数，右侧空出来的位由0填充，左移不影响符号位，符号位不变**
+#### 有符号的右移
+**操作符号由两个大于号组成(>>)，数值位向右移动指定的位数，左侧空出来的位由符号位的值填充，右移不影响符号位，符号位不变**
+#### 无符号的右移
+**操作符号由三个大于号组成(>>>)，所有的位向右移动指定的位数，左侧空缺由0填充**
+
+### 布尔操作符
+布尔操作符：NOT，AND，OR
+#### 逻辑非(!)
+由叹号(!)表示，对操作数取反
+>1. 如果操作数是对象，则返回false
+2. 如果操作数是一个空字符串，返回true
+3. 如果操作数是非空字符串，返回false
+4. 如果操作数是0，返回true
+5. 如果操作数是任意非0数值，返回false
+6. 如果操作数是null,返回true
+7. 如果操作数是NaN，返回true
+8. 如果操作数是undefined，返回true
+
+```
+alert(!false); // true
+alert(!"blue");   //false
+alert(!0);  //true
+alert(!NaN);  //true
+alert(!""); //true
+alert(!12345); //false
+```
+#### 逻辑与(&&)
+用两个和号表示（&&），需要两个操作数
+**只有两个操作数的值都是true的时候，逻辑与才返回true**
+>1. 如果第一个操作数是对象，则返回第二个操作数
+2. 如果第二个操作数是对象，只有第二个操作数是true的时候，才返回对象
+3. 如果两个操作数都是对象，则返回第二个操作数
+4. 如果有一个操作数是null，则返回null
+5. 如果有一个操作数是undefined，则返回undefined
+
+#### 逻辑或(||)
+用两个竖线符号（||）表示，需要两个操作数
+**只要有一个操作数是true，逻辑或就返回true**
+>1. 如果第一个操作数是对象，则返回第一个操作数
+2. 如果第一操作数是false,则返回第二个操作数
+3. 如果两个操作数都是对象，则返回第一个操作数
+4. 如果两个操作数都是null，则返回null
+5. 如果两个操作数都是NaN，则返回NaN
+6. 如果两个操作数都是undefined，则返回undefined
+
+
+### 乘性操作符
+包含：乘法，除法和求模
+#### 乘法
+星号（*）表示
+>1. 如果两个操作数是常规数值，则按照常规的乘法计算
+2. 如果只有一个操作数是有符号的，则结果是负数
+3. 如果有一个操作数是NaN，结果是NaN
+4. Infinity*0=NaN
+5. Infinity与非0数值相乘，结果是Infinity或者-Infinity
+6. Infinity*Infinity=Infinity
+7. 如果有一个操作数不是数值，则在后台通过Number()先转换，再操作
+
+
+#### 除法
+斜线（/）表示
+>1. 如果两个操作数都是常规数值，则按照常规除法计算
+2. 如果有一个操作数是NaN，结果是NaN
+3. Infinity/Infinity=NaN
+4. 0/0=NaN
+5. 非零的数值除以0，结果是Infinity或者-Infinity  ： 12/0=Infinity
+6. Infinity或者-Infinity除以非0的值，返回Infinity或者-Infinity   ：-Infinity/12=-Infinity
+7. 0除以 Infinity或者 -Infinity，返回0或-0：  0/-Infinity=-0   
+
+#### 求模（求余）
+百分号（%）表示
+>1. 如果操作数都是数值，则正常计算，返回余数
+2. 如果被除数是Infinity或-Infinity，除数是有限数值，则返回NaN： Infinity%5=NaN
+3. （+/-）Infinity%（+/-）Infinity=NaN
+4. 如果被除数是有限大的数值，除数是0，则返回NaN： 15%0=NaN
+5. 如果被除数是有限大的数值，除数是Infinity或者-Infinity，则返回被除数： -15%-Infinity=-15
+6. 如果被除数是0，则返回0： 0%Infinity=0
+7. 如果有一个操作数不是数值，则后台通过Number()转化后再计算
+
+
+
+### 加减操作符
+#### 加法
+>1. 如果两个操作数都是常规数值，则按正常情况相加
+2. 如果有一个操作数是NaN，则返回NaN
+3. Infinity+Infinity=Infinity, -Infinity+-Infinity=-Infinity,Infinity+-Infinity=NaN
+4. +0 + +0=+0, -0 + -0 = -0, +0 + -0= +0
+5. 如果两个操作数都是字符串，则拼接
+6. 如果只有一个是字符串，则将另外一个操作数（数值，布尔值，对象等）转换成字符串再拼接
+
+#### 减法
+>1. 如果两个操作数都是常规数值，则按正常情况相减
+2. 如果有一个操作数是NaN，则返回NaN
+3. Infinity-Infinity=NaN, -Infinity- -Infinity=NaN ,Infinity- -Infinity=Infinity ， -Infinity -Infinity=-Infinity
+4. +0 - +0=+0, +0 - -0=-0，-0 - -0=+0
+5. 如果有一个操作数是字符串，布尔值,null，undefined则先后台通过Number()转换再计算，如果转换之后是NaN，则结果就是NaN
+6. 如果有一个是对象，则通过valueOf()取得对象值，计算。如果对象值是NaN，则计算结果就是NaN。如果没有valueOf()，则用toString()取得字符串转换成数值
+
+
+###关系操作符
+<,>,<=,>=
+>1. 如果两个操作数都是数值，则正常比较
+2. 如果两个操作数是字符串，则比较字符编码值
+3. 如果有一个是数值，则将另外一个转换成数值再比较
+4. 如果有一个是对象，则使用valueOf(),如果没有valueOf(),再使用toString()转换再比较
+5. 如果有一个操作数是布尔值，则转换成数值再比较
+
+
+### 相等操作符
+重要的概念：
+**相等和不相等——先转换再比较
+全等和不全等——仅比较不做类型转换**
+
+#### 相等和不相等
+（==）（!=）
+>1. 如果有一个操作数是布尔值，则先转换为数值，true转换为1，false转换为0
+2. 如果有一个操作数是字符串，另外一个是数值，则先将字符串
+3. null==undefined
+
+
+#### 全等和全不等
+全等和全不等不做类型转换直接比较
+```
+var result1=("55"==55); //true   相等
+var result2=("55"===55); //false    不全等
+var result3=("55"!=55); //false      转化后相等
+var result3=("55"!==55); //true    不全等
+```
+
+
+### 条件操作符
+#### 赋值操作符
+等号（=）表示赋值，右侧的值赋给左侧的变量
+##### 复合赋值操作符
+```
+*=
+/=
++=
+-=
+%=
+<<=
+>>=
+>>>=
+```
+
+### 逗号操作符
+多用于变量声明
+
+## 语句
+### if语句
+```
+if(condition)
+        statement1
+else
+        statement2
+```
+condition可以是任意的表达式，如果结果不是布尔值，ECMAScript会自动调用Boolean()进行转换，condition如果结果为true则执行statement1,否则执行statement2。
+statement1和statement2可以是一行代码，也可以是语句块({}花括号包裹起来的多行代码)
+```
+if(i>25){
+            alert("Greater than 25");
+}
+else{
+            alert("Less than or equal to 25");
+}
+```
+
+### do-while语句
+do-while 是一种后测试的循环语句，只有在循环体内代码执行之后才会测试出口条件，也就是说，**循环体内的代码至少执行一次**
+```
+do{
+    statement
+}
+while(expression);
+```
+
+### while 语句
+while则和前面的不同，它会在循环体内的代码执行之前先做出口条件的测试，所以，**有可能循环体内的代码永远不会执行。**
+```
+while(expression){
+            statement
+}
+```
+
+###  for 语句
+for 语句也是一种循环测试语句，它具有在执行循环之前初始化变量和定义循环后要执行的代码的能力。
+```
+for(initialization;expression;post-loop-exoression){
+    statement
+}
+```
+initialization初始化变量可以在for循环外部声明`var`:
+```
+var count=10;
+for(var i=0;i<count;i++){
+    alert(i);
+}
+alert(i);
+//等同于
+var count=10;
+var i;
+for(i=0;i<count;i++){
+    alert(i);
+}
+alert(i);
+```
+**ECMAScript没有块级作用域，因此上面示例中for循环内的变量i,可以在循环外访问到**
+
+###  for-in 语句
+for-in 是精准的迭代语句，可以枚举对象的属性。
+```
+for (property in expression)
+            statement
+```
+```
+for (var proName in window){
+            document.write(proName);  //循环输出window对象属性
+}
+```
+由于对象的属性没有顺序，因此循环出的属性名的顺序是不可预测的。
+
+
+### label语句
+给代码添加标签，以便将来使用
+```
+label:statement
+```
+### break 和 continue 语句
+break和continue 用来在循环中精确控制代码的执行。
+**其中,break会立即退出循环，强制执行循环后面的语句，continue也是退出循环，但是会重循环顶部开始继续执行。**
+```
+var num=0;
+for (var i=1;i<10;i++){
+        if(i%5==0){
+
+            break;            //当i的值可以被5整除的时候（0，5，10...）
+                             // 终止执行循环体的代码，执行循环体后面的代码
+                            //这里当i等于5的时候不再执行循环
+        }                        
+      num++;               //当i的值为（0，5，10...）的时候，跳过这里（属于循环体代码）
+}
+alert(num);   //       4  ，当i=5的时候就不再循环，因此只循环了4次
+```
+```
+var num=0;
+for (var i=1;i<10;i++){
+        if(i%5==0){
+
+            continue;            //当i的值可以被5整除的时候（0，5，10...）
+                             // 回到循环体头部，开始新的循环
+                            //这里等于直接跳到i++
+        }                        
+      num++;               //当i的值为（0，5，10...）的时候，跳过这里,回到循环头部
+}
+alert(num);   //      8 ，当i为5和10的时候少了两次循环体内的执行，所以叠加只有8次
+```
+### with语句
+将代码的作用域设置到一个特定的对象中：
+```
+with(expression)
+statement;
+```
+```
+var gs=location.search.substring(1);
+var hostname=location.hostname;
+var url=location.href;
+//等价于
+with(location){
+    var gs=search.substring(1);
+    var hostname=hostname;
+    var url=href;
+}
+```
+严格模式下不允许使用with语句，而且性能不佳，调试困难，不建议使用with语句
+### switch语句
+```
+switch (expression){
+        case value1:statement1
+            break;
+        case value2:statement2
+            break;
+        case value3:statement3
+            break;    
+          default: default_statement   
+}
+```
+ switch 语句case 后面的value1,value2... 可以是变量，常量，或者表达式
+```
+switch("hello world!"){
+        case "hello"+" world!":
+                alert("Greeting was found.");
+                break;
+        case "goodbye":
+                alert("Closing was found.");
+                break;
+        default:
+                alert("Unexpected message was found.");        
+}
+```
+```
+var num=25;
+    switch(true){
+            case num<0:
+            alert("Less than 0");
+            break;
+            case num>=0 && num<=10:
+            alert("Between 0 and 10");
+            break;
+            case num>10 && num>=20:
+            alert("Between 10 and 20");
+            break;
+            default:
+            alert("More than 20");
+    }
+```
+Switch 语句在比较值时，使用的是全等操作符，不存在类型转换过程。
+
+## 函数
+function 作为关键字，封装了多条语句。函数声明：
+```
+function functionName(arg0,arg1,arg2...){
+        statements
+}
+```
+函数调用:
+```
+functionName(arg0,arg1,arg2...);
+```
+**ECMAScript的函数定义不必指定是否返回值。**如果需要返回值，则在函数体内添加return 语句，return 语句之后的代码永远不会执行
+严格模式的一些规定：
+>1. 不能把函数命名为`eval`或者`arguments`
+2. 函数的参数不能命名为`eval`或者`arguments`
+3. 不能出现两个命名参数同名的情况
+
+### 理解参数
+ECMAScript不介意传入参数的个数和类型。即，如果定义的函数只接收两个参数，但是调用的时候传入1个或者3个都是可以的。
+因为，ECMAScript中的参数在内部是以一个数组的形式表示的。函数始终接收的是这个数组，通过`arguments`对象可以访问这个数组
+`arguments`对象和数组类似（不是Array实例），可以通过`[]`语法访问每个元素（`arguments[x]`），通过`length`属性可以确定传入参数的个数。
+`argument`的值永远和对应命名参数的值保存同步：
+```
+function doAdd(num1,num2){
+        arguments[1]=10;
+        alert(arguments[0]+num2);
+}
+```
+以上例子中，无论doAdd函数运行几次，每次传入的arguments[1]的值都是10，从而对应的num2的值一直都会被重置为10.
+
+### 没有重载
+ECMASCript无法实现函数的重载，两个相同名字的函数，函数名只属于后定义的那个。如果想"间接实现重载"，可以使用判断传入参数的个数来实现：
+```
+function doAdd(){
+    if(arguments.length==1){
+         //如果传入的是1个参数
+        }else if(arguments.length==2){
+                //如果传入的是2个参数
+        }
+}
+//通过函数传入参数个数的不同，间接实现函数重载
+doAdd(1);
+doAdd(1,2);
+```
+
+## 小结
+>1. ECMAScript 基本数据类型：Undefined Null Boolean Number和String
+2. ECMAScript 复杂数据类型：Object，是所有对象的基础
+3. Number可以表示所有类型数值，包括整数和浮点数
+4. 严格模式为任意出错的地方施加了限制
+5. 包含基本操作符，算术操作符，布尔操作符，关系操作符，相等操作符和赋值操作符
+6. if ,while,do-while,for,switch等流程控制语句
+7. ECMAScript函数无需指定返回值，如果未指定，则返回的是undefined
+8. ECMAScript没有函数签名概念，函数参数是一个数组形式的对象arguments
+9. ECMAscript无法实现重载
