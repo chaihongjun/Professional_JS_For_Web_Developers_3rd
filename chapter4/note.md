@@ -100,4 +100,28 @@ alert(person.name);    //"Nicholas"
 
 
 
+### 检测类型
+typeof 用来检测基本数据类型，Undefined，Null，Boolean，Number，String和复杂类型Object，但是想具体检测引用类型，则可以使用instanceof
+```
+var s="Nicholas";
+var b=true;
+var i=22;
+var u;
+var n=null;
+var o=new Object();
+
+alert(typeof s); //String
+alert(typeof b); //Boolean
+alert(typeof i); //String
+alert(typeof u); //undefined
+alert(typeof n); //Object
+alert(typeof o); //Object
+
+alert(o instanceof Object); //true
+
+```
+
+## 执行环境及作用域
+**执行环境决定了变量或者函数有权访问的其他数据，决定了变量或者函数的行为。**
+
 [TOC]

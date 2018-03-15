@@ -1021,8 +1021,10 @@ body .markdown-body
 <li><a href="#_3">动态的属性</a></li>
 <li><a href="#_4">复制变量值</a></li>
 <li><a href="#_5">传递参数</a></li>
+<li><a href="#_6">检测类型</a></li>
 </ul>
 </li>
+<li><a href="#_7">执行环境及作用域</a></li>
 </ul>
 </li>
 </ul>
@@ -1171,6 +1173,27 @@ setName(person);
 alert(person.name);    //&quot;Nicholas&quot;
 </code></pre><br />
 这个段代码，函数内的obj参数和person都引用的同一个对象。</p>
+<h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>检测类型</h3>
+<p>typeof 用来检测基本数据类型，Undefined，Null，Boolean，Number，String和复杂类型Object，但是想具体检测引用类型，则可以使用instanceof<br />
+<pre><code>var s=&quot;Nicholas&quot;;
+var b=true;
+var i=22;
+var u;
+var n=null;
+var o=new Object();
+
+alert(typeof s); //String
+alert(typeof b); //Boolean
+alert(typeof i); //String
+alert(typeof u); //undefined
+alert(typeof n); //Object
+alert(typeof o); //Object
+
+alert(o instanceof Object); //true
+
+</code></pre></p>
+<h2 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>执行环境及作用域</h2>
+<p><strong>执行环境决定了变量或者函数有权访问的其他数据，决定了变量或者函数的行为。</strong></p>
 <div class="toc">
 <ul>
 <li><a href="#_1">变量，作用域和内存问题</a><ul>
@@ -1178,8 +1201,10 @@ alert(person.name);    //&quot;Nicholas&quot;
 <li><a href="#_3">动态的属性</a></li>
 <li><a href="#_4">复制变量值</a></li>
 <li><a href="#_5">传递参数</a></li>
+<li><a href="#_6">检测类型</a></li>
 </ul>
 </li>
+<li><a href="#_7">执行环境及作用域</a></li>
 </ul>
 </li>
 </ul>
