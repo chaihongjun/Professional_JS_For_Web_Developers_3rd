@@ -87,7 +87,7 @@ alert(count);   //20
 alert(result);    //30
 ```
 变量count的值20被复制给函数内部参数num,然后num变量又被加上10，num=20+10=30,然而，传入的参数count的值仍然是20没有变化。
-另外一个关于对象的例子（引用传递）
+另外一个关于对象的例子（仍然是值传递）
 ```
 function setName(obj){
         obj.name="Nicholas";
@@ -96,8 +96,31 @@ var person=new Object();
 setName(person);
 alert(person.name);    //"Nicholas"
 ```
-这个段代码，函数内的obj参数和person都引用的同一个对象。
+这个段代码，无法确定ECMAScript的函数参数传递是值传递还是引用传递。**值传递和引用传递的区别就是，两个参数其中一个参数发生了变化，那么另外一个参数如果没发生变化，则属于值传递，如果也同时发生了变化则是引用传递。**
+为了验证和判断ECMAScript 中所有的函数的参数都是按值传递还是引用传递用下面的例子验证：
+```
+function setName(obj){
+        obj.name="Nicholas";
+         //下面开始有变化
+         //函数内部参数obj重新指向另外一个对象
+         obj =new Object();
+         //对新的对象添加新的属性和值
+         obj.name="Greg";
+}
+var person=new Object();
+setName(person);
+alert(person.name);    //"Nicholas"
 
+```
+以上代码解析：
+>1. 首先实例化对象person
+2. 执行setName(person),将对象person作为参数传入函数setName()
+3. 执行函数setName的第一行代码，添加新的属性和值，这个时候person和obj都有属性name且值都为Nicholas,但是这个时候仍然无法判断person是obj的一个副本，还是指向共同的一个内存空间（引用）
+4. 接着obj被指向了一个新的对象
+5. obj指向的新对象添加了属性name和新的值
+6. 如果函数的参数传递是值传递的，那么新的obj对象将被赋予新的堆地址，而person还是原来那个person
+7. 如果函数的参数传递是引用传递的，那么新的obj指向新的堆地址了，同时person也会指向新的堆地址（和obj指向的地址是一致的），person也会发生改变
+8. 最后输出person的结果验证了函数的参数传递是值传递的（obj变了，但是person没变）
 
 
 ### 检测类型
@@ -122,6 +145,17 @@ alert(o instanceof Object); //true
 ```
 
 ## 执行环境及作用域
-**执行环境决定了变量或者函数有权访问的其他数据，决定了变量或者函数的行为。**
+**执行环境(execution context)决定了变量或者函数有权访问的其他数据，决定了变量或者函数的行为。**
+**每个执行环境都有一个对应的`变量对象(variable object)`用来保存在这个环境中定义的变量和函数**这个变量对象我们无法访问，但是后台会调用。
+全局执行执行环境是最外围的一个执行环境。ECMAScript实现所在宿主环境的不同，表示执行环境的对象也不一样。ECMAScript的宿主环境也就是运行环境主要有在客户端的的浏览器(如chrome ,firefox等)以及可以运行在服务端的(Nodejs)
+在浏览器中，全局执行环境被认为是`windows对象`，所以所有的全局变量和函数都是作为windows对象的属性和方法存在。
+当某一个环境的代码执行完毕之后，这个环境将被销毁，这个环境内的变量函数也会同时被销毁。（全局执行环境需要应用程序的推出才会销毁。比如关闭一个Tab或者关闭整个浏览器）
+
+函数也有执行环境，当程序执行流进入一个函数的时候，函数的环境（可理解为一个菜篮子）会被推入一个栈（环境栈，可理解为购物车）。函数执行完毕之后，这个环境会被从栈中弹出，程序的控制权被返回给前面一个执行环境。
+
+当代码在执行过程中，变量对象会创建一个`作用域链（scope chain）`，用来保证对执行环境有访问权限的变量和函数能够有序的访问。
+一张图来解释作用域链：
+![作用域链](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain.gif)
+
 
 [TOC]
