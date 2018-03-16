@@ -1106,435 +1106,48 @@ MathJax.Hub.Config({
 </script>
 <title>note</title></head><body><article class="markdown-body"><div class="toc">
 <ul>
-<li><a href="#_1">变量，作用域和内存问题</a><ul>
-<li><a href="#_2">基本类型和引用类型</a><ul>
-<li><a href="#_3">动态的属性</a></li>
-<li><a href="#_4">复制变量值</a></li>
-<li><a href="#_5">传递参数</a></li>
-<li><a href="#_6">检测类型</a></li>
-</ul>
-</li>
-<li><a href="#_7">执行环境及作用域</a><ul>
-<li><a href="#_8">延长作用域链</a></li>
-<li><a href="#_9">没有块级作用域</a><ul>
-<li><a href="#_10">声明变量</a></li>
-<li><a href="#_11">查询标识符</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_12">垃圾收集</a><ul>
-<li><a href="#_13">标记清除</a></li>
-<li><a href="#_14">引用计数</a></li>
-<li><a href="#_15">性能问题</a></li>
-<li><a href="#_16">管理内存</a></li>
-</ul>
-</li>
-<li><a href="#_17">小结</a></li>
+<li><a href="#_1">引用类型</a><ul>
+<li><a href="#object">Object类型</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>变量，作用域和内存问题</h1>
-<h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>基本类型和引用类型</h2>
-<p><strong>ECMAScript变量包含两种类型：<code>基本类型</code>和<code>引用类型</code>,基本类型是指<code>简单的数据段</code>，引用类型指那些可能由<code>多个值构成的对象</code></strong><br />
-5种基本数据类型:undefuned,null,boolean,number,string是按照值访问的，对象类型无法直接操作对象的内存空间，操作对象实际是操作对象的引用。<br />
-<strong>引用类型的值是按照引用访问的。</strong></p>
-<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>动态的属性</h3>
-<p>引用类型变量可以添加或者删除属性和方法<br />
-<div class="codehilite"><pre>var person=new Object();
+<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>引用类型</h1>
+<p><strong>引用类型的值（对象）是引用类型的一个实例，在ECMAScript中，引用类型是一种数据结构，用于将数据和功能组织起来。</strong>看起来像是类，由于不具备类的面向对象支持的类和接口等基本结构，<strong>所以引用类型被称为对象定义，因为它们描述的是一类对象所具有的属性和方法</strong></p>
+<h2 id="object"><a name="user-content-object" href="#object" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Object类型</h2>
+<p>创建Object实例有两种方法：<br />
+<div class="codehilite"><pre>// 方法1：通过构造函数
+var person =new Obejct();
+//添加属性
 person.name=&quot;Nicholas&quot;;
-alert(person.name); //Nicholas
+person.age=29;
+//方法2：通过对象字面量方法
+var person={
+    name:&quot;Nicholas&quot;,
+    age:29
+};
+//也可以写成这样
+var person={};       //与 new Object() 相同
+person.name=&quot;Nicholas&quot;;
+person.age=29;
 </pre></div>
 <br />
-以上代码创建了一个对象并且保存在变量person里，然后添加了属性name并赋值，如果对象不被销毁，或者属性不被删除，这个属性将一直存在<br />
-但是，<strong>基本类型无法添加属性或者方法。</strong><br />
-<div class="codehilite"><pre>var name = &quot;Nicholas&quot;;
-name.age=27;
-alert(name.age);  //undefined
-</pre></div>
-</p>
-<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>复制变量值</h3>
-<p><strong>从一个变量向另外一个变量复制基本类型和引用类型值时，也是不一样的。</strong><br />
-<em>复制基本类型</em><br />
-如果从一个变量向另外一个变量复制基本类型的值，会在新的变量上创建新的值。<br />
-<div class="codehilite"><pre>var num1=5;
-var num2=num1;
+<strong>对象字面量方法中通过逗号（,）来分隔不同的属性，最后一个属性后面不添加逗号</strong></p>
+<p><strong>访问对象属性有两种方法，点<code>.</code>语法和<code>[]</code>语法</strong><br />
+<div class="codehilite"><pre>1. 对象.属性
+2. 对象[&quot;属性&quot;]
+person.name
+person[&quot;name&quot;]
 </pre></div>
 <br />
-以上num1和num2都是完全独立的，两个变量参与的操作不会互相影响。</p>
-<blockquote>
-<p>复制前的变量对象</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>num1</td>
-<td>5(Number类型)</td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<p>————————————————</p>
-<blockquote>
-<p>复制后的变量对象</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>num2</td>
-<td>5(Number类型)</td>
-</tr>
-<tr>
-<td>num1</td>
-<td>5(Number类型)</td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<p><em>复制引用类型</em><br />
-当从一个变量向另外一个变量复制引用类型的值的时候，另外一个变量保存的是前一个变量的指针。两个变量实际引用的是同一个对象。<br />
-因此，改变其中一个变量，就会影响到另外一个变量<br />
-<div class="codehilite"><pre>var obj1=new Object();
-var obj2=obj1;    //obj2引用obj1对象
-obj1.name=&quot;Nicholas&quot;;
-alert(obj2.name); //Nicholas
+使用<code>[]</code>方法的好处是可以通过变量访问属性：<br />
+<div class="codehilite"><pre>var propertyName = name;
+person[propertyName];
 </pre></div>
 <br />
-obj1和obj2指向的是同一个对象(共享内存空间)：</p>
-<blockquote>
-<p>复制前的变量对象</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>obj1</td>
-<td>(Objectr类型)</td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<p>——|——————————————<br />
-Object<br />
-——|——————————————</p>
-<blockquote>
-<p>复制后的变量对象</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>obj2</td>
-<td>(Object类型)</td>
-</tr>
-<tr>
-<td>obj1</td>
-<td>(Object类型)</td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<h3 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>传递参数</h3>
-<p><strong>ECMAScript 中所有的函数的参数都是按值传递的</strong>，也就是把函数外部的值复制给函数内部的参数，就和把值从一个变量复制到另外一个变量一样。<br />
-向参数传递基本类型的值时，被传递的值会被复制给一个局部变量。向参数传递引用类型的值时，会把这个值的地址复制给一个局部变量，所以，这个局部变量的变化会在函数外部反映出来<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">addTen</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
-            <span class="nx">num</span> <span class="o">+=</span><span class="mi">10</span><span class="p">;</span>
-            <span class="k">return</span> <span class="nx">num</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">var</span> <span class="nx">count</span><span class="o">=</span><span class="mi">20</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">result</span><span class="o">=</span><span class="nx">addTen</span><span class="p">(</span><span class="nx">count</span><span class="p">);</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">count</span><span class="p">);</span>   <span class="c1">//20</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>    <span class="c1">//30</span>
+如果属性名包含会导致语法错误的字符，或属性名使用了关键字或保留字，则可以使用<code>[]</code>语法：<br />
+<div class="codehilite"><pre>person[&quot;first name&quot;];
 </pre></div>
 <br />
-变量count的值20被复制给函数内部参数num,然后num变量又被加上10，num=20+10=30,然而，传入的参数count的值仍然是20没有变化。<br />
-另外一个关于对象的例子（仍然是值传递）<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">setName</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
-        <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
-<span class="nx">setName</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>    <span class="c1">//&quot;Nicholas&quot;</span>
-</pre></div>
-<br />
-这个段代码，无法确定ECMAScript的函数参数传递是值传递还是引用传递。<strong>值传递和引用传递的区别就是，两个参数其中一个参数发生了变化，那么另外一个参数如果没发生变化，则属于值传递，如果也同时发生了变化则是引用传递。</strong><br />
-为了验证和判断ECMAScript 中所有的函数的参数都是按值传递还是引用传递用下面的例子验证：<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">setName</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
-        <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
-         <span class="c1">//下面开始有变化</span>
-         <span class="c1">//函数内部参数obj重新指向另外一个对象</span>
-         <span class="nx">obj</span> <span class="o">=</span><span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
-         <span class="c1">//对新的对象添加新的属性和值</span>
-         <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Greg&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
-<span class="nx">setName</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>    <span class="c1">//&quot;Nicholas&quot;</span>
-</pre></div>
-<br />
-以上代码解析：</p>
-<blockquote>
-<ol>
-<li>首先实例化对象person</li>
-<li>执行setName(person),将对象person作为参数传入函数setName()</li>
-<li>执行函数setName的第一行代码，添加新的属性和值，这个时候person和obj都有属性name且值都为Nicholas,但是这个时候仍然无法判断person是obj的一个副本，还是指向共同的一个内存空间（引用）</li>
-<li>接着obj被指向了一个新的对象</li>
-<li>obj指向的新对象添加了属性name和新的值</li>
-<li>如果函数的参数传递是值传递的，那么新的obj对象将被赋予新的堆地址，而person还是原来那个person</li>
-<li>如果函数的参数传递是引用传递的，那么新的obj指向新的堆地址了，同时person也会指向新的堆地址（和obj指向的地址是一致的），person也会发生改变</li>
-<li>最后输出person的结果验证了函数的参数传递是值传递的（obj变了，但是person没变）</li>
-</ol>
-</blockquote>
-<h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>检测类型</h3>
-<p>typeof 用来检测基本数据类型，Undefined，Null，Boolean，Number，String和复杂类型Object，但是想具体检测引用类型，则可以使用instanceof<br />
-<div class="codehilite"><pre>var s=&quot;Nicholas&quot;;
-var b=true;
-var i=22;
-var u;
-var n=null;
-var o=new Object();
-
-alert(typeof s); //String
-alert(typeof b); //Boolean
-alert(typeof i); //String
-alert(typeof u); //undefined
-alert(typeof n); //Object
-alert(typeof o); //Object
-
-alert(o instanceof Object); //true
-</pre></div>
-</p>
-<h2 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>执行环境及作用域</h2>
-<p><strong>执行环境(execution context)决定了变量或者函数有权访问的其他数据，决定了变量或者函数的行为。</strong><br />
-<strong>每个执行环境都有一个对应的<code>变量对象(variable object)</code>用来保存在这个环境中定义的变量和函数</strong>这个变量对象我们无法访问，但是后台会调用。<br />
-全局执行执行环境是最外围的一个执行环境。ECMAScript实现所在宿主环境的不同，表示执行环境的对象也不一样。ECMAScript的宿主环境也就是运行环境主要有在客户端的的浏览器(如chrome ,firefox等)以及可以运行在服务端的(Nodejs)<br />
-在浏览器中，全局执行环境被认为是<code>windows对象</code>，所以所有的全局变量和函数都是作为windows对象的属性和方法存在。<br />
-当某一个环境的代码执行完毕之后，这个环境将被销毁，这个环境内的变量函数也会同时被销毁。（全局执行环境需要应用程序的推出才会销毁。比如关闭一个Tab或者关闭整个浏览器）</p>
-<p>函数也有执行环境，当程序执行流进入一个函数的时候，函数的环境（可理解为一个菜篮子）会被推入一个栈（环境栈，可理解为购物车）。函数执行完毕之后，这个环境会被从栈中弹出，程序的控制权被返回给前面一个执行环境。</p>
-<p>当代码在执行过程中，变量对象会创建一个<code>作用域链（scope chain）</code>，用来保证对执行环境有访问权限的变量和函数能够有序的访问。<br />
-几张图来解释作用域链：<br />
-<img alt="作用域链" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain.gif" /><br />
-<img alt="作用域链" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain2.png" /><br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
-   <span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
-   <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nx">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
-</pre></div>
-<br />
-第2张图片结合代码表明：</p>
-<blockquote>
-<ol>
-<li>作用域链的前端是当前执行环境的变量对象（也就是当前执行环境内的变量和函数），绿色部分那里</li>
-<li>绿色部分称为活动对象(Activation object)，它的头部是首先是全局对象window,然后是函数参数对象arguments，接着是当前执行环境的变量</li>
-<li>活动对象后面的跟着外层环境的变量对象，直到最外层的全局变量对象</li>
-<li>全局变量对象是作用域链中最后一个对象</li>
-</ol>
-</blockquote>
-<p>标识符的解析过程是从作用域链的前端开始，沿着作用域链一级一级的搜索，直到找到为止。<br />
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>
-<span class="kd">function</span> <span class="nx">changeColor</span><span class="p">(){</span>
-        <span class="k">if</span><span class="p">(</span><span class="nx">color</span><span class="o">===</span><span class="s2">&quot;blue&quot;</span><span class="p">){</span>
-                    <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>
-        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-                    <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
-<span class="p">}</span>
-<span class="nx">changeColor</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Color is now &quot;</span><span class="o">+</span><span class="nx">color</span><span class="p">);</span>
-</pre></div>
-</p>
-<table>
-<thead>
-<tr>
-<th>changeColor()  scope chain</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>arguments</td>
-</tr>
-<tr>
-<td>全局变量 color</td>
-</tr>
-<tr>
-<td>可以在changeColor()访问变量color，是因为changeColor()的作用域链可以找到它。</td>
-</tr>
-</tbody>
-</table>
-<p><strong>在局部作用域定义的变量可以在局部环境中与全局变量互换使用。</strong><br />
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>                                               <span class="c1">//0:全局环境 只能访问 color                                       </span>
-<span class="kd">function</span> <span class="nx">changeColor</span><span class="p">(){</span>                                         <span class="c1">//1: changeColor() 环境 可以访问 color,anotherColor</span>
-            <span class="kd">var</span> <span class="nx">anotherColor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>
-            <span class="kd">function</span> <span class="nx">swapColors</span><span class="p">(){</span>                               <span class="c1">//2:swapColor()环境 可以访问color,anotherColor,tempColor</span>
-                    <span class="kd">var</span> <span class="nx">tempColor</span><span class="o">=</span><span class="nx">anotherColor</span><span class="p">;</span>
-                    <span class="nx">anotherColor</span><span class="o">=</span><span class="nx">color</span><span class="p">;</span>
-                    <span class="nx">color</span><span class="o">=</span><span class="nx">tempColor</span><span class="p">;</span>
-                    <span class="c1">//可以访问color,anotherColor,tempColor</span>
-            <span class="p">}</span>
-                <span class="c1">//可以访问color,anotherColor</span>
-                <span class="nx">swapColors</span><span class="p">();</span>
-<span class="p">}</span>
-<span class="c1">//  只能访问color;</span>
-<span class="nx">changeColor</span><span class="p">();</span>
-</pre></div>
-<br />
-内部的执行环境可以通过作用域链访问外层环境，但是外层环境无法访问内部环境的变量和函数，每个环境都可以向上搜索作用域链，以查询变量和函数，但是任何环境都不能通过作用域链向下查询进入另外一个环境。<br />
-window</p>
-<blockquote>
-<p>----------color</p>
-<p>----------changeColor()</p>
-<blockquote>
-<p>----------anotherColor</p>
-</blockquote>
-<p>----------swapColors()</p>
-<blockquote>
-<blockquote>
-<p>----------tempColor</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>延长作用域链</h3>
-<p>两种场景会延长作用域链：<br />
-1. try-catch语句执行到catch语句<br />
-2. 使用with语句<br />
-以上执行的时候会在作用域链的前端添加一个变量对象</p>
-<h3 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>没有块级作用域</h3>
-<p>JS没有块级的作用域，<code>{}</code>内的变量在外面依然可以访问<br />
-<div class="codehilite"><pre>if(true){
-        var color=&quot;blue&quot;;
-}
-alert(color);   //&quot;blue&quot;
-</pre></div>
-<br />
-以上代码如果在C,java之类有块级作用域的语言里，则不会输出blue,因为在if的语句块内没有输出就被销毁了。而在ECMAScript环境下，color的赋值保留在了当前的执行环境中，这里是全局变量。特别注意for循环:<br />
-<div class="codehilite"><pre>for(var i=0;i&lt;10;i++){
-    doSomething(i);
-}
-alert(i);  //10    
-</pre></div>
-<br />
-for 循环创建的变量直到循环结束，依然保留在循环外部的环境中。</p>
-<h4 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>声明变量</h4>
-<p>var 声明的变量会添加到最接近的执行环境，在函数内，最近接的环境就是函数的局部环境；with语句中最接近的环境就是函数环境，如果初始化的时候没有用<code>var</code>,则变量被添加到全局环境中。严格模式下，初始化未声明的变量会导致错误<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">.</span><span class="nx">num2</span><span class="p">){</span>
-            <span class="kd">var</span> <span class="nx">sum</span><span class="o">=</span><span class="nx">num1</span><span class="o">+</span><span class="nx">num2</span><span class="p">;</span>
-            <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">var</span> <span class="nx">result</span><span class="o">=</span><span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span> <span class="c1">//30</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span> <span class="c1">// 报错，因为在add函数内声明的局部变量，无法在外层访问</span>
-</pre></div>
-</p>
-<h4 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>查询标识符</h4>
-<p>在某个环境中为了读取或者写入而引用一个标识符的时候，必须通过搜索来确定这个标识符实际代表的是什么。从作用域链的前端开始搜索，向上逐级查询，直到全局环境。<br />
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>
-<span class="kd">function</span> <span class="nx">getColor</span><span class="p">(){</span>
-            <span class="k">return</span> <span class="nx">color</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">getColor</span><span class="p">());</span> <span class="c1">//&quot;blue&quot;</span>
-</pre></div>
-<br />
-上面的代码执行分析:</p>
-<blockquote>
-<ol>
-<li>首先调用函数getColor()</li>
-<li>getColor()的作用是返回标识符color</li>
-<li>在getColor()函数执行环境内,当前不知道color是一个变量还是函数还是属性，于是向上查询</li>
-<li>在外层查询到了color的声明，color是一个变量，而且也赋值了。</li>
-<li>最后弹出变量color的值</li>
-</ol>
-</blockquote>
-<p>当然，如果在向上的搜索过程中发现了同名的标识符，则会中断查询过程:<br />
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>
-<span class="kd">function</span> <span class="nx">getColor</span><span class="p">(){</span>
-            <span class="kd">var</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>
-            <span class="k">return</span> <span class="nx">color</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">getColor</span><span class="p">());</span> <span class="c1">//&quot;red&quot;</span>
-</pre></div>
-<br />
-上述代码函数内的变量声明属于局部变量，局部变量会被先调用。函数返回标识符首先在局部环境内查找，因此，外层的全局变量不会被使用到</p>
-<h2 id="_12"><a name="user-content-_12" href="#_12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>垃圾收集</h2>
-<p>JS有自动的垃圾收集机制，无需开发人员关心，JS的垃圾收集机制会按照固定的时间间隔周期性的检查不再使用的变量，并释放其占用的空间。</p>
-<h3 id="_13"><a name="user-content-_13" href="#_13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>标记清除</h3>
-<p>javascript 常用的垃圾收集方式是mark-and-sweep，标记清除</p>
-<h3 id="_14"><a name="user-content-_14" href="#_14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>引用计数</h3>
-<h3 id="_15"><a name="user-content-_15" href="#_15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>性能问题</h3>
-<h3 id="_16"><a name="user-content-_16" href="#_16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>管理内存</h3>
-<h2 id="_17"><a name="user-content-_17" href="#_17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>小结</h2>
-<ol>
-<li>JS变量可以保存两种类型的值：基本类型和引用类型</li>
-<li>基本类型值：Undefined，Null，Boolean，Number，String</li>
-<li>基本类型值占用的空间上固定大小的，所以被保存在栈中</li>
-<li>引用类型的值是对象，所以是保持在堆中</li>
-<li>从一个变量向另外一个变量复制基本类型的值。会创建这个值的副本</li>
-<li>包含引用类型值得变量实际包含的不是对象本身，而是对象在堆中的地址</li>
-<li>从一个变量向另外一个变量复制引用类型的值，复制的实际是指针（内存地址），所以两个变量指向的是同一个对象</li>
-<li>确定一个值是属于哪种类型可以使用typeof操作符，要想确认一个值是哪种引用类型可以使用instanceof操作符<br />
-所以的变量都存在于一个执行环境（作用域）中，这个执行环境决定了变量的声明周期，以及被访问的权限。<br />
-关于执行环境：</li>
-<li>执行环境分全局执行环境（全局环境）和函数执行环境</li>
-<li>每次进入一个执行环境，会创建一个用于搜索变量和函数的作用域链</li>
-<li>函数的局部环境不仅可以访问函数作用域中的变量，而且也可以访问包含它的（父）环境，甚至全局环境</li>
-<li>全局环境只能访问全局环境中定义的变量和函数，不能直接访问局部环境内的任何数据</li>
-<li>变量的执行环境有助于确定何时释放内存</li>
-<li>垃圾回收机制（略过）</li>
-</ol>
-<div class="toc">
-<ul>
-<li><a href="#_1">变量，作用域和内存问题</a><ul>
-<li><a href="#_2">基本类型和引用类型</a><ul>
-<li><a href="#_3">动态的属性</a></li>
-<li><a href="#_4">复制变量值</a></li>
-<li><a href="#_5">传递参数</a></li>
-<li><a href="#_6">检测类型</a></li>
-</ul>
-</li>
-<li><a href="#_7">执行环境及作用域</a><ul>
-<li><a href="#_8">延长作用域链</a></li>
-<li><a href="#_9">没有块级作用域</a><ul>
-<li><a href="#_10">声明变量</a></li>
-<li><a href="#_11">查询标识符</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_12">垃圾收集</a><ul>
-<li><a href="#_13">标记清除</a></li>
-<li><a href="#_14">引用计数</a></li>
-<li><a href="#_15">性能问题</a></li>
-<li><a href="#_16">管理内存</a></li>
-</ul>
-</li>
-<li><a href="#_17">小结</a></li>
-</ul>
-</li>
-</ul>
-</div></article></body></html>
+&ldquo;first name&rdquo; 中间有空格，无法使用点语法。<br />
+通常，除非必须使用变量访问属性，一般建议使用点语法</p></article></body></html>
