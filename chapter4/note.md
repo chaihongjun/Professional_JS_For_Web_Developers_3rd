@@ -154,8 +154,112 @@ alert(o instanceof Object); //true
 函数也有执行环境，当程序执行流进入一个函数的时候，函数的环境（可理解为一个菜篮子）会被推入一个栈（环境栈，可理解为购物车）。函数执行完毕之后，这个环境会被从栈中弹出，程序的控制权被返回给前面一个执行环境。
 
 当代码在执行过程中，变量对象会创建一个`作用域链（scope chain）`，用来保证对执行环境有访问权限的变量和函数能够有序的访问。
-一张图来解释作用域链：
+几张图来解释作用域链：
 ![作用域链](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain.gif)
+![作用域链](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain2.png)
+```
+function add(num1, num2){
+   var sum = num1 + num2;
+   return sum;
+}
+add(3,4);
+```
+第2张图片结合代码表明：
+>1. 作用域链的前端是当前执行环境的变量对象（也就是当前执行环境内的变量和函数），绿色部分那里
+2. 绿色部分称为活动对象(Activation object)，它的头部是首先是全局对象window,然后是函数参数对象arguments，接着是当前执行环境的变量
+3. 活动对象后面的跟着外层环境的变量对象，直到最外层的全局变量对象
+4. 全局变量对象是作用域链中最后一个对象
 
+标识符的解析过程是从作用域链的前端开始，沿着作用域链一级一级的搜索，直到找到为止。
+```
+var color ="blue";
+function changeColor(){
+        if(color==="blue"){
+                    color="red";
+        }else{
+                    color="blue";
+        }
+}
+changeColor();
+alert("Color is now "+color);
+```
+
+| changeColor()  scope chain |
+|------------------------------|
+|   arguments                        |
+|    全局变量 color                           |
+可以在changeColor()访问变量color，是因为changeColor()的作用域链可以找到它。
+
+
+**在局部作用域定义的变量可以在局部环境中与全局变量互换使用。**
+```
+var color="blue";                                               //0:全局环境 只能访问 color                                       
+function changeColor(){                                         //1: changeColor() 环境 可以访问 color,anotherColor
+            var anotherColor="red";
+            function swapColors(){                               //2:swapColor()环境 可以访问color,anotherColor,tempColor
+                    var tempColor=anotherColor;
+                    anotherColor=color;
+                    color=tempColor;
+                    //可以访问color,anotherColor,tempColor
+            }
+                //可以访问color,anotherColor
+                swapColors();
+}
+//  只能访问color;
+changeColor();
+```
+内部的执行环境可以通过作用域链访问外层环境，但是外层环境无法访问内部环境的变量和函数，每个环境都可以向上搜索作用域链，以查询变量和函数，但是任何环境都不能通过作用域链向下查询进入另外一个环境。
+window
+>
+>----------color
+>
+>
+>----------changeColor()
+>>
+>----------anotherColor
+>
+>----------swapColors()
+>>>
+----------tempColor
+
+
+
+
+### 延长作用域链
+两种场景会延长作用域链：
+1. try-catch语句执行到catch语句
+2. 使用with语句
+以上执行的时候会在作用域链的前端添加一个变量对象
+
+
+
+###　没有块级作用域
+JS没有块级的作用域，`{}`内的变量在外面依然可以访问
+```
+if(true){
+        var color="blue";
+}
+alert(color);   //"blue"
+```
+以上代码如果在C,java之类有块级作用域的语言里，则不会输出blue,因为在if的语句块内没有输出就被销毁了。而在ECMAScript环境下，color的赋值保留在了当前的执行环境中，这里是全局变量。特别注意for循环:
+```
+for(var i=0;i<10;i++){
+    doSomething(i);
+}
+alert(i);  //10    
+```
+for 循环创建的变量直到循环结束，依然保留在循环外部的环境中。
+#### 声明变量
+var 声明的变量会添加到最接近的执行环境，在函数内，最近接的环境就是函数的局部环境；with语句中最接近的环境就是函数环境，如果初始化的时候没有用`var`,则变量被添加到全局环境中。严格模式下，初始化未声明的变量会导致错误
+```
+function add(num1.num2){
+            var sum=num1+num2;
+            return sum;
+}
+var result=add(10,20); //30
+alert(sum); // 报错，因为在add函数内声明的局部变量，无法在外层访问
+```
+
+#### 查询标识符
 
 [TOC]

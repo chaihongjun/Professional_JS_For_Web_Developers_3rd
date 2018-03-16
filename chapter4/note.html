@@ -1114,7 +1114,15 @@ MathJax.Hub.Config({
 <li><a href="#_6">检测类型</a></li>
 </ul>
 </li>
-<li><a href="#_7">执行环境及作用域</a></li>
+<li><a href="#_7">执行环境及作用域</a><ul>
+<li><a href="#_8">延长作用域链</a></li>
+<li><a href="#_9">没有块级作用域</a><ul>
+<li><a href="#_10">声明变量</a></li>
+<li><a href="#_11">查询标识符</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1323,8 +1331,120 @@ alert(o instanceof Object); //true
 当某一个环境的代码执行完毕之后，这个环境将被销毁，这个环境内的变量函数也会同时被销毁。（全局执行环境需要应用程序的推出才会销毁。比如关闭一个Tab或者关闭整个浏览器）</p>
 <p>函数也有执行环境，当程序执行流进入一个函数的时候，函数的环境（可理解为一个菜篮子）会被推入一个栈（环境栈，可理解为购物车）。函数执行完毕之后，这个环境会被从栈中弹出，程序的控制权被返回给前面一个执行环境。</p>
 <p>当代码在执行过程中，变量对象会创建一个<code>作用域链（scope chain）</code>，用来保证对执行环境有访问权限的变量和函数能够有序的访问。<br />
-一张图来解释作用域链：<br />
-<img alt="作用域链" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain.gif" /></p>
+几张图来解释作用域链：<br />
+<img alt="作用域链" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain.gif" /><br />
+<img alt="作用域链" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter4/scope_chain2.png" /><br />
+<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+   <span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+   <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+</pre></div>
+<br />
+第2张图片结合代码表明：</p>
+<blockquote>
+<ol>
+<li>作用域链的前端是当前执行环境的变量对象（也就是当前执行环境内的变量和函数），绿色部分那里</li>
+<li>绿色部分称为活动对象(Activation object)，它的头部是首先是全局对象window,然后是函数参数对象arguments，接着是当前执行环境的变量</li>
+<li>活动对象后面的跟着外层环境的变量对象，直到最外层的全局变量对象</li>
+<li>全局变量对象是作用域链中最后一个对象</li>
+</ol>
+</blockquote>
+<p>标识符的解析过程是从作用域链的前端开始，沿着作用域链一级一级的搜索，直到找到为止。<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">changeColor</span><span class="p">(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">color</span><span class="o">===</span><span class="s2">&quot;blue&quot;</span><span class="p">){</span>
+                    <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                    <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">changeColor</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Color is now &quot;</span><span class="o">+</span><span class="nx">color</span><span class="p">);</span>
+</pre></div>
+</p>
+<table>
+<thead>
+<tr>
+<th>changeColor()  scope chain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arguments</td>
+</tr>
+<tr>
+<td>全局变量 color</td>
+</tr>
+<tr>
+<td>可以在changeColor()访问变量color，是因为changeColor()的作用域链可以找到它。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>在局部作用域定义的变量可以在局部环境中与全局变量互换使用。</strong><br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">;</span>                                               <span class="c1">//0:全局环境 只能访问 color                                       </span>
+<span class="kd">function</span> <span class="nx">changeColor</span><span class="p">(){</span>                                         <span class="c1">//1: changeColor() 环境 可以访问 color,anotherColor</span>
+            <span class="kd">var</span> <span class="nx">anotherColor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>
+            <span class="kd">function</span> <span class="nx">swapColors</span><span class="p">(){</span>                               <span class="c1">//2:swapColor()环境 可以访问color,anotherColor,tempColor</span>
+                    <span class="kd">var</span> <span class="nx">tempColor</span><span class="o">=</span><span class="nx">anotherColor</span><span class="p">;</span>
+                    <span class="nx">anotherColor</span><span class="o">=</span><span class="nx">color</span><span class="p">;</span>
+                    <span class="nx">color</span><span class="o">=</span><span class="nx">tempColor</span><span class="p">;</span>
+                    <span class="c1">//可以访问color,anotherColor,tempColor</span>
+            <span class="p">}</span>
+                <span class="c1">//可以访问color,anotherColor</span>
+                <span class="nx">swapColors</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="c1">//  只能访问color;</span>
+<span class="nx">changeColor</span><span class="p">();</span>
+</pre></div>
+<br />
+内部的执行环境可以通过作用域链访问外层环境，但是外层环境无法访问内部环境的变量和函数，每个环境都可以向上搜索作用域链，以查询变量和函数，但是任何环境都不能通过作用域链向下查询进入另外一个环境。<br />
+window</p>
+<blockquote>
+<p>----------color</p>
+<p>----------changeColor()</p>
+<blockquote>
+<p>----------anotherColor</p>
+</blockquote>
+<p>----------swapColors()</p>
+<blockquote>
+<blockquote>
+<p>----------tempColor</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>延长作用域链</h3>
+<p>两种场景会延长作用域链：<br />
+1. try-catch语句执行到catch语句<br />
+2. 使用with语句<br />
+以上执行的时候会在作用域链的前端添加一个变量对象</p>
+<h3 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>没有块级作用域</h3>
+<p>JS没有块级的作用域，<code>{}</code>内的变量在外面依然可以访问<br />
+<div class="codehilite"><pre>if(true){
+        var color=&quot;blue&quot;;
+}
+alert(color);   //&quot;blue&quot;
+</pre></div>
+<br />
+以上代码如果在C,java之类有块级作用域的语言里，则不会输出blue,因为在if的语句块内没有输出就被销毁了。而在ECMAScript环境下，color的赋值保留在了当前的执行环境中，这里是全局变量。特别注意for循环:<br />
+<div class="codehilite"><pre>for(var i=0;i&lt;10;i++){
+    doSomething(i);
+}
+alert(i);  //10    
+</pre></div>
+<br />
+for 循环创建的变量直到循环结束，依然保留在循环外部的环境中。</p>
+<h4 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>声明变量</h4>
+<p>var 声明的变量会添加到最接近的执行环境，在函数内，最近接的环境就是函数的局部环境；with语句中最接近的环境就是函数环境，如果初始化的时候没有用<code>var</code>,则变量被添加到全局环境中。严格模式下，初始化未声明的变量会导致错误<br />
+<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">.</span><span class="nx">num2</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">sum</span><span class="o">=</span><span class="nx">num1</span><span class="o">+</span><span class="nx">num2</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">result</span><span class="o">=</span><span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span> <span class="c1">//30</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span> <span class="c1">// 报错，因为在add函数内声明的局部变量，无法在外层访问</span>
+</pre></div>
+</p>
+<h4 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>查询标识符</h4>
 <div class="toc">
 <ul>
 <li><a href="#_1">变量，作用域和内存问题</a><ul>
@@ -1335,7 +1455,15 @@ alert(o instanceof Object); //true
 <li><a href="#_6">检测类型</a></li>
 </ul>
 </li>
-<li><a href="#_7">执行环境及作用域</a></li>
+<li><a href="#_7">执行环境及作用域</a><ul>
+<li><a href="#_8">延长作用域链</a></li>
+<li><a href="#_9">没有块级作用域</a><ul>
+<li><a href="#_10">声明变量</a></li>
+<li><a href="#_11">查询标识符</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
