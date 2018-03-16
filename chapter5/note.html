@@ -1,6 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
-  /* max-width: 980px; */
-  width:80%; 
+  max-width: 980px;
   border: 1px solid #ddd;
   outline: 1300px solid #fff;
   margin: 16px auto;
@@ -1015,99 +1014,15 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*github*/
-.codehilite {background-color:#fff;color:#333333;}
-.codehilite .hll {background-color:#ffffcc;}
-.codehilite .c{color:#999988;font-style:italic}
-.codehilite .err{color:#a61717;background-color:#e3d2d2}
-.codehilite .k{font-weight:bold}
-.codehilite .o{font-weight:bold}
-.codehilite .cm{color:#999988;font-style:italic}
-.codehilite .cp{color:#999999;font-weight:bold}
-.codehilite .c1{color:#999988;font-style:italic}
-.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
-.codehilite .gd{color:#000000;background-color:#ffdddd}
-.codehilite .ge{font-style:italic}
-.codehilite .gr{color:#aa0000}
-.codehilite .gh{color:#999999}
-.codehilite .gi{color:#000000;background-color:#ddffdd}
-.codehilite .go{color:#888888}
-.codehilite .gp{color:#555555}
-.codehilite .gs{font-weight:bold}
-.codehilite .gu{color:#800080;font-weight:bold}
-.codehilite .gt{color:#aa0000}
-.codehilite .kc{font-weight:bold}
-.codehilite .kd{font-weight:bold}
-.codehilite .kn{font-weight:bold}
-.codehilite .kp{font-weight:bold}
-.codehilite .kr{font-weight:bold}
-.codehilite .kt{color:#445588;font-weight:bold}
-.codehilite .m{color:#009999}
-.codehilite .s{color:#dd1144}
-.codehilite .n{color:#333333}
-.codehilite .na{color:teal}
-.codehilite .nb{color:#0086b3}
-.codehilite .nc{color:#445588;font-weight:bold}
-.codehilite .no{color:teal}
-.codehilite .ni{color:purple}
-.codehilite .ne{color:#990000;font-weight:bold}
-.codehilite .nf{color:#990000;font-weight:bold}
-.codehilite .nn{color:#555555}
-.codehilite .nt{color:navy}
-.codehilite .nv{color:teal}
-.codehilite .ow{font-weight:bold}
-.codehilite .w{color:#bbbbbb}
-.codehilite .mf{color:#009999}
-.codehilite .mh{color:#009999}
-.codehilite .mi{color:#009999}
-.codehilite .mo{color:#009999}
-.codehilite .sb{color:#dd1144}
-.codehilite .sc{color:#dd1144}
-.codehilite .sd{color:#dd1144}
-.codehilite .s2{color:#dd1144}
-.codehilite .se{color:#dd1144}
-.codehilite .sh{color:#dd1144}
-.codehilite .si{color:#dd1144}
-.codehilite .sx{color:#dd1144}
-.codehilite .sr{color:#009926}
-.codehilite .s1{color:#dd1144}
-.codehilite .ss{color:#990073}
-.codehilite .bp{color:#999999}
-.codehilite .vc{color:teal}
-.codehilite .vg{color:teal}
-.codehilite .vi{color:teal}
-.codehilite .il{color:#009999}
-.codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX"],
-  tex2jax: {
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: false
-  },
-  TeX: {
-    extensions: ["AMSmath.js", "AMSsymbols.js"],
-    TagSide: "right",
-    TagIndent: ".8em",
-    MultLineWidth: "85%",
-    equationNumbers: {
-      autoNumber: "AMS",
-    },
-    unicode: {
-      fonts: "STIXGeneral,'Arial Unicode MS'"
-    }
-  },
-  showProcessingMessages: false
-});
-</script>
-<title>note</title></head><body><article class="markdown-body"><div class="toc">
+</style><title>note</title></head><body><article class="markdown-body"><div class="toc">
 <ul>
 <li><a href="#_1">引用类型</a><ul>
 <li><a href="#object">Object类型</a></li>
+<li><a href="#array">Array 类型</a><ul>
+<li><a href="#_2">队列方法</a></li>
+<li><a href="#_3">重排序方法</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1116,7 +1031,7 @@ MathJax.Hub.Config({
 <p><strong>引用类型的值（对象）是引用类型的一个实例，在ECMAScript中，引用类型是一种数据结构，用于将数据和功能组织起来。</strong>看起来像是类，由于不具备类的面向对象支持的类和接口等基本结构，<strong>所以引用类型被称为对象定义，因为它们描述的是一类对象所具有的属性和方法</strong></p>
 <h2 id="object"><a name="user-content-object" href="#object" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Object类型</h2>
 <p>创建Object实例有两种方法：<br />
-<div class="codehilite"><pre>// 方法1：通过构造函数
+<pre><code>// 方法1：通过构造函数
 var person =new Obejct();
 //添加属性
 person.name=&quot;Nicholas&quot;;
@@ -1130,24 +1045,126 @@ var person={
 var person={};       //与 new Object() 相同
 person.name=&quot;Nicholas&quot;;
 person.age=29;
-</pre></div>
-<br />
+</code></pre><br />
 <strong>对象字面量方法中通过逗号（,）来分隔不同的属性，最后一个属性后面不添加逗号</strong></p>
 <p><strong>访问对象属性有两种方法，点<code>.</code>语法和<code>[]</code>语法</strong><br />
-<div class="codehilite"><pre>1. 对象.属性
+<pre><code>1. 对象.属性
 2. 对象[&quot;属性&quot;]
 person.name
 person[&quot;name&quot;]
-</pre></div>
-<br />
+</code></pre><br />
 使用<code>[]</code>方法的好处是可以通过变量访问属性：<br />
-<div class="codehilite"><pre>var propertyName = name;
+<pre><code>var propertyName = name;
 person[propertyName];
-</pre></div>
-<br />
+</code></pre><br />
 如果属性名包含会导致语法错误的字符，或属性名使用了关键字或保留字，则可以使用<code>[]</code>语法：<br />
-<div class="codehilite"><pre>person[&quot;first name&quot;];
-</pre></div>
-<br />
+<pre><code>person[&quot;first name&quot;];
+</code></pre><br />
 &ldquo;first name&rdquo; 中间有空格，无法使用点语法。<br />
-通常，除非必须使用变量访问属性，一般建议使用点语法</p></article></body></html>
+通常，除非必须使用变量访问属性，一般建议使用点语法</p>
+<h2 id="array"><a name="user-content-array" href="#array" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Array 类型</h2>
+<p>ECMAScript的数组，每一个项目可以保存任意类型的数据，而且数组的大小是可以动态调整<br />
+创建数组的基本方式有2种：<br />
+<pre><code>//第一种使用Array构造函数
+var colors=new Array();
+var colors=Array(10); //10个项目
+//第二种使用的是数组字面量方法
+var colors=[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;];
+var names=[];
+ ```
+读取和设置数组的值时，使用`[]`和相应的值基于0的数字索引，通过`length`属性可以`设置`和`读取`数组的项目个数。
+未指定的数组项将用undefined
+
+
+###检测数组
+Array.isArray()方法可判断某个值是不是数组，而不管它是在哪个全局执行环境中创建的。
+</code></pre><br />
+if(Array.isArray(value)){<br />
+    //对数组value操作<br />
+}<br />
+<pre><code>### 转换方法
+所有对象都有toLocaleString(),toString()和valueOf()方法,。数组的转换字符串方法，将数组的每个值以字符串形式拼接，默认以逗号分隔。valueOf()返回的还是数组
+</code></pre><br />
+var colors= [&ldquo;red&rdquo;,&rdquo;blue&rdquo;,&rdquo;green&rdquo;];<br />
+alert(colors.toString());    //red,blue,green<br />
+alert(colors.valueOf()); //red,blue,green<br />
+alert(colors);// red,blue,green  系统在后台调用toString() <br />
+<pre><code>如果是使用join()拼接，则可以指定分隔符，join()默认的分隔符也是逗号：
+</code></pre><br />
+var colors=[&ldquo;red&rdquo;,&rdquo;blue&rdquo;,&rdquo;green&rdquo;];<br />
+alert(colors.join()); //red,blue,green<br />
+alert(colors.join(&ldquo;undefined&rdquo;)); //red,blue,green <br />
+alert(colors.join(&ldquo;||&rdquo;));  //red||blue||green<br />
+<pre><code>
+### 栈方法
+**栈是一种LIFO（Last-In-First-Out,后进先出）的数据结构，最新添加的最早被删除。栈的压入和弹出都在栈的顶部，数据的出口和入口都是一个。**
+ECMAScript专门为数组提供`push()`和`pop()`方法实现栈的行为。
+**`push()`方法可接受任意数量的参数，将参数逐个添加到数组的末尾，并返回修改后的数组的长度。
+`pop()`方法则是从数组的末尾移出最后一项，并减少了数组的`length`值，然后返回移出的那项**
+**`push()`和`pop()`方法都是在数组的尾部操作**
+
+```var colors=new Array() ; // 构造数组
+var count = colors.push(&quot;red&quot;,&quot;green&quot;);  // colors=[&quot;red&quot;,&quot;green&quot;],返回数组长度
+alert(count); //2
+
+count=colors.push(&quot;black&quot;); // colors=[&quot;red&quot;,&quot;green&quot;,&quot;black&quot;] 返回数组长度
+alert(count); //3
+
+var item=colors.pop(); //弹出black 弹出最后一个项，并返回它   colors=[&quot;red&quot;,&quot;green&quot;]
+alert(item);  //black
+alert(colors.length); //2
+</code></pre></p>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>队列方法</h3>
+<p><strong>队列数据结构的方法是FIFO（First-In-First-Out，先进先出），队列的列表在末尾添加项，在列表的前端移除项</strong><br />
+<strong><code>shift()</code>方法将数组的第一个项移除并返回这项，然后数组的长度减1。<br />
+<code>unshift()</code>方法将在数组头部添加任意个数组项，并返回新数组的长度。</strong><br />
+<strong><code>shift()</code>和<code>unshift()</code>方法都是在数组头部操作</strong><br />
+<pre><code>var colors=new Array();
+var count=colors.push(&quot;red&quot;,&quot;green&quot;);// colors=[&quot;red&quot;,&quot;green&quot;]
+alert(count);//2
+
+count=colors.push(&quot;black&quot;); //colors=[&quot;red&quot;,&quot;green&quot;,&quot;black&quot;];
+alert(count); // 3
+
+var item=colors.shift(); //弹出并返回 red  colors=[&quot;green&quot;,&quot;black&quot;]
+alert(item); //red
+alert(colors.length); //2
+</code></pre><br />
+<pre><code>var colors =new Array(); 
+var count=colors.unshift(&quot;red&quot;,&quot;green&quot;);   //colors=[&quot;red&quot;,&quot;green&quot;]
+alert(count); //2
+
+count = colors.unshift(&quot;black&quot;); //colors=[&quot;black&quot;,&quot;red&quot;,&quot;green&quot;]
+alert(count); //3
+
+var item=colors.pop();  // 弹出green  colors=[&quot;black&quot;,&quot;red&quot;]
+alert(item);// green
+alert(colors.length); //2
+</code></pre></p>
+<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>重排序方法</h3>
+<p>数组已经有两个可直接使用的重排序方法<code>reverse()</code>和<code>sort()</code><br />
+<strong><code>reverse()</code>方法反转数组的数组项顺序</strong><br />
+<code>sort()</code>方法默认情况下按照升序排列（最小的值在前面，最大的值在后面），sort方法会调用数组项目的toString()转换，然后比较。即使数组包含数值，<strong>sort()比较的还是字符串</strong><br />
+sort()函数可以接收一个比较函数：<br />
+<pre><code>function compare(value1,value2){
+    if(value1&lt;value2){
+        return 1;
+    }else if(value1&gt;value2){
+        return -1;
+    }else{
+        return 0;
+    }
+var values=[0,1,5,10,15];
+values.sort(compare);
+alert(values); //15,10,5,1,0
+
+//对于数值型或者valueOf()返回数值型的对象类型
+//用第二个值减第一个值相比较
+function compare(value1,value2){
+    return value2-value1;
+}
+
+
+
+}
+</code></pre></p></article></body></html>
