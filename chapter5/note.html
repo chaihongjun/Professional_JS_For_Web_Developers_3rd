@@ -1,6 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
-  /* max-width: 980px; */
-  width:80%; 
+  max-width: 980px;
   border: 1px solid #ddd;
   outline: 1300px solid #fff;
   margin: 16px auto;
@@ -1015,96 +1014,7 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*github*/
-.codehilite {background-color:#fff;color:#333333;}
-.codehilite .hll {background-color:#ffffcc;}
-.codehilite .c{color:#999988;font-style:italic}
-.codehilite .err{color:#a61717;background-color:#e3d2d2}
-.codehilite .k{font-weight:bold}
-.codehilite .o{font-weight:bold}
-.codehilite .cm{color:#999988;font-style:italic}
-.codehilite .cp{color:#999999;font-weight:bold}
-.codehilite .c1{color:#999988;font-style:italic}
-.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
-.codehilite .gd{color:#000000;background-color:#ffdddd}
-.codehilite .ge{font-style:italic}
-.codehilite .gr{color:#aa0000}
-.codehilite .gh{color:#999999}
-.codehilite .gi{color:#000000;background-color:#ddffdd}
-.codehilite .go{color:#888888}
-.codehilite .gp{color:#555555}
-.codehilite .gs{font-weight:bold}
-.codehilite .gu{color:#800080;font-weight:bold}
-.codehilite .gt{color:#aa0000}
-.codehilite .kc{font-weight:bold}
-.codehilite .kd{font-weight:bold}
-.codehilite .kn{font-weight:bold}
-.codehilite .kp{font-weight:bold}
-.codehilite .kr{font-weight:bold}
-.codehilite .kt{color:#445588;font-weight:bold}
-.codehilite .m{color:#009999}
-.codehilite .s{color:#dd1144}
-.codehilite .n{color:#333333}
-.codehilite .na{color:teal}
-.codehilite .nb{color:#0086b3}
-.codehilite .nc{color:#445588;font-weight:bold}
-.codehilite .no{color:teal}
-.codehilite .ni{color:purple}
-.codehilite .ne{color:#990000;font-weight:bold}
-.codehilite .nf{color:#990000;font-weight:bold}
-.codehilite .nn{color:#555555}
-.codehilite .nt{color:navy}
-.codehilite .nv{color:teal}
-.codehilite .ow{font-weight:bold}
-.codehilite .w{color:#bbbbbb}
-.codehilite .mf{color:#009999}
-.codehilite .mh{color:#009999}
-.codehilite .mi{color:#009999}
-.codehilite .mo{color:#009999}
-.codehilite .sb{color:#dd1144}
-.codehilite .sc{color:#dd1144}
-.codehilite .sd{color:#dd1144}
-.codehilite .s2{color:#dd1144}
-.codehilite .se{color:#dd1144}
-.codehilite .sh{color:#dd1144}
-.codehilite .si{color:#dd1144}
-.codehilite .sx{color:#dd1144}
-.codehilite .sr{color:#009926}
-.codehilite .s1{color:#dd1144}
-.codehilite .ss{color:#990073}
-.codehilite .bp{color:#999999}
-.codehilite .vc{color:teal}
-.codehilite .vg{color:teal}
-.codehilite .vi{color:teal}
-.codehilite .il{color:#009999}
-.codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX"],
-  tex2jax: {
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: false
-  },
-  TeX: {
-    extensions: ["AMSmath.js", "AMSsymbols.js"],
-    TagSide: "right",
-    TagIndent: ".8em",
-    MultLineWidth: "85%",
-    equationNumbers: {
-      autoNumber: "AMS",
-    },
-    unicode: {
-      fonts: "STIXGeneral,'Arial Unicode MS'"
-    }
-  },
-  showProcessingMessages: false
-});
-</script>
-<title>note</title></head><body><article class="markdown-body"><div class="toc">
+</style><title>note</title></head><body><article class="markdown-body"><div class="toc">
 <ul>
 <li><a href="#_1">引用类型</a><ul>
 <li><a href="#object">Object类型</a></li>
@@ -1132,7 +1042,7 @@ MathJax.Hub.Config({
 <p><strong>引用类型的值（对象）是引用类型的一个实例，在ECMAScript中，引用类型是一种数据结构，用于将数据和功能组织起来。</strong>看起来像是类，由于不具备类的面向对象支持的类和接口等基本结构，<strong>所以引用类型被称为对象定义，因为它们描述的是一类对象所具有的属性和方法</strong></p>
 <h2 id="object"><a name="user-content-object" href="#object" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Object类型</h2>
 <p>创建Object实例有两种方法：<br />
-<div class="codehilite"><pre>// 方法1：通过构造函数
+<pre><code>// 方法1：通过构造函数
 var person =new Obejct();
 //添加属性
 person.name=&quot;Nicholas&quot;;
@@ -1146,31 +1056,27 @@ var person={
 var person={};       //与 new Object() 相同
 person.name=&quot;Nicholas&quot;;
 person.age=29;
-</pre></div>
-<br />
+</code></pre><br />
 <strong>对象字面量方法中通过逗号（,）来分隔不同的属性，最后一个属性后面不添加逗号</strong></p>
 <p><strong>访问对象属性有两种方法，点<code>.</code>语法和<code>[]</code>语法</strong><br />
-<div class="codehilite"><pre>1. 对象.属性
+<pre><code>1. 对象.属性
 2. 对象[&quot;属性&quot;]
 person.name
 person[&quot;name&quot;]
-</pre></div>
-<br />
+</code></pre><br />
 使用<code>[]</code>方法的好处是可以通过变量访问属性：<br />
-<div class="codehilite"><pre>var propertyName = name;
+<pre><code>var propertyName = name;
 person[propertyName];
-</pre></div>
-<br />
+</code></pre><br />
 如果属性名包含会导致语法错误的字符，或属性名使用了关键字或保留字，则可以使用<code>[]</code>语法：<br />
-<div class="codehilite"><pre>person[&quot;first name&quot;];
-</pre></div>
-<br />
+<pre><code>person[&quot;first name&quot;];
+</code></pre><br />
 &ldquo;first name&rdquo; 中间有空格，无法使用点语法。<br />
 通常，除非必须使用变量访问属性，一般建议使用点语法</p>
 <h2 id="array"><a name="user-content-array" href="#array" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Array 类型</h2>
 <p>ECMAScript的数组，每一个项目可以保存任意类型的数据，而且数组的大小是可以动态调整<br />
 创建数组的基本方式有2种：<br />
-<div class="codehilite"><pre>//第一种使用Array构造函数
+<pre><code>//第一种使用Array构造函数
 var colors=new Array();
 var colors=Array(10); //10个项目
 //第二种使用的是数组字面量方法
@@ -1183,27 +1089,25 @@ var names=[];
 
 ###检测数组
 Array.isArray()方法可判断某个值是不是数组，而不管它是在哪个全局执行环境中创建的。
-</pre></div>
-<br />
+</code></pre><br />
 if(Array.isArray(value)){<br />
     //对数组value操作<br />
 }<br />
-<div class="codehilite"><pre>### 转换方法
+<pre><code>### 转换方法
 所有对象都有toLocaleString(),toString()和valueOf()方法,。数组的转换字符串方法，将数组的每个值以字符串形式拼接，默认以逗号分隔。valueOf()返回的还是数组
-</pre></div>
-<br />
+</code></pre><br />
 var colors= [&ldquo;red&rdquo;,&rdquo;blue&rdquo;,&rdquo;green&rdquo;];<br />
 alert(colors.toString());    //red,blue,green<br />
 alert(colors.valueOf()); //red,blue,green<br />
 alert(colors);// red,blue,green  系统在后台调用toString() <br />
-<div class="codehilite"><pre>如果是使用join()拼接，则可以指定分隔符，join()默认的分隔符也是逗号：
-</pre></div>
-<br />
+<pre><code>如果是使用join()拼接，则可以指定分隔符，join()默认的分隔符也是逗号：
+</code></pre><br />
 var colors=[&ldquo;red&rdquo;,&rdquo;blue&rdquo;,&rdquo;green&rdquo;];<br />
 alert(colors.join()); //red,blue,green<br />
 alert(colors.join(&ldquo;undefined&rdquo;)); //red,blue,green <br />
 alert(colors.join(&ldquo;||&rdquo;));  //red||blue||green<br />
-<div class="codehilite"><pre>### 栈方法
+<pre><code>
+### 栈方法
 **栈是一种LIFO（Last-In-First-Out,后进先出）的数据结构，最新添加的最早被删除。栈的压入和弹出都在栈的顶部，数据的出口和入口都是一个。**
 ECMAScript专门为数组提供`push()`和`pop()`方法实现栈的行为。
 **`push()`方法可接受任意数量的参数，将参数逐个添加到数组的末尾，并返回修改后的数组的长度。
@@ -1220,14 +1124,13 @@ alert(count); //3
 var item=colors.pop(); //弹出black 弹出最后一个项，并返回它   colors=[&quot;red&quot;,&quot;green&quot;]
 alert(item);  //black
 alert(colors.length); //2
-</pre></div>
-</p>
+</code></pre></p>
 <h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>队列方法</h3>
 <p><strong>队列数据结构的方法是FIFO（First-In-First-Out，先进先出），队列的列表在末尾添加项，在列表的前端移除项</strong><br />
 <strong><code>shift()</code>方法将数组的第一个项移除并返回这项，然后数组的长度减1。<br />
 <code>unshift()</code>方法将在数组头部添加任意个数组项，并返回新数组的长度。</strong><br />
 <strong><code>shift()</code>和<code>unshift()</code>方法都是在数组头部操作</strong><br />
-<div class="codehilite"><pre>var colors=new Array();
+<pre><code>var colors=new Array();
 var count=colors.push(&quot;red&quot;,&quot;green&quot;);// colors=[&quot;red&quot;,&quot;green&quot;]
 alert(count);//2
 
@@ -1237,9 +1140,8 @@ alert(count); // 3
 var item=colors.shift(); //弹出并返回 red  colors=[&quot;green&quot;,&quot;black&quot;]
 alert(item); //red
 alert(colors.length); //2
-</pre></div>
-<br />
-<div class="codehilite"><pre>var colors =new Array(); 
+</code></pre><br />
+<pre><code>var colors =new Array(); 
 var count=colors.unshift(&quot;red&quot;,&quot;green&quot;);   //colors=[&quot;red&quot;,&quot;green&quot;]
 alert(count); //2
 
@@ -1249,100 +1151,92 @@ alert(count); //3
 var item=colors.pop();  // 弹出green  colors=[&quot;black&quot;,&quot;red&quot;]
 alert(item);// green
 alert(colors.length); //2
-</pre></div>
-</p>
+</code></pre></p>
 <h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>重排序方法</h3>
 <p>数组已经有两个可直接使用的重排序方法<code>reverse()</code>和<code>sort()</code><br />
 <strong><code>reverse()</code>方法反转数组的数组项顺序</strong><br />
 <code>sort()</code>方法默认情况下按照升序排列（最小的值在前面，最大的值在后面），sort方法会调用数组项目的toString()转换，然后比较。即使数组包含数值，<strong>sort()比较的还是字符串</strong><br />
 sort()函数可以接收一个比较函数：<br />
-<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">value1</span><span class="p">,</span><span class="nx">value2</span><span class="p">){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">value1</span><span class="o">&lt;</span><span class="nx">value2</span><span class="p">){</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">value1</span><span class="o">&gt;</span><span class="nx">value2</span><span class="p">){</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">values</span><span class="o">=</span><span class="cp">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="cp">]</span><span class="p">;</span>
-<span class="nx">values</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span> <span class="c1">//15,10,5,1,0</span>
+<pre><code>function compare(value1,value2){
+    if(value1&lt;value2){
+        return 1;
+    }else if(value1&gt;value2){
+        return -1;
+    }else{
+        return 0;
+    }
+var values=[0,1,5,10,15];
+values.sort(compare);
+alert(values); //15,10,5,1,0
 
-<span class="c1">//对于数值型或者valueOf()返回数值型的对象类型</span>
-<span class="c1">//用第二个值减第一个值相比较</span>
-<span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">value1</span><span class="p">,</span><span class="nx">value2</span><span class="p">){</span>
-    <span class="k">return</span> <span class="nx">value2</span><span class="o">-</span><span class="nx">value1</span><span class="p">;</span>
-<span class="p">}</span>
+//对于数值型或者valueOf()返回数值型的对象类型
+//用第二个值减第一个值相比较
+function compare(value1,value2){
+    return value2-value1;
+}
 
 
 
-<span class="p">}</span>
-</pre></div>
-</p>
+}
+</code></pre></p>
 <h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>操作方法</h3>
 <p><strong><code>concat()</code>方法默认创建数组的副本,如果传递给concat()的是一个或者多个数组，则该方法会将数组中的项添加到结果数组中。</strong><br />
-<div class="codehilite"><pre>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
+<pre><code>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
 var colors2=colors.concat(&quot;yellow&quot;,[&quot;black&quot;,&quot;brown]);
 
 alert(colors);   //   red,green,blue
 alert(colors2);     //    red,green,blue,yellow,black,brown
-</pre></div>
-</p>
+</code></pre></p>
 <p><strong><code>slice()</code>基于当前数组的一个或者多个项创建新的数组，slice()可接受一个或者两个参数，分别表示返回项的起始和结束位置。如果只有一个参数，则表示起始位置到数组的末尾。如果是两个参数，则返回起始和结束位置直接的项，但不包含结束位的项。slice()不影响原始数组</strong><br />
-<div class="codehilite"><pre>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
+<pre><code>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
 var colors2=colors.slice(1);    //从索引位置1开始到最后
 var colors3=colors.slice(1,4) ;//  从索引1开始，到索引4前面的值（不含索引4的值）
 
 alert(colors2); //green,blue,yellow,purple
 alert(colors3);//green,blue,yellow
-</pre></div>
-<br />
+</code></pre><br />
 <strong>如果slice()的参数有负数，则用数组的长度加上这个负数值来确定相应的位置：</strong><br />
-<div class="codehilite"><pre>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
+<pre><code>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
 slice(-2,-1)  相当于 slice(5-2,5-1) 及slice(3,4)
-</pre></div>
-</p>
+</code></pre></p>
 <p><strong><code>splice()</code>主要用来向数组中添加数组项，但是实际可以<code>删除</code>,<code>插入</code>,<code>替换</code>数组元素的操作</strong><br />
 1.  可以删除任意数量的项（连续的），只需指定2个参数，第一个参数是要删除的第一个项的位置，第二个是项的数量<br />
-<div class="codehilite"><pre>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
+<pre><code>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
 colors.splice(0,2);  //意味着删除数组中的前面2个
 
 alert(colors);  //    blue,yellow,purple
-</pre></div>
-<br />
+</code></pre><br />
 2. 向数组的指定位置插入元素，只需要3个参数（起始位置，0，要插入的项），如果要插入多个项，再传入第4个甚至更多个<br />
-<div class="codehilite"><pre>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
+<pre><code>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
 colors.splice(2,0,&quot;black&quot;,&quot;gray&quot;);     //意味着在数组的第二个项后面插入元素
 
 alert(colors);  //red,green,black,gray,blue,yellow,purple
-</pre></div>
-<br />
+</code></pre><br />
 3. 替换数组内容，只需要3个参数(起始位置，需要删除的项个数，要插入的项)<br />
-<div class="codehilite"><pre>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
+<pre><code>var colors=[&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;,&quot;yellow&quot;,&quot;purple&quot;];
 colors.splice(2,3,&quot;black&quot;,&quot;gray&quot;);     //从索引位置2开始连续删除3个项，然后插入新的项
 
 alert(colors);  //red,green,black,gray
-</pre></div>
-</p>
+</code></pre></p>
 <h3 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>位置方法</h3>
 <p><strong><code>indexOf()</code>和<code>lastIndexOf()</code>位置方法，有两个参数，第一个是需要查找的项，第二个是可选择的查找的起点位置索引,两个查找方向分别是从数组头部和尾部</strong><br />
 返回值为查找项的位置，如果没找到则返回-1,且查询过程使用严格相等模式(===)<br />
-<div class="codehilite"><pre><span class="nt">var</span> <span class="nt">numbers</span><span class="o">=</span><span class="cp">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="cp">]</span><span class="o">;</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">numbers</span><span class="nc">.indexOf</span><span class="o">(</span><span class="nt">4</span><span class="o">));</span>  <span class="o">//</span><span class="nt">3</span><span class="err">，</span>   <span class="nt">4的索引值</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">numbers</span><span class="nc">.lastIndexOf</span><span class="o">(</span><span class="nt">4</span><span class="o">));</span>  <span class="o">//</span><span class="nt">5</span><span class="err">，</span>   <span class="nt">最后那个4的索引值</span>
+<pre><code>var numbers=[1,2,3,4,5,4,3,2,1];
+alert(numbers.indexOf(4));  //3，   4的索引值
+alert(numbers.lastIndexOf(4));  //5，   最后那个4的索引值
 
-<span class="nt">alert</span><span class="o">(</span><span class="nt">numbers</span><span class="nc">.indexOf</span><span class="o">(</span><span class="nt">4</span><span class="err">，</span><span class="nt">4</span><span class="o">));</span>  <span class="o">//</span><span class="nt">5</span><span class="err">，</span>   <span class="nt">查找项4</span><span class="err">，</span><span class="nt">从索引值4位置开始查询</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">numbers</span><span class="nc">.lastIndexOf</span><span class="o">(</span><span class="nt">4</span><span class="err">，</span><span class="nt">4</span><span class="o">));</span>  <span class="o">//</span><span class="nt">3</span><span class="err">，</span>   <span class="nt">查找项4</span><span class="err">，</span><span class="nt">从索引值导数4位置开始查询</span>
+alert(numbers.indexOf(4，4));  //5，   查找项4，从索引值4位置开始查询
+alert(numbers.lastIndexOf(4，4));  //3，   查找项4，从索引值导数4位置开始查询
 
-<span class="nt">var</span> <span class="nt">person</span><span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="o">:</span><span class="s2">&quot;Nicholas&quot;</span><span class="p">}</span><span class="o">;</span>
-<span class="nt">var</span> <span class="nt">people</span><span class="o">=</span> <span class="cp">[</span><span class="p">{</span><span class="nx">name</span><span class="p">:</span><span class="s2">&quot;Nicholas&quot;</span><span class="p">}</span><span class="cp">]</span><span class="o">;</span>
+var person= {name:&quot;Nicholas&quot;};
+var people= [{name:&quot;Nicholas&quot;}];
 
-<span class="nt">var</span> <span class="nt">morePeople</span> <span class="o">=</span> <span class="cp">[</span><span class="nx">person</span><span class="cp">]</span><span class="o">;</span>
+var morePeople = [person];
 
-<span class="nt">alert</span><span class="o">(</span><span class="nt">people</span><span class="nc">.indexOf</span><span class="o">(</span><span class="nt">person</span><span class="o">));//</span>  <span class="nt">-1</span>  <span class="nt">查询不到</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">morePeople</span><span class="nc">.indexOf</span><span class="o">(</span><span class="nt">person</span><span class="o">));//</span>   <span class="nt">0</span>
-</pre></div>
-</p>
+alert(people.indexOf(person));//  -1  查询不到
+alert(morePeople.indexOf(person));//   0
+
+</code></pre></p>
 <h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>迭代方法</h3>
 <p>ECMAScript有5种针对数组的迭代方法：every(),filter(),forEach(),map(),some()<br />
 这些方法都有两个参数，分别是数组项需要执行的函数和运行这个函数的作用域对象（可选的），会影响this的值。<br />
@@ -1358,86 +1252,81 @@ alert(colors);  //red,green,black,gray
 </blockquote>
 <p>以上方法不会改变数组值</p>
 <p><code>every()</code>和<code>some()</code> 返回的是布尔值，<code>filter()</code>和<code>map()</code>返回的是新的数组，forEach没有返回值。<br />
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">numbers</span><span class="o">=</span><span class="cp">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="cp">]</span><span class="p">;</span>
+<pre><code>var numbers=[1,2,3,4,5,4,3,2,1];
 
-<span class="kd">var</span> <span class="nx">everyResult</span><span class="o">=</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">array</span><span class="p">){</span>
-                <span class="k">return</span> <span class="p">(</span><span class="nx">item</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">);</span>
-    <span class="p">});</span>
-    <span class="nx">alert</span><span class="p">(</span><span class="nx">everyResult</span><span class="p">);</span>  <span class="c1">// false ,不是所有数组项都大于2</span>
+var everyResult=numbers.every(function(item,index,array){
+                return (item&gt;2);
+    });
+    alert(everyResult);  // false ,不是所有数组项都大于2
 
-<span class="kd">var</span> <span class="nx">someResult</span><span class="o">=</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">array</span><span class="p">){</span>
-                            <span class="k">return</span> <span class="p">(</span><span class="nx">item</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">someResult</span><span class="p">);</span>  <span class="c1">// true, 数组有大于2的项</span>
+var someResult=numbers.some(function(item,index,array){
+                            return (item&gt;2);
+    });
+alert(someResult);  // true, 数组有大于2的项
 
-<span class="kd">var</span> <span class="nx">filterResult</span><span class="o">=</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">array</span><span class="p">){</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="nx">item</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">filterResult</span><span class="p">);</span> <span class="c1">// </span><span class="cp">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="cp">]</span><span class="c1">    ，将符合条件（数组项大于2）的数组项组合成新的数组</span>
+var filterResult=numbers.filter(function(item,index,array){
+                    return (item&gt;2);
+    });
+alert(filterResult); // [3,4,5,4,3]    ，将符合条件（数组项大于2）的数组项组合成新的数组
 
 
-<span class="kd">var</span> <span class="nx">mapResult</span><span class="o">=</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">array</span><span class="p">){</span>
-                <span class="k">return</span> <span class="nx">item</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
-    <span class="p">});</span>
+var mapResult=numbers.map(function(item,index,array){
+                return item*2;
+    });
 
-<span class="nx">alert</span><span class="p">(</span><span class="nx">mapResult</span><span class="p">);</span> <span class="c1">// </span><span class="cp">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="cp">]</span><span class="c1"></span>
-</pre></div>
-</p>
+alert(mapResult); // [2,4,6,8,10,8,6,4,2]
+
+</code></pre></p>
 <h3 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>归并方法</h3>
 <p><strong><code>reduce()</code>和<code>reduceRight()</code>迭代数组并构建一个最终的返回值，reduce从数组第一项开始逐个遍历到最后，reduceRight则从最后一项开始直到第一个项</strong><br />
 这两个方法都接收2个参数：在数组项上执行的函数和作为归并基础的初始值（可选的）。<br />
 传给这2个方法的函数接收4个函数(前一个值，当前值，索引，数组对象本身)<br />
 <strong>prev与cur经过处理之后传给prev,cur指向后面一个数组项，依此类推</strong><br />
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">values</span><span class="o">=</span><span class="cp">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="cp">]</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">sum</span><span class="o">=</span><span class="nx">values</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">prev</span><span class="p">,</span><span class="nx">cur</span><span class="p">,</span><span class="nx">index</span><span class="p">,</span><span class="nx">array</span><span class="p">){</span>
-       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">prev</span><span class="p">);</span>
-       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cur</span><span class="p">);</span>  
-       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">prev</span><span class="o">+</span><span class="nx">cur</span><span class="p">);</span>
-       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;-----------------&quot;</span><span class="p">);</span>
-       <span class="k">return</span>   <span class="nx">prev</span><span class="o">+</span><span class="nx">cur</span><span class="p">;</span>    
-    <span class="p">});</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span> <span class="c1">//15</span>
-</pre></div>
-<br />
+<pre><code>var values=[1,2,3,4,5];
+var sum=values.reduce(function(prev,cur,index,array){
+       console.log(prev);
+       console.log(cur);  
+       console.log(prev+cur);
+       console.log(&quot;-----------------&quot;);
+       return   prev+cur;    
+    });
+    console.log(sum); //15
+</code></pre><br />
 <strong>reduce与reduceRight除了从哪里开始（数组头部还是尾部）不一样之外，其他都一样。</strong></p>
 <h2 id="date"><a name="user-content-date" href="#date" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Date类型</h2>
 <p>Date类型的日期范围在1970年1月1日之前或之后100000000年<br />
-<div class="codehilite"><pre>创建当前日期对象：
+<pre><code>创建当前日期对象：
 var now=new Date();
-</pre></div>
-<br />
+</code></pre><br />
 Date.parse()接收一个表示日期的字符串，并将该字符串转换成对应的日期毫秒数<br />
 Date.now() 表示调用这个方法的当前时间:<br />
-<div class="codehilite"><pre>//取得开始时间
+<pre><code>//取得开始时间
 var start =Date.now();
 doSomething();
 //取得停止时间
 var stop=Date.now();
 //doSomething的函数执行消耗时间
 result=stop - start;
-</pre></div>
-<br />
+</code></pre><br />
 UTC：世界标准时间</p>
 <h3 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>继承的方法</h3>
 <p>Date类重写了toString(),toLocaleString(),valueOf()<br />
 toString()和toLocaleString()在各个浏览器下输出的内容不相同，<br />
 valueOf()只返回时间日期的毫秒数</p>
 <h3 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>日期格式化方法</h3>
-<div class="codehilite"><pre>toDateString(),以特定的格式显示星期几，月，日和年
+<pre><code>toDateString(),以特定的格式显示星期几，月，日和年
 toTimeString(),以特定的格式显示时，分，秒和时区
 toLocaleDateString(),以特定于地区的格式显示星期几，悦，日和年
 toLocaleTimeString(),以特定于地区的格式显示时，分，秒
 toUTCString(),以特定的格式显示完整的UTC日期
-</pre></div>
-
+</code></pre>
 
 <h3 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>日期／时间组件方法</h3>
 <p>略过</p>
 <h2 id="regexp"><a name="user-content-regexp" href="#regexp" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>RegExp 类型</h2>
 <p>RegExp类型支持正则表达式<br />
-<div class="codehilite"><pre>var expression = /pattern/ flags;
-</pre></div>
-</p>
+<pre><code>var expression = /pattern/ flags;
+</code></pre></p>
 <blockquote>
 <p><code>pattern</code> 模式部分可以说任意简单或复杂的正则表达式，可包含字符类，限定符，分组，向前查找及反向引用。<br />
 每个正则表达式都可以带一个或者多个标志<code>flags</code>，用以表明正则表达式的行为。<br />
@@ -1447,7 +1336,7 @@ toUTCString(),以特定的格式显示完整的UTC日期
 3. <code>m</code>表示多行（multiline）模式，即在到达一行文本末尾时还会继续查找下一行中是否存在匹配的项。</p>
 </blockquote>
 <p><strong>所以一个正则表达式就是一个匹配模式与3种标志的组合</strong></p>
-<p><div class="codehilite"><pre>//匹配字符串中所有&quot;at&quot;的实例
+<p><pre><code>//匹配字符串中所有&quot;at&quot;的实例
 var pattern1=/at/g;
 
 //匹配第一个bat或者cat，而且忽略大小写
@@ -1455,9 +1344,15 @@ var pattern2=/[bc]at/i;
 
 //匹配字符串中以&quot;at&quot;结尾的字符组合，且忽略大小写
 var pattern3=/.at/gi;
-</pre></div>
-<br />
-必须转移的元字符：<br />
-<div class="codehilite"><pre>( [ { \ ^ $ | ) ? * + . ] }
-</pre></div>
-</p></article></body></html>
+</code></pre><br />
+必须转义的元字符：<br />
+<code>(</code>  <code>[</code> <code>{</code> <code>\</code> <code>^</code> <code>$</code> <code>|</code> <code>)</code> <code>?</code> <code>*</code> <code>+</code> <code>.</code> <code>]</code> <code>}</code><br />
+<pre><code>//匹配第一个&quot;bat&quot;或者&quot;cat&quot;,不区分大小写
+var pattern1=/[bc]at/i;
+//匹配第一个&quot; [bc]at&quot;,不区分大小写
+var pattern2= / \[bc]\at/i; 
+//匹配所有以&quot;at&quot;结尾的3个字符的组合，不区分大小写
+var pattern3=/.at/gi;
+//匹配所有以&quot;.at&quot;，不区分大小写
+var pattern4=/\.at/gi;
+</code></pre></p></article></body></html>
