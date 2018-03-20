@@ -361,3 +361,94 @@ var pattern3=/.at/gi;
 //匹配所有".at"，不区分大小写
 var pattern4=/\.at/gi;
 ```
+## Function 类型
+###没有重载
+```
+function addSomeNumber (num){
+    return num+100;
+}
+function addSomeNumber (num){
+    return num+200;
+}
+var result=addSomeNumber(100);
+```
+两个同名函数，后面的函数会覆盖前面的函数
+
+###函数声明与函数表达式
+解析器会先读取函数声明，使其在执行任何代码前之前可用（可访问）；函数表达式必须等到解析器执行到它所在的代码行才会被解释执行：
+```
+alert(sum(10,10));
+function sum(num1,num2){
+            return nim+1num2;
+}
+```
+以上代码可以正常运行。因为解析器通过`(function declaration hoisting)函数声明提升`过程，读取并将函数声明添加到执行环境中。对代码求职时，JS引擎第一遍会声明函数并将它们放到源码树的顶部。
+所以，即使函数声明的代码在调用代码的后面，JS引擎也会把函数声明提升到顶部。
+```
+alert(sum(10,10));
+var sum=function(num1,num2){
+        return num1+num2;
+}
+```
+以上代码会报错，因为sum函数不是声明式，而在一个赋值表达式中。
+
+###　作为值的函数
+```
+function createComparisonFunction(propertyName){
+        return function(object1,object2){
+             var value1=object1[propertyName];
+             var value2=object2[propertyName];
+
+             if(value1<value2){
+                    return -1;
+             }else if(value1>value2){
+                    return 1;
+             }else{
+                    return 0;
+             }
+        }
+}
+
+var data=[{name:"Zachary",age:28},{name:"Nicholas",age:29}];
+data.sort(createComparisonFunction("name"));
+alert(data[0].name);  //Nicholas
+
+data.sort(createComparisonFunction("age"));
+alert(data[0].name);  //Zachary
+```
+### 函数内部属性
+函数内有两个特殊的对象:`arguments`和`this`。`arguments`对象包含传入函数的所有参数，`arguments`对象有一个属性`callee`，这个属性是一个指针，指向拥有`arguments`对象的函数
+```
+//阶乘函数
+function factorial(num){
+        if(num<=1){
+                return 1;
+        }else{
+            return num*factorial(num-1);
+        }
+}
+```
+阶乘函数一般都要用到递归算法，上面的代码，函数的执行和函数名耦合在一起，可以使用`arguments.callee`消除耦合：
+```
+function factorial(num){
+        if(num<=1){
+                return 1;
+        }else{
+            return num*arguments.callee(num-1);
+        }
+}
+```
+函数内另外一个特殊的对象是`this`，引用的是函数执行的环境对象。
+```
+window.color="red";
+var o={color:"blue"};
+
+function sayColor(){
+    alert(this.color);
+}
+sayColor(); // "red"
+
+o.sayColor=sayColor;
+o.sayColor(); //  "blue"
+```
+
