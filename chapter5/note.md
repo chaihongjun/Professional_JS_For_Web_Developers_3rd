@@ -448,7 +448,84 @@ function sayColor(){
 }
 sayColor(); // "red"
 
-o.sayColor=sayColor;
+o.sayColor=sayColor;    //sayColor()函数指针赋给对象o的新的属性
 o.sayColor(); //  "blue"
 ```
 
+**sayColor作为函数名仅仅是包含指针的变量，全局的sayColor()函数与o.sayColor属性指向同一个函数**
+**ECMAScript5也规范了另外一个函数对象属性`caller`,它保存了调用当前函数的函数引用，如果是在全局作用域中调用当前函数，则它的值为null**
+```
+function outer(){
+     inner();
+}
+function inner(){
+    alert(inner.caller);  //弹窗显示outer()的源代码，因为outer()调用了inner(),所以inner.caller指向outer()
+}
+outer();
+```
+###函数属性和方法
+ECMAScript中的函数也是对象，所以函数也有属性和方法。**每个函数都有两个属性:`length`和`prototype`,`lenght`表示函数希望接收的命名参数的个数**
+```
+function sayName(name){
+        alert(name);
+}
+function sum(num1,num2){
+        return num1+num2;
+}
+function sayHi(){
+        alert("hi");
+}
+alert(sayName.length); //1
+alert(sum.length);   //2
+alert(sayHi.length);  //0
+```
+**对于ECMASCript的引用类型而言，`prototype`保存了引用类型实例方法，toString()和valueOf()实际保存在prototype名下**
+ECMAScript中prototype的属性是不可枚举的。
+**每个函数都包含两个非继承的方法:`apply()`和`call()`，用于在特定作用域中调用函数，实际等于设置函数体内this对象值,用于改变`this`指向的对象**
+`apply()`方法接收两个参数：一个是在其中运行函数的作用域，另外一个是参数数组。
+```
+function sum(num1,num2){
+        return num1+num2;
+}
+function callSum1(num1,num2){
+            return sum.apply(this,arguments); //传入arguments对象 。this为全局对象window
+}
+function callSum2(num1,num2){
+            return sum.apply(this,[num1,num2]); //传入数组 . this为全局对象window 
+}
+alert(callSum1(10,10)); //20
+alert(callSum2(10,10));  //20
+```
+```
+function sum(num1,num2){
+        return num1+num2;
+}
+function callSum(num1,num2){
+        return sum.call(this,sum1,num2);   //  call的参数需要一个一个的传入，与apply()不同
+}
+alert(callSum(10,10));  // 20
+```
+**`call()`和`apply()`强大的地方是扩展函数的运行作用域**
+```
+window.color="red";
+var o={color:"blue"};
+function sayColor(){
+    alert(this.color);
+}
+sayColor();                              //red, 当前的this 作用域就是全局window
+sayColor.call(this);               //red,同上
+sayColor.call(window);     //red,指定了window对象调用sayColor函数
+sayColor.call(o);                  //blue,指定了o对象调用sayColor函数，所以sayColor函数内this指向o对象
+```
+ECMAScript5还定义了另外一个方法`bind()`,bind()方法创建一个新的函数, 当被调用时，将其this关键字设置为提供的值，在调用新函数时，在任何提供之前提供一个给定的参数序列
+```
+window.color="red";
+var o={color:"blue"};
+function sayColor(){
+        alert(this.color);
+}
+var objectSayColor=sayColor.bind(o);   //这里的this就是对象o
+objectSayColor(); //blue;
+```
+## 基本包装类型
+![Javascript类型](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter5/jstype.jpg)
