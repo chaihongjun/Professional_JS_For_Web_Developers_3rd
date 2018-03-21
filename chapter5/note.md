@@ -529,3 +529,32 @@ objectSayColor(); //blue;
 ```
 ## 基本包装类型
 ![Javascript类型](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter5/jstype.jpg)
+引用类型中有3个特殊的类型：Boolean,Number,String属于基本包装类型
+```
+var s1="some text";
+var s2=s1.substring(2);
+//相当于后台处理为（后台隐式的操作）
+var s1=new String("some text");
+var s2=s1.substring(2);
+s1=null; //前面代码执行完毕之后，生命周期完结对象立即被销毁
+```
+基本包装类型和引用类型主要区别就是对象的生存周期，new操作创建的引用类型实例，在执行流代码离开当前作用域之前都一直保存在内存中。
+自动创建的基本包装类型则只存在于一瞬间。**所以，无法给基本包装类型添加属性和方法。**
+另外，基本包装类型调用`typeof`会返回`object`,所有基本包装类型的对象都会转换为`true`.
+基本包装类型构造函数与同名转型函数不一样:
+```
+var value="25";
+
+var obj=new Number(value);
+alert(typeof obj);//object
+
+var number=Number(value);
+alert(typeof number); // number
+
+```
+
+### Boolean 类型
+构造布尔值对象
+```
+var booleanObject=new Boolean(true);
+```

@@ -1132,7 +1132,10 @@ MathJax.Hub.Config({
 <li><a href="#_15">函数属性和方法</a></li>
 </ul>
 </li>
-<li><a href="#_16">基本包装类型</a></li>
+<li><a href="#_16">基本包装类型</a><ul>
+<li><a href="#boolean">Boolean 类型</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1643,4 +1646,31 @@ ECMAScript5还定义了另外一个方法<code>bind()</code>,bind()方法创建�
 </pre></div>
 </p>
 <h2 id="_16"><a name="user-content-_16" href="#_16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>基本包装类型</h2>
-<p><img alt="Javascript类型" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter5/jstype.jpg" /></p></article></body></html>
+<p><img alt="Javascript类型" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter5/jstype.jpg" /><br />
+引用类型中有3个特殊的类型：Boolean,Number,String属于基本包装类型<br />
+<div class="codehilite"><pre>var s1=&quot;some text&quot;;
+var s2=s1.substring(2);
+//相当于后台处理为（后台隐式的操作）
+var s1=new String(&quot;some text&quot;);
+var s2=s1.substring(2);
+s1=null; //前面代码执行完毕之后，生命周期完结对象立即被销毁
+</pre></div>
+<br />
+基本包装类型和引用类型主要区别就是对象的生存周期，new操作创建的引用类型实例，在执行流代码离开当前作用域之前都一直保存在内存中。<br />
+自动创建的基本包装类型则只存在于一瞬间。<strong>所以，无法给基本包装类型添加属性和方法。</strong><br />
+另外，基本包装类型调用<code>typeof</code>会返回<code>object</code>,所有基本包装类型的对象都会转换为<code>true</code>.<br />
+基本包装类型构造函数与同名转型函数不一样:<br />
+<div class="codehilite"><pre>var value=&quot;25&quot;;
+
+var obj=new Number(value);
+alert(typeof obj);//object
+
+var number=Number(value);
+alert(typeof number); // number
+</pre></div>
+</p>
+<h3 id="boolean"><a name="user-content-boolean" href="#boolean" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Boolean 类型</h3>
+<p>构造布尔值对象<br />
+<div class="codehilite"><pre>var booleanObject=new Boolean(true);
+</pre></div>
+</p></article></body></html>
