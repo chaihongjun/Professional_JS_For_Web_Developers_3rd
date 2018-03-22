@@ -558,3 +558,199 @@ alert(typeof number); // number
 ```
 var booleanObject=new Boolean(true);
 ```
+### Number类型
+number是与数字值对应的引用类型。
+```
+var numberObject =new Number(10);
+```
+**number类型一个将数值格式化为字符串的方法`toFixed()`，会按照指定的小数位返回数值的字符串表示(能够自动舍入，但是各个浏览器的表现会有不同)：**
+```
+var num=10;
+alert(num.toFixed(2)); //"10.00"
+```
+**另外可格式化数值的方法`toExponential()`，返回以指数表示法(e表示法)表示的数值的字符串形式**
+```
+var num=10;
+alert(num.toExponential(1)); //"1.0e+1"
+```
+**如果想表示某个数值的最合适的格式，应该使用`toPrecision()`方法：**
+```
+var num=99;
+alert(num.toPrecision(1)); // "1e+2"
+alert(num.toPrecision(2)); // "99"
+alert(num.toPrecision(3)); // "99.0"
+```
+
+### String 类型
+String类型是字符串的包装类型
+```
+var stringObject =new String("hello world");
+```
+1. 字符方法
+用于访问字符串中特定的字符的方法:`charAt()`和`charCodeAt()`，这两个方法都接收一个参数，基于0 的字符位置。
+`charAt()`方法以单字符形式返回给定位置的字符
+```
+var stringValue ="hello world";
+alert(stringValue.charAt(1)); //"e"
+```
+如果想得到的是字符编码，则使用`charCodeAt()`:
+```
+var stringValue="hello world";
+alert(stringValue.charCodeAt(1));// 101， 返回位置1的字符编码，即字母"e"的编码
+```
+ECMAScript5还定义了另外一个访问个别字符的方法。**可以通过[]语法加数字索引来访问字符串中特定的字符**
+```
+var stringValue=hello world";
+alert(stringValue[1]); //"e"
+```
+2. 字符串操作方法
+`concat()`用于将一个或多个字符串拼接起来，返回新字符串,对原来的字符串没有影响:
+```
+var stringValue="hello ";
+var result=stringValue.concat("world");
+alert(result); //"hello world"
+alert(stringValue); //"hello "
+```
+ECMAScript还提供了三个基于子字符串创建新字符串的方法：`slice()`，`substr()`，`substring()`,都返回被操作的字符串的一个子字符串。
+都接收两个参数：
+第一个参数是起始位置，第二个参数是表示到哪里结束
+```
+stringObj.slice(start, [end])
+//slice 可以对数组操作，substring不可以
+//如果起始位置是负值则
+stringObj.slice(length+start, length+[end])
+stringObj.substring(0);
+-------------------------------------------------
+stringObj.substring(start,end);
+stringObj.substr(start,length);
+// start表示的是基于0的起始的位置
+//end 表示的是基于0的结束的位置，但是不包含end
+//length 表示要返回的字符串的长度
+
+
+```
+```
+var stringValue="hello world";
+alert(stringValue.slice(3));  //"lo world"
+alert(stringValue.substring(3));  //"lo world"
+alert(stringValue.substr(3));  //"lo world"
+alert(stringValue.slice(3,7));  //"lo w"
+alert(stringValue.substring(3,7));  //"lo w"
+alert(stringValue.substr(3,7));  //"lo worl"
+```
+3. 字符串位置方法
+**有两个可以从字符串中查找子字符串的方法：`indexOf()`和`lastIndexOf()`，返回子字符串的位置，如果没有则返回-1，indexOf()从字符串开头向后面搜索，lastIndexOf()则相反**
+这两个方法也可以接受第二个参数:
+```
+var stringValue="hello world";
+alert(stringValue.indexOf("o",6)); //7 , 从位置6开始向后搜索
+alert(stringValue.lastIndexOf("o",6));  //4,从位置6开始向前搜索
+```
+```
+var stringValue="Lorem ipsum dolor sit amet, consectetur adipisicing elit";
+var positions =new Array();
+//第一个"e"位置
+var pos=stringValue.indexOf("e");
+//将所有"e"的位置，依次放入新的数组
+while(pos>-1){
+            positions.push(pos);
+            pos=stringValue.indexOf("e",pos+1);
+}
+alert(positions);
+```
+4. trim()方法
+ECMAScript5定义了`trim()`方法，会创建字符串副本，清除字符串前置和后置的空格。
+5. 字符串大小写转换方法
+```
+toLowerCase() //转换成小写
+toLocaleLowerCase()
+toUpperCase()  //转换成大写
+toLocaleUpperCase()
+```
+6. 字符串的模式匹配方法
+**`match()`方法只接收一个参数，要么是正则表达式，要么是RegExp对象(match()`本质上和RegExp的exec()是一致的):**
+```
+var text="cat,bat,sat,fat";
+var pattern=/.at/;
+
+//与pattern.exec(text)相同
+var matches=text.match(pattern);
+alert(matches.index);
+alert(matches[0]);
+alert(pattern.lastIndex);
+```
+**另外一个查找模式方法是`search()`,返回第一个匹配项的索引，如果没有找到则返回-1，`search()`始终是从字符串开头向后查找**
+```
+var   text="cat ,bat,sat,fat";
+var pos=text.search(/at/);
+alert(pos);  //1 ,at 第一次出现的位置
+```
+另外，ECMAScript提供了`replace()`方法，接受两个参数，第一个参数可以是RegExp对象或者一个字符串（这个字符串不会转换成正则表达式），第二个参数可以是字符串或者函数。
+如果第一个参数是字符串，就会替换第一个子字符串，如果要替换全部的子字符串，那就要提供正则表达式，而且指定全局(g)标志:
+```
+var text="cat,bat,sat,fat";
+var result=text.replace("at","ond"); //"cond,bat,sat,fat",将字符串中第一次出现的"at"替换为"ond"
+
+result=text.replace(/at/g,"ond");/ "cond,bond,sond,fond", 将字符串中全部的"at"换成"ond"
+```
+第二个参数如果是字符串，可以使用一些特殊的字符序列:
+
+|字符序列 | 替换文本|
+|--- | ---|
+|$$ | $|
+| $& | 匹配整个模式的子字符串。与RegExp.lastMatch的值相同|
+| $'|  匹配的子字符串之前的子字符串。与RegExp.leftContext的值相同|
+|$`| 匹配的子字符串之后的子字符串。与RegExp.rightContext的值相同|
+|$n| 匹配第n个捕获的子字符串，其中n等于0~9。例如，$1匹配的是第一个捕获组的子字符串。如果正则表达式没有定义捕获组，则使用空字符串|
+|$nn| 匹配第nn个捕获的子字符串，其中nn等于01～99.例如，$01是匹配第一个捕获组的子字符串。如果正则表达式没有定义捕获组，则使用空字符串|
+
+```
+var text="cat,bat,sat,fat";
+result=text.replace(/(.at)/g,"word($1)");
+alert(result);
+```
+......
+
+
+7.localeCompare()方法
+`localeCompare()`方法比较两个字符串
+```
+stringA.localeCompare(stringB)
+```
+如果StringB在字母表中排在stringA前面,则返回1
+如果StringB在字母表中排在stringA后面,则返回-1
+如果stringA等于stringB，则返回0
+
+8 .fromCharCode()方法
+接收一个或者多个字符编码，然后将它们转换成字符串，本质上与`charCodeAt()`是相反操作
+```
+alert(String.fromCharCode(104,101,108,108,111)); //"hello"
+```
+
+9. HTML方法
+
+......
+
+## 单体内置对象
+**内置对象:由ECMAScript实现提供不依赖宿主环境的对象，这些对象在ECMAScript程序执行前就已经存在**
+开发人员无需显示实例化内置对象，它们已经实例化了。
+Object,Array,String,
+### Global对象
+不属于任何其他对象的属性和方法，都是Global对象的属性和方法
+1. URI编码方法
+Global对象的`encodeURI()`和`encodeURIComponent()`方法可以对URI进行编码，以便发给浏览器，有效的URI不能包含某些字符，如空格。
+**`encodeURI()`主要用于整个URI，`encodeURIComponent()`用于针对URI的某一段，`encodeURI()`不会对本身属于URI的特殊字符进行编码，比如冒号，正斜杠，问号和井号；而`encodeURIComponent()`会对它发现的任何非标准字符进行编码**：
+```
+var uri="http://www.wrox.com/illegal value.htm#srtart";
+
+//"http://www.wrox.com/illegal%20value.htm#srtart"
+alert(encodeURI(uri));
+
+//"http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.htm%23srtart"
+alert(encodeURIComponent(uri));
+```
+
+**使用`encodeURI()`编码之后的结果是除了空格之外的字符都原封不动，只有空格被替换成%20。
+`encodeURIComponet()`会将除`字母`和`数字`之外的数值进行编码替换**
+
+和`encodeURI() encodeURIComponent` 对应的方法是`decodeURI() decodeURIComponent()`,对前面编码的字符做解码

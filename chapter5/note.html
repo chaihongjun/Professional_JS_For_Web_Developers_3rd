@@ -1134,6 +1134,12 @@ MathJax.Hub.Config({
 </li>
 <li><a href="#_16">基本包装类型</a><ul>
 <li><a href="#boolean">Boolean 类型</a></li>
+<li><a href="#number">Number类型</a></li>
+<li><a href="#string">String 类型</a></li>
+</ul>
+</li>
+<li><a href="#_17">单体内置对象</a><ul>
+<li><a href="#global">Global对象</a></li>
 </ul>
 </li>
 </ul>
@@ -1673,4 +1679,215 @@ alert(typeof number); // number
 <p>构造布尔值对象<br />
 <div class="codehilite"><pre>var booleanObject=new Boolean(true);
 </pre></div>
-</p></article></body></html>
+</p>
+<h3 id="number"><a name="user-content-number" href="#number" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Number类型</h3>
+<p>number是与数字值对应的引用类型。<br />
+<div class="codehilite"><pre>var numberObject =new Number(10);
+</pre></div>
+<br />
+<strong>number类型一个将数值格式化为字符串的方法<code>toFixed()</code>，会按照指定的小数位返回数值的字符串表示(能够自动舍入，但是各个浏览器的表现会有不同)：</strong><br />
+<div class="codehilite"><pre>var num=10;
+alert(num.toFixed(2)); //&quot;10.00&quot;
+</pre></div>
+<br />
+<strong>另外可格式化数值的方法<code>toExponential()</code>，返回以指数表示法(e表示法)表示的数值的字符串形式</strong><br />
+<div class="codehilite"><pre>var num=10;
+alert(num.toExponential(1)); //&quot;1.0e+1&quot;
+</pre></div>
+<br />
+<strong>如果想表示某个数值的最合适的格式，应该使用<code>toPrecision()</code>方法：</strong><br />
+<div class="codehilite"><pre>var num=99;
+alert(num.toPrecision(1)); // &quot;1e+2&quot;
+alert(num.toPrecision(2)); // &quot;99&quot;
+alert(num.toPrecision(3)); // &quot;99.0&quot;
+</pre></div>
+</p>
+<h3 id="string"><a name="user-content-string" href="#string" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>String 类型</h3>
+<p>String类型是字符串的包装类型<br />
+<div class="codehilite"><pre>var stringObject =new String(&quot;hello world&quot;);
+</pre></div>
+<br />
+1. 字符方法<br />
+用于访问字符串中特定的字符的方法:<code>charAt()</code>和<code>charCodeAt()</code>，这两个方法都接收一个参数，基于0 的字符位置。<br />
+<code>charAt()</code>方法以单字符形式返回给定位置的字符<br />
+<div class="codehilite"><pre>var stringValue =&quot;hello world&quot;;
+alert(stringValue.charAt(1)); //&quot;e&quot;
+</pre></div>
+<br />
+如果想得到的是字符编码，则使用<code>charCodeAt()</code>:<br />
+<div class="codehilite"><pre>var stringValue=&quot;hello world&quot;;
+alert(stringValue.charCodeAt(1));// 101， 返回位置1的字符编码，即字母&quot;e&quot;的编码
+</pre></div>
+<br />
+ECMAScript5还定义了另外一个访问个别字符的方法。<strong>可以通过[]语法加数字索引来访问字符串中特定的字符</strong><br />
+<div class="codehilite"><pre>var stringValue=hello world&quot;;
+alert(stringValue[1]); //&quot;e&quot;
+</pre></div>
+<br />
+2. 字符串操作方法<br />
+<code>concat()</code>用于将一个或多个字符串拼接起来，返回新字符串,对原来的字符串没有影响:<br />
+<div class="codehilite"><pre>var stringValue=&quot;hello &quot;;
+var result=stringValue.concat(&quot;world&quot;);
+alert(result); //&quot;hello world&quot;
+alert(stringValue); //&quot;hello &quot;
+</pre></div>
+<br />
+ECMAScript还提供了三个基于子字符串创建新字符串的方法：<code>slice()</code>，<code>substr()</code>，<code>substring()</code>,都返回被操作的字符串的一个子字符串。<br />
+都接收两个参数：<br />
+第一个参数是起始位置，第二个参数是表示到哪里结束<br />
+<div class="codehilite"><pre>stringObj.slice(start, [end])
+//slice 可以对数组操作，substring不可以
+//如果起始位置是负值则
+stringObj.slice(length+start, length+[end])
+stringObj.substring(0);
+-------------------------------------------------
+stringObj.substring(start,end);
+stringObj.substr(start,length);
+// start表示的是基于0的起始的位置
+//end 表示的是基于0的结束的位置，但是不包含end
+//length 表示要返回的字符串的长度
+</pre></div>
+<br />
+<div class="codehilite"><pre>var stringValue=&quot;hello world&quot;;
+alert(stringValue.slice(3));  //&quot;lo world&quot;
+alert(stringValue.substring(3));  //&quot;lo world&quot;
+alert(stringValue.substr(3));  //&quot;lo world&quot;
+alert(stringValue.slice(3,7));  //&quot;lo w&quot;
+alert(stringValue.substring(3,7));  //&quot;lo w&quot;
+alert(stringValue.substr(3,7));  //&quot;lo worl&quot;
+</pre></div>
+<br />
+3. 字符串位置方法<br />
+<strong>有两个可以从字符串中查找子字符串的方法：<code>indexOf()</code>和<code>lastIndexOf()</code>，返回子字符串的位置，如果没有则返回-1，indexOf()从字符串开头向后面搜索，lastIndexOf()则相反</strong><br />
+这两个方法也可以接受第二个参数:<br />
+<div class="codehilite"><pre>var stringValue=&quot;hello world&quot;;
+alert(stringValue.indexOf(&quot;o&quot;,6)); //7 , 从位置6开始向后搜索
+alert(stringValue.lastIndexOf(&quot;o&quot;,6));  //4,从位置6开始向前搜索
+</pre></div>
+<br />
+<div class="codehilite"><pre>var stringValue=&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit&quot;;
+var positions =new Array();
+//第一个&quot;e&quot;位置
+var pos=stringValue.indexOf(&quot;e&quot;);
+//将所有&quot;e&quot;的位置，依次放入新的数组
+while(pos&gt;-1){
+            positions.push(pos);
+            pos=stringValue.indexOf(&quot;e&quot;,pos+1);
+}
+alert(positions);
+</pre></div>
+<br />
+4. trim()方法<br />
+ECMAScript5定义了<code>trim()</code>方法，会创建字符串副本，清除字符串前置和后置的空格。<br />
+5. 字符串大小写转换方法<br />
+<div class="codehilite"><pre>toLowerCase() //转换成小写
+toLocaleLowerCase()
+toUpperCase()  //转换成大写
+toLocaleUpperCase()
+</pre></div>
+<br />
+6. 字符串的模式匹配方法<br />
+**<code>match()</code>方法只接收一个参数，要么是正则表达式，要么是RegExp对象(match()<code>本质上和RegExp的exec()是一致的):**
+<div class="codehilite"><pre>var text=&quot;cat,bat,sat,fat&quot;;
+var pattern=/.at/;
+
+//与pattern.exec(text)相同
+var matches=text.match(pattern);
+alert(matches.index);
+alert(matches[0]);
+alert(pattern.lastIndex);
+</pre></div>
+
+**另外一个查找模式方法是</code>search()<code>,返回第一个匹配项的索引，如果没有找到则返回-1，</code>search()<code>始终是从字符串开头向后查找**
+<div class="codehilite"><pre>var   text=&quot;cat ,bat,sat,fat&quot;;
+var pos=text.search(/at/);
+alert(pos);  //1 ,at 第一次出现的位置
+</pre></div>
+
+另外，ECMAScript提供了</code>replace()`方法，接受两个参数，第一个参数可以是RegExp对象或者一个字符串（这个字符串不会转换成正则表达式），第二个参数可以是字符串或者函数。<br />
+如果第一个参数是字符串，就会替换第一个子字符串，如果要替换全部的子字符串，那就要提供正则表达式，而且指定全局(g)标志:<br />
+<div class="codehilite"><pre>var text=&quot;cat,bat,sat,fat&quot;;
+var result=text.replace(&quot;at&quot;,&quot;ond&quot;); //&quot;cond,bat,sat,fat&quot;,将字符串中第一次出现的&quot;at&quot;替换为&quot;ond&quot;
+
+result=text.replace(/at/g,&quot;ond&quot;);/ &quot;cond,bond,sond,fond&quot;, 将字符串中全部的&quot;at&quot;换成&quot;ond&quot;
+</pre></div>
+<br />
+第二个参数如果是字符串，可以使用一些特殊的字符序列:</p>
+<table>
+<thead>
+<tr>
+<th>字符序列</th>
+<th>替换文本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$$</td>
+<td>$</td>
+</tr>
+<tr>
+<td>$&amp;</td>
+<td>匹配整个模式的子字符串。与RegExp.lastMatch的值相同</td>
+</tr>
+<tr>
+<td>$&rsquo;</td>
+<td>匹配的子字符串之前的子字符串。与RegExp.leftContext的值相同</td>
+</tr>
+<tr>
+<td>$`</td>
+<td>匹配的子字符串之后的子字符串。与RegExp.rightContext的值相同</td>
+</tr>
+<tr>
+<td>$n</td>
+<td>匹配第n个捕获的子字符串，其中n等于0~9。例如，$1匹配的是第一个捕获组的子字符串。如果正则表达式没有定义捕获组，则使用空字符串</td>
+</tr>
+<tr>
+<td>$nn</td>
+<td>匹配第nn个捕获的子字符串，其中nn等于01～99.例如，$01是匹配第一个捕获组的子字符串。如果正则表达式没有定义捕获组，则使用空字符串</td>
+</tr>
+</tbody>
+</table>
+<p><div class="codehilite"><pre>var text=&quot;cat,bat,sat,fat&quot;;
+result=text.replace(/(.at)/g,&quot;word($1)&quot;);
+alert(result);
+</pre></div>
+<br />
+......</p>
+<p>7.localeCompare()方法<br />
+<code>localeCompare()</code>方法比较两个字符串<br />
+<div class="codehilite"><pre>stringA.localeCompare(stringB)
+</pre></div>
+<br />
+如果StringB在字母表中排在stringA前面,则返回1<br />
+如果StringB在字母表中排在stringA后面,则返回-1<br />
+如果stringA等于stringB，则返回0</p>
+<p>8 .fromCharCode()方法<br />
+接收一个或者多个字符编码，然后将它们转换成字符串，本质上与<code>charCodeAt()</code>是相反操作<br />
+<div class="codehilite"><pre>alert(String.fromCharCode(104,101,108,108,111)); //&quot;hello&quot;
+</pre></div>
+</p>
+<ol>
+<li>HTML方法</li>
+</ol>
+<p>......</p>
+<h2 id="_17"><a name="user-content-_17" href="#_17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>单体内置对象</h2>
+<p><strong>内置对象:由ECMAScript实现提供不依赖宿主环境的对象，这些对象在ECMAScript程序执行前就已经存在</strong><br />
+开发人员无需显示实例化内置对象，它们已经实例化了。<br />
+Object,Array,String,</p>
+<h3 id="global"><a name="user-content-global" href="#global" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Global对象</h3>
+<p>不属于任何其他对象的属性和方法，都是Global对象的属性和方法<br />
+1. URI编码方法<br />
+Global对象的<code>encodeURI()</code>和<code>encodeURIComponent()</code>方法可以对URI进行编码，以便发给浏览器，有效的URI不能包含某些字符，如空格。<br />
+<strong><code>encodeURI()</code>主要用于整个URI，<code>encodeURIComponent()</code>用于针对URI的某一段，<code>encodeURI()</code>不会对本身属于URI的特殊字符进行编码，比如冒号，正斜杠，问号和井号；而<code>encodeURIComponent()</code>会对它发现的任何非标准字符进行编码</strong>：<br />
+<div class="codehilite"><pre><span class="nt">var</span> <span class="nt">uri</span><span class="o">=</span><span class="s2">&quot;http://www.wrox.com/illegal value.htm#srtart&quot;</span><span class="o">;</span>
+
+<span class="o">//</span><span class="s2">&quot;http://www.wrox.com/illegal%20value.htm#srtart&quot;</span>
+<span class="nt">alert</span><span class="o">(</span><span class="nt">encodeURI</span><span class="o">(</span><span class="nt">uri</span><span class="o">));</span>
+
+<span class="o">//</span><span class="s2">&quot;http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.htm%23srtart&quot;</span>
+<span class="nt">alert</span><span class="o">(</span><span class="nt">encodeURIComponent</span><span class="o">(</span><span class="nt">uri</span><span class="o">));</span>
+</pre></div>
+</p>
+<p><strong>使用<code>encodeURI()</code>编码之后的结果是除了空格之外的字符都原封不动，只有空格被替换成%20。<br />
+<code>encodeURIComponet()</code>会将除<code>字母</code>和<code>数字</code>之外的数值进行编码替换</strong></p>
+<p>和<code>encodeURI() encodeURIComponent</code> 对应的方法是<code>decodeURI() decodeURIComponent()</code>,对前面编码的字符做解码</p></article></body></html>
