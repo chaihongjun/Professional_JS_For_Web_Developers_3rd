@@ -245,3 +245,30 @@ var person2=new Person("Grey",27,"Doctor");
 
 2. 构造函数的问题
 
+
+
+
+### 原型模式
+**我们创建的函数都有一个`prototype`(原型)属性，这个属性是一个指针，指向一个对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。**
+**`prototype`就是通过调用构造函数而创建的那个对象实例的原型对象。**
+**使用原型对象可以让所有对象实例共享它的属性和方法，不必在构造函数中定义对象实例信息。**
+```
+function Person(){
+}
+Person.prototype.name="Nicholas"; 
+Person.prototype.age=29; 
+Person.prototype.job="Software Engineer"; 
+Person.prototype.sayName = function(){
+            alert(this.name);
+}
+var person1=new Person();
+person1.sayName(); // "Nicholas"
+
+var person2=new Person();
+person2.sayName();// "Nicholas"
+
+alert(person1.sayName==person2.sayName); //true
+```
+Person所有属性和方法添加到了它的原型属性中，这些方法和属性属于Person构造对象共享
+
+

@@ -1116,6 +1116,7 @@ MathJax.Hub.Config({
 <li><a href="#_6">创建对象</a><ul>
 <li><a href="#_7">工厂模式</a></li>
 <li><a href="#_8">构造函数模式</a></li>
+<li><a href="#_9">原型模式</a></li>
 </ul>
 </li>
 </ul>
@@ -1343,4 +1344,26 @@ alert(person.name); //Nicholas
 <strong>构造函数和其他函数唯一区别是调用方式不同，只要通过new操作符调用的就是构造函数</strong></p>
 <ol>
 <li>构造函数的问题</li>
-</ol></article></body></html>
+</ol>
+<h3 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>原型模式</h3>
+<p><strong>我们创建的函数都有一个<code>prototype</code>(原型)属性，这个属性是一个指针，指向一个对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。</strong><br />
+<strong><code>prototype</code>就是通过调用构造函数而创建的那个对象实例的原型对象。</strong><br />
+<strong>使用原型对象可以让所有对象实例共享它的属性和方法，不必在构造函数中定义对象实例信息。</strong><br />
+<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">Person</span><span class="p">(){</span>
+<span class="p">}</span>
+<span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span> 
+<span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">age</span><span class="o">=</span><span class="mi">29</span><span class="p">;</span> 
+<span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">job</span><span class="o">=</span><span class="s2">&quot;Software Engineer&quot;</span><span class="p">;</span> 
+<span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sayName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">person1</span><span class="o">=</span><span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">person1</span><span class="p">.</span><span class="nx">sayName</span><span class="p">();</span> <span class="c1">// &quot;Nicholas&quot;</span>
+
+<span class="kd">var</span> <span class="nx">person2</span><span class="o">=</span><span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">person2</span><span class="p">.</span><span class="nx">sayName</span><span class="p">();</span><span class="c1">// &quot;Nicholas&quot;</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">person1</span><span class="p">.</span><span class="nx">sayName</span><span class="o">==</span><span class="nx">person2</span><span class="p">.</span><span class="nx">sayName</span><span class="p">);</span> <span class="c1">//true</span>
+</pre></div>
+<br />
+Person所有属性和方法添加到了它的原型属性中，这些方法和属性属于Person构造对象共享</p></article></body></html>
