@@ -1140,8 +1140,10 @@ MathJax.Hub.Config({
 </li>
 <li><a href="#_17">单体内置对象</a><ul>
 <li><a href="#global">Global对象</a></li>
+<li><a href="#math">Math对象</a></li>
 </ul>
 </li>
+<li><a href="#_18">小结</a></li>
 </ul>
 </li>
 </ul>
@@ -1888,6 +1890,298 @@ Global对象的<code>encodeURI()</code>和<code>encodeURIComponent()</code>方�
 <span class="nt">alert</span><span class="o">(</span><span class="nt">encodeURIComponent</span><span class="o">(</span><span class="nt">uri</span><span class="o">));</span>
 </pre></div>
 </p>
-<p><strong>使用<code>encodeURI()</code>编码之后的结果是除了空格之外的字符都原封不动，只有空格被替换成%20。<br />
-<code>encodeURIComponet()</code>会将除<code>字母</code>和<code>数字</code>之外的数值进行编码替换</strong></p>
-<p>和<code>encodeURI() encodeURIComponent</code> 对应的方法是<code>decodeURI() decodeURIComponent()</code>,对前面编码的字符做解码</p></article></body></html>
+<p><strong>使用<code>encodeURI()</code>编码之后的结果是除了空格之外的字符都原封不动，只有空格被替换成%20。<code>encodeURIComponet()</code>会将除<code>字母</code>和<code>数字</code>之外的数值进行编码替换</strong><br />
+<strong>和<code>encodeURI() encodeURIComponent</code> 对应的方法是<code>decodeURI() decodeURIComponent()</code>,对前面编码的字符做解码</strong><br />
+2.eval()方法<br />
+<code>eval()</code>就像完整的ECMAScript解析器，只接收一个参数，要执行的ECMAScript或者JavaScript字符串:<br />
+<div class="codehilite"><pre>eval(&quot;alert(&#39;hi&#39;)&quot;);
+//等价于
+alert(&quot;hi&quot;);
+</pre></div>
+<br />
+<strong>当解析器发现代码调用<code>eval()</code>方法时，它会将传入的参数当作实际的ECMASCript语句来解析，然后把执行结果插入到原来的位置。通过<code>eval()</code>执行的代码被认为是包含该次调用的执行环境的一部分，所以，被执行的代码有与该执行环境相同的作用域链。通过<code>eval()</code>执行的代码可以引用在闭包环境中定义的变量</strong>:<br />
+<div class="codehilite"><pre>//外部定义变量
+var msg=&quot;hello world&quot;;
+//eval()里面的代码被替换为真正执行的代码
+eval(&quot;alert(&#39;msg&#39;)&quot;);   //&quot;hello world&quot;
+</pre></div>
+<br />
+<strong>在<code>eval()</code>中创建的变量或者函数不会被提升，因为，在解析代码的时候，它们被包含在一个字符串中，它们只在eval()执行的时候创建</strong></p>
+<p>3.Global对象的属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>undefined</td>
+<td>特殊值 undefined</td>
+<td>Date</td>
+<td>构造函数Date</td>
+</tr>
+<tr>
+<td>NaN</td>
+<td>特殊值 NaN</td>
+<td>RegExp</td>
+<td>构造函数 RegExp</td>
+</tr>
+<tr>
+<td>Infinity</td>
+<td>特殊值 Infinity</td>
+<td>Error</td>
+<td>构造函数 Error</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>构造函数 Object</td>
+<td>EvalError</td>
+<td>构造函数 EvalError</td>
+</tr>
+<tr>
+<td>Array</td>
+<td>构造函数 Array</td>
+<td>RangeError</td>
+<td>构造函数 RangeError</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>构造函数 Function</td>
+<td>ReferenceError</td>
+<td>构造函数 ReferenceError</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>构造函数 Boolean</td>
+<td>SyntaxError</td>
+<td>构造函数 SyntaxError</td>
+</tr>
+<tr>
+<td>String</td>
+<td>构造函数 String</td>
+<td>TypeError</td>
+<td>构造函数  TypeError</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>构造函数 Number</td>
+<td>URIError</td>
+<td>构造函数  URIError</td>
+</tr>
+</tbody>
+</table>
+<p>ECMAScript5 明确给undefined,NaN,Infinity赋值</p>
+<p>4.window 对象<br />
+<strong>ECMAScript没有指出如何直接访问Global对象，WEB浏览器将这个全局对象作为<code>window</code>对象的一部分实现,全局作用域中声明的变量和函数称为window对象的属性</strong><br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>   <span class="c1">//全局变量</span>
+<span class="kd">function</span> <span class="nx">sayColor</span><span class="p">(){</span>    <span class="c1">//全局函数</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">color</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">sayColor</span><span class="p">();</span>   <span class="c1">//red</span>
+</pre></div>
+<br />
+另外一种取得Global对象的方法:<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">global</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">}();</span>
+</pre></div>
+</p>
+<h3 id="math"><a name="user-content-math" href="#math" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Math对象</h3>
+<p>1.Math对象的属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Math.E</td>
+<td>自然对数的底数，常量e的值</td>
+</tr>
+<tr>
+<td>Math.LN10</td>
+<td>10的自然对数</td>
+</tr>
+<tr>
+<td>Math.LN2</td>
+<td>2的自然对数</td>
+</tr>
+<tr>
+<td>Math.LOG2E</td>
+<td>以2为底e的对数</td>
+</tr>
+<tr>
+<td>Math.LOG10E</td>
+<td>以10为底e的对数</td>
+</tr>
+<tr>
+<td>Math.PI</td>
+<td>π的值</td>
+</tr>
+<tr>
+<td>Math.SQRT_2</td>
+<td>1/2的平方根（即2的平方根的倒数）</td>
+</tr>
+<tr>
+<td>Math.SQRT2</td>
+<td>2的平方根</td>
+</tr>
+</tbody>
+</table>
+<p>2.min()和max()方法<br />
+可以接收任意多个参数，返回最小和最大的值</p>
+<p>3.舍入方法<br />
+<div class="codehilite"><pre>//向上舍入，数值向上舍入最接近的整数
+Math.ceil()
+
+//向下舍入，数值向下舍入最接近的整数
+Math.floor()
+
+//标准舍入(四合五入)
+Math.round()
+</pre></div>
+<br />
+<div class="codehilite"><pre>alert(Math.ceil(25.9)); //26
+alert(Math.ceil(25.5)); //26
+alert(Math.ceil(25.1)); //26
+
+alert(Math.round(25.9)); //26
+alert(Math.round(25.5)); //26
+alert(Math.round(25.1)); //25
+
+alert(Math.floor(25.9)); //25
+alert(Math.floor(25.5)); //25
+alert(Math.floor(25.1)); //25
+</pre></div>
+</p>
+<p>4.random() 方法<br />
+<strong><code>Math.random()</code> 返回大于等于0小于1的一个随机数</strong></p>
+<p>可以利用random()从某个整数范围内随机选择一个值:<br />
+<div class="codehilite"><pre>Math.floor(Math.random())*可能值的总数+第一个可能的值
+</pre></div>
+</p>
+<p><strong>求某个范围内的一个随机数,返回任意两个整数之间可能的一个随机整数:</strong><br />
+<div class="codehilite"><pre><span class="kd">function</span> <span class="nx">selectFrom</span><span class="p">(</span><span class="nx">lowerValue</span><span class="p">,</span><span class="nx">upperValue</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">choices</span> <span class="o">=</span><span class="nx">upperValue</span> <span class="o">-</span>  <span class="nx">lowerValue</span> <span class="o">+</span><span class="mi">1</span><span class="p">;</span>   <span class="c1">//可能返回值的数量总和</span>
+    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">choices</span><span class="o">+</span><span class="nx">lowerValue</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="nx">selectFrom</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span>
+</pre></div>
+<br />
+5. 其他方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Math.abs(num)</td>
+<td>返回num的绝对值</td>
+<td>Math.asin(x)</td>
+<td>返回x 的反正弦值</td>
+</tr>
+<tr>
+<td>Math.exp(num)</td>
+<td>返回Math.E的num次幂</td>
+<td>Math.atan(x)</td>
+<td>返回x的反正切值</td>
+</tr>
+<tr>
+<td>Math.log(num)</td>
+<td>返回num的自然对数</td>
+<td>Math.atan2(y,x)</td>
+<td>返回 y/x 的反正切值</td>
+</tr>
+<tr>
+<td>Math.pow(num,power)</td>
+<td>返回num的power次幂</td>
+<td>Math.cos(x)</td>
+<td>返回x的余弦值</td>
+</tr>
+<tr>
+<td>Math.sqrt(num)</td>
+<td>返回num的平方根</td>
+<td>Math.sin(x)</td>
+<td>返回x的余弦值</td>
+</tr>
+<tr>
+<td>Math.acos(x)</td>
+<td>返回x的反余弦值</td>
+<td>Math.tan(x)</td>
+<td>返回x的正切值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_18"><a name="user-content-_18" href="#_18" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>小结</h2>
+<p>对象在JS中为引用类型，内置的引用类型可以创建特定的对象<br />
+1. Object是一个基础类型，其他所有类型都是从Object类型继承了基本的行为<br />
+2. Array类型是一组值的有序列表，同时提供了操作和转换这些值的功能<br />
+3. Date类型提供有关日期和时间的信息，金额当前日期和时间的相关计算功能<br />
+4. RegExp类型是ECMAScript支持正则表达式的一个接口。</p>
+<p>函数实际上是Function类型的实例，所以函数也是对象，函数也有方法增强行为。</p>
+<p>由于有基本包装类型，所以，基本类型值可以被当作对象来访问。<br />
+三种基本包装类型:<br />
+1. Boolean<br />
+2. Number<br />
+3. String<br />
+共同特征：<br />
+1. 每个保障类型都映射到同名的基本类型<br />
+2. 在读取模式下访问基本类型，会创建对应的包装类型的一个对象，方便数据操作<br />
+3. 操作基本类型的值一经完成，立即销毁新创建的包装对象</p>
+<p>所有代码执行之前，作用域内就内置两个对象<code>Global</code>和<code>Math</code>。在大多数的ECMAScript的实现，都不能直接访问Global对象，WEB浏览器实现了承担GLOBAl角色的window对象。全局的函数和变量都是global对象的属性</p>
+<div class="toc">
+<ul>
+<li><a href="#_1">引用类型</a><ul>
+<li><a href="#object">Object类型</a></li>
+<li><a href="#array">Array 类型</a><ul>
+<li><a href="#_2">队列方法</a></li>
+<li><a href="#_3">重排序方法</a></li>
+<li><a href="#_4">操作方法</a></li>
+<li><a href="#_5">位置方法</a></li>
+<li><a href="#_6">迭代方法</a></li>
+<li><a href="#_7">归并方法</a></li>
+</ul>
+</li>
+<li><a href="#date">Date类型</a><ul>
+<li><a href="#_8">继承的方法</a></li>
+<li><a href="#_9">日期格式化方法</a></li>
+<li><a href="#_10">日期／时间组件方法</a></li>
+</ul>
+</li>
+<li><a href="#regexp">RegExp 类型</a></li>
+<li><a href="#function">Function 类型</a><ul>
+<li><a href="#_11">没有重载</a></li>
+<li><a href="#_12">函数声明与函数表达式</a></li>
+<li><a href="#_13">作为值的函数</a></li>
+<li><a href="#_14">函数内部属性</a></li>
+<li><a href="#_15">函数属性和方法</a></li>
+</ul>
+</li>
+<li><a href="#_16">基本包装类型</a><ul>
+<li><a href="#boolean">Boolean 类型</a></li>
+<li><a href="#number">Number类型</a></li>
+<li><a href="#string">String 类型</a></li>
+</ul>
+</li>
+<li><a href="#_17">单体内置对象</a><ul>
+<li><a href="#global">Global对象</a></li>
+<li><a href="#math">Math对象</a></li>
+</ul>
+</li>
+<li><a href="#_18">小结</a></li>
+</ul>
+</li>
+</ul>
+</div></article></body></html>

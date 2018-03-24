@@ -750,7 +750,146 @@ alert(encodeURI(uri));
 alert(encodeURIComponent(uri));
 ```
 
-**使用`encodeURI()`编码之后的结果是除了空格之外的字符都原封不动，只有空格被替换成%20。
-`encodeURIComponet()`会将除`字母`和`数字`之外的数值进行编码替换**
+**使用`encodeURI()`编码之后的结果是除了空格之外的字符都原封不动，只有空格被替换成%20。`encodeURIComponet()`会将除`字母`和`数字`之外的数值进行编码替换**
+**和`encodeURI() encodeURIComponent` 对应的方法是`decodeURI() decodeURIComponent()`,对前面编码的字符做解码**
+2.eval()方法
+`eval()`就像完整的ECMAScript解析器，只接收一个参数，要执行的ECMAScript或者JavaScript字符串:
+```
+eval("alert('hi')");
+//等价于
+alert("hi");
+```
+**当解析器发现代码调用`eval()`方法时，它会将传入的参数当作实际的ECMASCript语句来解析，然后把执行结果插入到原来的位置。通过`eval()`执行的代码被认为是包含该次调用的执行环境的一部分，所以，被执行的代码有与该执行环境相同的作用域链。通过`eval()`执行的代码可以引用在闭包环境中定义的变量**:
+```
+//外部定义变量
+var msg="hello world";
+//eval()里面的代码被替换为真正执行的代码
+eval("alert('msg')");   //"hello world"
+```
+**在`eval()`中创建的变量或者函数不会被提升，因为，在解析代码的时候，它们被包含在一个字符串中，它们只在eval()执行的时候创建**
 
-和`encodeURI() encodeURIComponent` 对应的方法是`decodeURI() decodeURIComponent()`,对前面编码的字符做解码
+3.Global对象的属性
+
+| 属性 | 说明 | 属性 | 说明|
+|---|---|---|---|
+| undefined | 特殊值 undefined| Date | 构造函数Date|
+| NaN | 特殊值 NaN | RegExp| 构造函数 RegExp |
+| Infinity | 特殊值 Infinity | Error | 构造函数 Error |
+| Object | 构造函数 Object | EvalError | 构造函数 EvalError |
+| Array | 构造函数 Array | RangeError | 构造函数 RangeError |
+| Function | 构造函数 Function | ReferenceError | 构造函数 ReferenceError |
+| Boolean | 构造函数 Boolean | SyntaxError |  构造函数 SyntaxError |
+| String | 构造函数 String | TypeError | 构造函数  TypeError |
+| Number | 构造函数 Number | URIError | 构造函数  URIError |
+
+ECMAScript5 明确给undefined,NaN,Infinity赋值
+
+4.window 对象
+**ECMAScript没有指出如何直接访问Global对象，WEB浏览器将这个全局对象作为`window`对象的一部分实现,全局作用域中声明的变量和函数称为window对象的属性**
+```
+var color="red";   //全局变量
+function sayColor(){    //全局函数
+        alert(window.color);
+}
+window.sayColor();   //red
+```
+另外一种取得Global对象的方法:
+```
+var global=function(){
+        return this;
+}();
+```
+### Math对象
+1.Math对象的属性
+
+| 属性 | 说明 |
+|---|---|
+| Math.E | 自然对数的底数，常量e的值 |
+| Math.LN10 | 10的自然对数 |
+| Math.LN2 | 2的自然对数 |
+| Math.LOG2E | 以2为底e的对数 |
+| Math.LOG10E | 以10为底e的对数 |
+| Math.PI | π的值 |
+| Math.SQRT_2 | 1/2的平方根（即2的平方根的倒数）|
+| Math.SQRT2 | 2的平方根 |
+
+2.min()和max()方法
+可以接收任意多个参数，返回最小和最大的值
+
+3.舍入方法
+```
+//向上舍入，数值向上舍入最接近的整数
+Math.ceil()
+
+//向下舍入，数值向下舍入最接近的整数
+Math.floor()
+
+//标准舍入(四合五入)
+Math.round()
+```
+```
+alert(Math.ceil(25.9)); //26
+alert(Math.ceil(25.5)); //26
+alert(Math.ceil(25.1)); //26
+
+alert(Math.round(25.9)); //26
+alert(Math.round(25.5)); //26
+alert(Math.round(25.1)); //25
+
+alert(Math.floor(25.9)); //25
+alert(Math.floor(25.5)); //25
+alert(Math.floor(25.1)); //25
+```
+
+4.random() 方法
+**`Math.random()` 返回大于等于0小于1的一个随机数**
+
+可以利用random()从某个整数范围内随机选择一个值:
+```
+Math.floor(Math.random())*可能值的总数+第一个可能的值
+```
+
+**求某个范围内的一个随机数,返回任意两个整数之间可能的一个随机整数:**
+```
+function selectFrom(lowerValue,upperValue){
+    var choices =upperValue -  lowerValue +1;   //可能返回值的数量总和
+    return Math.floor(Math.random()*choices+lowerValue);
+}
+var num = selectFrom(2,10);
+alert(num);
+```
+5. 其他方法
+
+| 方法 | 说明 | 方法 | 说明 |
+|---|---|---|---|
+| Math.abs(num) | 返回num的绝对值 | Math.asin(x) | 返回x 的反正弦值 |
+| Math.exp(num) | 返回Math.E的num次幂 | Math.atan(x) | 返回x的反正切值 |
+| Math.log(num) | 返回num的自然对数 | Math.atan2(y,x) | 返回 y/x 的反正切值 | 
+| Math.pow(num,power) | 返回num的power次幂 | Math.cos(x) | 返回x的余弦值 |
+| Math.sqrt(num) | 返回num的平方根 | Math.sin(x) | 返回x的余弦值 | 
+| Math.acos(x) | 返回x的反余弦值 | Math.tan(x) | 返回x的正切值 
+
+## 小结
+对象在JS中为引用类型，内置的引用类型可以创建特定的对象
+1. Object是一个基础类型，其他所有类型都是从Object类型继承了基本的行为
+2. Array类型是一组值的有序列表，同时提供了操作和转换这些值的功能
+3. Date类型提供有关日期和时间的信息，金额当前日期和时间的相关计算功能
+4. RegExp类型是ECMAScript支持正则表达式的一个接口。
+
+函数实际上是Function类型的实例，所以函数也是对象，函数也有方法增强行为。
+
+由于有基本包装类型，所以，基本类型值可以被当作对象来访问。
+三种基本包装类型:
+1. Boolean
+2. Number
+3. String
+共同特征：
+1. 每个保障类型都映射到同名的基本类型
+2. 在读取模式下访问基本类型，会创建对应的包装类型的一个对象，方便数据操作
+3. 操作基本类型的值一经完成，立即销毁新创建的包装对象
+
+所有代码执行之前，作用域内就内置两个对象`Global`和`Math`。在大多数的ECMAScript的实现，都不能直接访问Global对象，WEB浏览器实现了承担GLOBAl角色的window对象。全局的函数和变量都是global对象的属性
+
+
+
+[TOC]
