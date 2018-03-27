@@ -38,11 +38,11 @@ var person={
 **为了表示特征是内部值，语法规范使用`[]`。ECMAScript有两种属性:`数据属性`和`访问器属性`**
 
 1. 数据属性
-数据属性包的一个数据值的位置，这个位置可以读取和写入，数据属性有4个描述行为的特征
-[Configurable]:表示能否通过delete删除属性从而重新定义属性，能否修改属性的特征，或者能否把属性改成访问器属性。默认是true
-[Enumerable]:表示能否通过for-in循环返回属性，默认值true
-[Writable]:表示能否修改属性的值。默认值true
-[Value]:包含这个属性的属性值。读取属性值的时候，从这个位置读取；写入属性值的时候把新值保存在这个位置。默认值是undefined
+数据属性包含的一个数据值的位置，这个位置可以读取和写入，数据属性有4个描述行为的特征:
+`[[Configurable]]`:表示能否通过delete删除属性从而重新定义属性，能否修改属性的特征，或者能否把属性改成访问器属性。直接在对象上定义的属性默认是true（字面量方式）
+`[[Enumerable]]`:表示能否通过for-in循环返回属性，直接在对象上定义的属性默认值true（字面量方式）
+`[[Writable]]`:表示能否修改属性的值。直接在对象上定义的属性默认值true（字面量方式）
+`[[Value]]`:包含这个属性的属性值。读取属性值的时候，从这个位置读取；写入属性值的时候把新值保存在这个位置。默认值是undefined
 
 前面的例子:
 ```
@@ -56,11 +56,18 @@ var person={
         }
 }
 ```
-直接在对象上定义的属性,name,age,job等等，他们的[[Configurable]], [[Enumerable]] ,[[Writable]]特性值为true,而[[Value]]被指定为特定的值
+直接在对象上定义的属性,name,age,job等等，他们的`[[Configurable]]`, `[[Enumerable]] `,`[[Writable]]`特性值为true,而`[[Value]]`被指定为特定的值
 比如name为Nicholas
 
 **要修改属性默认的特性必须使用ECMAScript5的`Object.defineProperty()`方法,该方法接收3个参数：属性所在对象，属性名和一个描述符对象，
 描述符（descriptor）对象的属性必须是configurable,enumerable,writable和value，设置其中一个或者多个**：
+语法：
+```
+Object.defineProperty(obj, prop, descriptor)
+// obj是属性所在的对象
+//prop 是属性
+// descriptor 描述符 
+```
 ```
 var person ={};
 Object.defineProperty(person,"name",{
@@ -269,6 +276,7 @@ person2.sayName();// "Nicholas"
 
 alert(person1.sayName==person2.sayName); //true
 ```
-Person所有属性和方法添加到了它的原型属性中，这些方法和属性属于Person构造对象共享
+Person所有属性和方法添加到了它的原型属性中，这些方法和属性属于Person构造对象共享。
+1. 理解原型对象
 
 

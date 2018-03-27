@@ -1158,7 +1158,11 @@ MathJax.Hub.Config({
 <p><strong>为了表示特征是内部值，语法规范使用<code>[]</code>。ECMAScript有两种属性:<code>数据属性</code>和<code>访问器属性</code></strong></p>
 <ol>
 <li>数据属性<br />
-数据属性包的一个数据值的位置，这个位置可以读取和写入，数据属性有4个描述行为的特征</li>
+数据属性包含的一个数据值的位置，这个位置可以读取和写入，数据属性有4个描述行为的特征:<br />
+<code>[[Configurable]]</code>:表示能否通过delete删除属性从而重新定义属性，能否修改属性的特征，或者能否把属性改成访问器属性。直接在对象上定义的属性默认是true（字面量方式）<br />
+<code>[[Enumerable]]</code>:表示能否通过for-in循环返回属性，直接在对象上定义的属性默认值true（字面量方式）<br />
+<code>[[Writable]]</code>:表示能否修改属性的值。直接在对象上定义的属性默认值true（字面量方式）<br />
+<code>[[Value]]</code>:包含这个属性的属性值。读取属性值的时候，从这个位置读取；写入属性值的时候把新值保存在这个位置。默认值是undefined</li>
 </ol>
 <p>前面的例子:<br />
 <div class="codehilite"><pre><span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="p">{</span>
@@ -1172,10 +1176,17 @@ MathJax.Hub.Config({
 <span class="p">}</span>
 </pre></div>
 <br />
-直接在对象上定义的属性,name,age,job等等，他们的<a class="wikilink" href="/Configurable/">Configurable</a>, <a class="wikilink" href="/Enumerable/">Enumerable</a> ,<a class="wikilink" href="/Writable/">Writable</a>特性值为true,而<a class="wikilink" href="/Value/">Value</a>被指定为特定的值<br />
+直接在对象上定义的属性,name,age,job等等，他们的<code>[[Configurable]]</code>, <code>[[Enumerable]]</code>,<code>[[Writable]]</code>特性值为true,而<code>[[Value]]</code>被指定为特定的值<br />
 比如name为Nicholas</p>
 <p><strong>要修改属性默认的特性必须使用ECMAScript5的<code>Object.defineProperty()</code>方法,该方法接收3个参数：属性所在对象，属性名和一个描述符对象，<br />
 描述符（descriptor）对象的属性必须是configurable,enumerable,writable和value，设置其中一个或者多个</strong>：<br />
+语法：<br />
+<div class="codehilite"><pre>Object.defineProperty(obj, prop, descriptor)
+// obj是属性所在的对象
+//prop 是属性
+// descriptor 描述符 
+</pre></div>
+<br />
 <div class="codehilite"><pre>var person ={};
 Object.defineProperty(person,&quot;name&quot;,{
             writable:false,    //不可修改name属性值
@@ -1366,4 +1377,5 @@ alert(person.name); //Nicholas
 <span class="nx">alert</span><span class="p">(</span><span class="nx">person1</span><span class="p">.</span><span class="nx">sayName</span><span class="o">==</span><span class="nx">person2</span><span class="p">.</span><span class="nx">sayName</span><span class="p">);</span> <span class="c1">//true</span>
 </pre></div>
 <br />
-Person所有属性和方法添加到了它的原型属性中，这些方法和属性属于Person构造对象共享</p></article></body></html>
+Person所有属性和方法添加到了它的原型属性中，这些方法和属性属于Person构造对象共享。<br />
+1. 理解原型对象</p></article></body></html>
