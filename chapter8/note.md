@@ -317,3 +317,24 @@ alert(hasPlugin("Flash"));
 //检测Quicktime
 alert(hasPlugin("QuickTime"));
 ```
+###  注册处理程序
+(略)
+
+## screen 对象
+screen对象主要用来表明客户端能力，下表列出所有属性和支持的浏览器
+
+| 属性 |  说明 |   IE |  Firefox | Safari/Chrome | opera | 
+|-|-|-|-|-|-|
+| availHeight | 屏幕的像素高度减系统部件高度之后的值（只读） |  |  |  |   |
+| availLeft | 未被系统部件占用的最左侧的像素值（只读） |  |  |  |   |
+| availTop | 未被系统部件占用的最上方的像素值（只读） |  |  |  |   |
+| availWidth |  屏幕的像素宽度减系统部件宽度之后的值（只读） |  |  |  |   |
+| bufferDepth |  读写用于呈现屏外位图的位数 |  |  |  |   |
+| colorDepth |  用于表现颜色的位数；多数系统都是32（只读） |  |  |  |   |
+| deviceXDPI | 屏幕实际的水平DPI(只读)  |  |  |  |   |
+
+
+
+
+
+##　history 对象
