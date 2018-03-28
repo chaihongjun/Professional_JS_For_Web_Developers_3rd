@@ -1128,6 +1128,7 @@ MathJax.Hub.Config({
 </li>
 <li><a href="#screen">screen 对象</a></li>
 <li><a href="#history">history 对象</a></li>
+<li><a href="#_11">小结</a></li>
 </ul>
 </li>
 </ul>
@@ -1726,39 +1727,39 @@ plugins数组包含以下属性:</p>
 <tr>
 <td>availHeight</td>
 <td>屏幕的像素高度减系统部件高度之后的值（只读）</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
 </tr>
 <tr>
 <td>availLeft</td>
 <td>未被系统部件占用的最左侧的像素值（只读）</td>
 <td></td>
-<td></td>
-<td></td>
+<td>√</td>
+<td>√</td>
 <td></td>
 </tr>
 <tr>
 <td>availTop</td>
 <td>未被系统部件占用的最上方的像素值（只读）</td>
 <td></td>
-<td></td>
-<td></td>
+<td>√</td>
+<td>√</td>
 <td></td>
 </tr>
 <tr>
 <td>availWidth</td>
 <td>屏幕的像素宽度减系统部件宽度之后的值（只读）</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
 </tr>
 <tr>
 <td>bufferDepth</td>
 <td>读写用于呈现屏外位图的位数</td>
-<td></td>
+<td>√</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1766,19 +1767,125 @@ plugins数组包含以下属性:</p>
 <tr>
 <td>colorDepth</td>
 <td>用于表现颜色的位数；多数系统都是32（只读）</td>
-<td></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>deviceXDPI</td>
+<td>屏幕实际的水平DPI(只读)</td>
+<td>√</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td>deviceXDPI</td>
-<td>屏幕实际的水平DPI(只读)</td>
-<td></td>
+<td>deviceYDPI</td>
+<td>屏幕实际的垂直DPI(只读)</td>
+<td>√</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
+<tr>
+<td>fontSmoothingEnabled</td>
+<td>表示是否启用了字体平滑(只读)</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>height</td>
+<td>屏幕的像素高度</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>left</td>
+<td>当前屏幕距左边的像素距离</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>logicalXDPI</td>
+<td>屏幕逻辑的水平DPI(只读)</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>logicalYDPI</td>
+<td>屏幕逻辑的垂直DPI(只读)</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>pixelDepth</td>
+<td>屏幕的位深(只读)</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>top</td>
+<td>当前屏幕距上边的像素距离</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>updateInterval</td>
+<td>读写译毫秒 表示的屏幕刷新时间间隔</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>width</td>
+<td>屏幕的像素宽度</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
 </tbody>
 </table>
-<h2 id="history"><a name="user-content-history" href="#history" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>history 对象</h2></article></body></html>
+<h2 id="history"><a name="user-content-history" href="#history" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>history 对象</h2>
+<p><code>history</code>对象记录了用户上网的历史记录，从窗口被打开的那一刻开始。因为<code>history</code>是<code>window</code>对象属性，所以每个窗口每个标签页甚至每个框架都有自己的history。<br />
+通过<code>go()</code>方法，可以在历史记录中任意跳转：<br />
+<div class="codehilite"><pre>//用数值来控制前后
+//后退一页
+history.go(-1);
+//前进一页
+history.go(1);
+//前进两页
+history.go(2);
+
+//也可以传递字符串，浏览器会跳到报告该字符串的第一个位置（可能前进，也可能后退）
+history.go(&quot;wrox.com&quot;); //跳到最近的包含wrox.com的页面
+
+//也可以通过 forward()和back()来控制前进后退
+history.forward(); //前进一页
+history.back();// 后退一页
+</pre></div>
+<br />
+<code>history.length</code> 保存了历史记录的数量，对于初次加载的页面而言，这个值为0</p>
+<h2 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>小结</h2>
+<p>BOM以window对象为依托，表示浏览器窗口和页面的可见区域。<br />
+使用框架的时候，每个框架都有自己的<code>window</code>对象及原生构造函数和其他函数的副本<br />
+有一些窗口指针，用来引用其他的框架:<code>window.frames[]</code><br />
+<code>top</code>对象始终指向最外围的框架，也就是整个浏览器<br />
+<code>parent</code>对象表示包含当前框架的框架，而<code>self</code>对象则回指<code>window</code><br />
+调用<code>replace()</code>可以导航到新的URL，且替换了浏览器历史记录中当前的页面</p></article></body></html>
