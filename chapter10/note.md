@@ -49,6 +49,21 @@ var firstChild =someNode.childNodes[0];
 var secondChild =someNode.childNodes.item(1);
 var count = someNode.childNodes.length;   //包含的子节点数量
 ```
+**关于`childNodes`节点的几个属性:**
+
+>
+`parentNode`:指向当前节点的父节点
+`previousSibling`: 当前节点的前一个节点 ,childNodes中第一个节点的previousSibling是null
+`nextSibling`:当前节点的后一个节点,childNodes中最后一个节点的nextSibling是null
+如果childNodes中只有一个节点，则previousSibling和nextSibling都是null
+`someNode.childNodes[0]=someNode.firstChild`
+`someNode.childNodes[someNode.childNodes.length-1]=someNode.lastChild`
+`如果someNode没有子节点,firstChild=lastChild=null`
+    
+所有节点都有属性`ownerDocument`，指向文档节点。通过这个属性可以不必回溯到顶端而直接访问文档节点
+
+3. 操作节点
+
 
 
 
