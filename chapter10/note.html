@@ -1109,6 +1109,7 @@ MathJax.Hub.Config({
 <li><a href="#dom">DOM</a><ul>
 <li><a href="#_1">节点层次</a><ul>
 <li><a href="#node">Node类型</a></li>
+<li><a href="#document">Document 类型</a></li>
 </ul>
 </li>
 </ul>
@@ -1147,10 +1148,8 @@ if (someNode.nodeType==1){
 </pre></div>
 <br />
 1. nodeName和nodeValue值<br />
-分别表示节点的名称和值。<br />
-对于元素节点，nodeName保存元素的标签名，nodeValue的值始终是null。</p>
-<ol>
-<li>节点关系<br />
+分别表示节点的名称和值。对于元素节点，nodeName保存元素的标签名，nodeValue的值始终是null。<br />
+2. 节点关系<br />
 每个节点都有<code>childNodes</code>属性，保存着<code>NodeList</code>对象。<code>NodeList</code>是类数组对象，保存一组有序的节点，并且是动态变化的，基于DOM结构动态执行查询的结果。<br />
 访问<code>NodeList</code>中保存的节点，可以通过<code>[]</code>语法访问，也可以通过<code>item()</code>方法:<br />
 <div class="codehilite"><pre>var firstChild =someNode.childNodes[0];
@@ -1158,8 +1157,7 @@ var secondChild =someNode.childNodes.item(1);
 var count = someNode.childNodes.length;   //包含的子节点数量
 </pre></div>
 <br />
-<strong>关于<code>childNodes</code>节点的几个属性:</strong></li>
-</ol>
+<strong>关于<code>childNodes</code>节点的几个属性:</strong></p>
 <blockquote>
 <p><code>parentNode</code>:指向当前节点的父节点<br />
 <code>previousSibling</code>: 当前节点的前一个节点 ,childNodes中第一个节点的previousSibling是null<br />
@@ -1169,15 +1167,103 @@ var count = someNode.childNodes.length;   //包含的子节点数量
 <code>someNode.childNodes[someNode.childNodes.length-1]=someNode.lastChild</code><br />
 <code>如果someNode没有子节点,firstChild=lastChild=null</code></p>
 </blockquote>
-<p>所有节点都有属性<code>ownerDocument</code>，指向文档节点。通过这个属性可以不必回溯到顶端而直接访问文档节点</p>
+<p>所有节点都有属性<code>ownerDocument</code>，指向文档节点。通过这个属性可以不必回溯到顶端而直接访问文档节点<br />
+3. 操作节点<br />
+<strong>向childNodes列表末尾添加节点<code>appendChild()</code>,添加之后childNodes新增节点，父节点等之间的关系指针都有相应的更新。<code>appendChild()</code>返回新增的节点</strong><br />
+<div class="codehilite"><pre>var returnedNode =someNode.appendChild(newNode);
+alert(returnedNode == newNode) ;//true
+alert(someNode.lastChild==newNode); //true   ,childNodes最后添加了一个新的节点
+</pre></div>
+<br />
+<strong>如果<code>appendChild()</code>操作的是旧的节点，则会将旧的节点移动到新的位置</strong>:<br />
+<div class="codehilite"><pre>//someNode有多个子节点
+var returnedNode=someNode.appendChild(someNode.firstChild);  //移动someNode的第一子节点到someNode.childNodes的末尾
+alert(returnedNode == someNode.firstChild);//false
+alert(returnedNode == someNode.lastChild);//true    
+</pre></div>
+<br />
+<strong>如果想把节点放在childNodes的某个特定位置，可以使用<code>inserBefore()</code>方法，该方法接收两个参数，要插入的节点和参照的节点。</strong><br />
+<strong>插入新的节点之后，新的节点会成为参照节点的前一个同胞节点(<code>previousSibling</code>),同时返回这个新的节点</strong><br />
+<strong>如果参照节点是<code>null</code>，则<code>inserBefore()</code>和<code>appendChild()</code>是一样的。</strong><br />
+<div class="codehilite"><pre>//插入后成为最后一个子节点
+returnedNode = someNode.insertBefore(newNode,null); //在最后null之前插入
+alert(newNode=someNode.lastChild); //true
+
+//插入后成为第一个子节点
+var returnedNode=someNode.insertBefore(newNode,someNode.firstChild);//在第一个子节点前面插入
+alert(newNode=someNode.firstChild); //true
+
+//插入到最后一个子节点前面
+var returnedNode=someNode.insertBefore(newNode,someNode.lastChild);
+alert(newNode==someNode.childNodes[someNode.childNodes.length-2]);//true
+</pre></div>
+</p>
+<p><strong><code>replaceChild()</code>可以用新节点替换旧的节点，第一个参数是要插入的节点，第二个参数是要被替换的节点。要被替换的节点将从文档树中移除。</strong><br />
+<div class="codehilite"><pre>//替换第一个子节点
+var returnedNode=someNode.replaceChild(newNode,someNode.firstChild);
+//替换最后一个子节点
+var returnedNode = someNode.replaceChild(newNode,someNode.lastChild);
+</pre></div>
+<br />
+<strong><code>removeChild()</code>可以移除节点，参数为要被移出的节点</strong><br />
+<div class="codehilite"><pre>//移除第一个子节点
+var formerFirstChild=someNode.removeChild(someNode.firstChild);
+//移除最后一个子节点
+var formerLastChild=someNode.removeChild(someNode.lastChild);
+</pre></div>
+<br />
+<strong>无论是<code>replaceChild()</code>替换掉的节点还是<code>removeChild()</code>删除的节点，仍然为文档所有，只是在文档树中没有位置。</strong></p>
+<p><strong>以上4个操作方法<code>appendChild(newNode)</code>,<code>insertBefore(newNode,oldNode)</code>,<code>replaceChild(newNode,oldNode)</code>和<code>removeChild(oldNode)</code>都是通过父节点(<code>parentNode</code>)操作，且必须是包子节点类型的节点上</strong><br />
+4. 其他方法<br />
+<strong><code>cloneNode()</code>，创建调用某个节点的副本，可选参数类为布尔值，表示是否是深度复制，返回的节点属于文档所有，但是没有父节点</strong><br />
+<div class="codehilite"><pre>someNode.cloneNode(true); //深度复制，复制本身节点和其子节点（如果有的话）
+someNode.cloneNode();// 只复制节点本身，不复制其子节点（如果有的话）
+</pre></div>
+<br />
+<strong>注意，<code>cloneNode()</code>只复制DOM节点，不会复制添加到节点上的Javascript属性，IE则会负责事件处理程序，因此建议在复制前，最好先移出事件处理程序</strong></p>
+<p><strong><code>normalize()</code>方法处理文档树中的文本节点，对于空的文本节点则删除，对于连续出现的文本节点则合并。</strong></p>
+<h3 id="document"><a name="user-content-document" href="#document" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Document 类型</h3>
+<p>JavaScript通过Document类型表示文档，在浏览器中,<code>document</code>对象是<code>HTMLDocument</code>(继承自Document类型)的一个实例，表示整个HTML页面，又是<code>window</code>的一个属性，可以当作全局对象访问。<br />
+Document节点的特征:</p>
+<blockquote>
+<p>nodeType =9 <br />
+nodeName 的值是 &ldquo;#document&rdquo;<br />
+nodeValue 的值为null<br />
+parentNode 为null<br />
+ownerDocument 值为null<br />
+其子节点可能是一个DocumentType（最多一个）,Element(最多一个),ProcessingInstruction或Comment</p>
+</blockquote>
+<p>Document类型可以表示HTML页面或者其他基于XML的文档，不过常见作为HTMLDocument的实例document对象</p>
 <ol>
-<li>操作节点</li>
+<li>文档的子节点<br />
+<code>document.documentElement</code>可取得<code>&lt;html&gt;</code><br />
+<code>document.body</code>可取得<code>&lt;body&gt;</code><br />
+<code>document.doctype</code>可取的<code>&lt;!DOCTYPE&gt;</code> <br />
+<div class="codehilite"><pre>document.documentElement==document.childNodes[0]==document.firstChild==&lt;html&gt;
+</pre></div>
+</li>
+<li>文档信息<br />
+<div class="codehilite"><pre>document.title //文档标题
+document.url //文档URL
+document.domian //文档域名
+document.referrer //取得来源页面的URL
+</pre></div>
+<br />
+特别注意domain设置的限制，如果开始是松散类型的，后面就不可以改成绷紧的:<br />
+<div class="codehilite"><pre>document.domain=&quot;wrox.com&quot;;  //松散
+document.domain=&quot;www.wrox.com&quot;; //紧绷的，会出错
+</pre></div>
+</li>
 </ol>
+<p>3.查找元素<br />
+<code>getElementById()</code>和<code>getElementsByTagName()</code>分别通过元素的ID（严格大小写匹配）和元素标签名称查找。<br />
+<code>getElementsByTagName()</code>返回的是零或者多个元素的NodeList</p>
 <div class="toc">
 <ul>
 <li><a href="#dom">DOM</a><ul>
 <li><a href="#_1">节点层次</a><ul>
 <li><a href="#node">Node类型</a></li>
+<li><a href="#document">Document 类型</a></li>
 </ul>
 </li>
 </ul>

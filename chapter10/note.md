@@ -38,9 +38,7 @@ if (someNode.nodeType==1){
 }
 ```
 1. nodeName和nodeValue值
-分别表示节点的名称和值。
-对于元素节点，nodeName保存元素的标签名，nodeValue的值始终是null。
-
+分别表示节点的名称和值。对于元素节点，nodeName保存元素的标签名，nodeValue的值始终是null。
 2. 节点关系
 每个节点都有`childNodes`属性，保存着`NodeList`对象。`NodeList`是类数组对象，保存一组有序的节点，并且是动态变化的，基于DOM结构动态执行查询的结果。
 访问`NodeList`中保存的节点，可以通过`[]`语法访问，也可以通过`item()`方法:
@@ -61,14 +59,98 @@ var count = someNode.childNodes.length;   //包含的子节点数量
 `如果someNode没有子节点,firstChild=lastChild=null`
     
 所有节点都有属性`ownerDocument`，指向文档节点。通过这个属性可以不必回溯到顶端而直接访问文档节点
-
 3. 操作节点
+**向childNodes列表末尾添加节点`appendChild()`,添加之后childNodes新增节点，父节点等之间的关系指针都有相应的更新。`appendChild()`返回新增的节点**
+```
+var returnedNode =someNode.appendChild(newNode);
+alert(returnedNode == newNode) ;//true
+alert(someNode.lastChild==newNode); //true   ,childNodes最后添加了一个新的节点
+```
+**如果`appendChild()`操作的是旧的节点，则会将旧的节点移动到新的位置**:
+```
+//someNode有多个子节点
+var returnedNode=someNode.appendChild(someNode.firstChild);  //移动someNode的第一子节点到someNode.childNodes的末尾
+alert(returnedNode == someNode.firstChild);//false
+alert(returnedNode == someNode.lastChild);//true    
+```
+**如果想把节点放在childNodes的某个特定位置，可以使用`inserBefore()`方法，该方法接收两个参数，要插入的节点和参照的节点。**
+**插入新的节点之后，新的节点会成为参照节点的前一个同胞节点(`previousSibling`),同时返回这个新的节点**
+**如果参照节点是`null`，则`inserBefore()`和`appendChild()`是一样的。**
+```
+//插入后成为最后一个子节点
+returnedNode = someNode.insertBefore(newNode,null); //在最后null之前插入
+alert(newNode=someNode.lastChild); //true
 
+//插入后成为第一个子节点
+var returnedNode=someNode.insertBefore(newNode,someNode.firstChild);//在第一个子节点前面插入
+alert(newNode=someNode.firstChild); //true
 
+//插入到最后一个子节点前面
+var returnedNode=someNode.insertBefore(newNode,someNode.lastChild);
+alert(newNode==someNode.childNodes[someNode.childNodes.length-2]);//true
+```
 
+**`replaceChild()`可以用新节点替换旧的节点，第一个参数是要插入的节点，第二个参数是要被替换的节点。要被替换的节点将从文档树中移除。**
+```
+//替换第一个子节点
+var returnedNode=someNode.replaceChild(newNode,someNode.firstChild);
+//替换最后一个子节点
+var returnedNode = someNode.replaceChild(newNode,someNode.lastChild);
+```
+**`removeChild()`可以移除节点，参数为要被移出的节点**
+```
+//移除第一个子节点
+var formerFirstChild=someNode.removeChild(someNode.firstChild);
+//移除最后一个子节点
+var formerLastChild=someNode.removeChild(someNode.lastChild);
+```
+**无论是`replaceChild()`替换掉的节点还是`removeChild()`删除的节点，仍然为文档所有，只是在文档树中没有位置。**
 
+**以上4个操作方法`appendChild(newNode)`,`insertBefore(newNode,oldNode)`,`replaceChild(newNode,oldNode)`和`removeChild(oldNode)`都是通过父节点(`parentNode`)操作，且必须是包子节点类型的节点上**
+4. 其他方法
+**`cloneNode()`，创建调用某个节点的副本，可选参数类为布尔值，表示是否是深度复制，返回的节点属于文档所有，但是没有父节点**
+```
+someNode.cloneNode(true); //深度复制，复制本身节点和其子节点（如果有的话）
+someNode.cloneNode();// 只复制节点本身，不复制其子节点（如果有的话）
+```
+**注意，`cloneNode()`只复制DOM节点，不会复制添加到节点上的Javascript属性，IE则会负责事件处理程序，因此建议在复制前，最好先移出事件处理程序**
 
+**`normalize()`方法处理文档树中的文本节点，对于空的文本节点则删除，对于连续出现的文本节点则合并。**
 
+### Document 类型
+JavaScript通过Document类型表示文档，在浏览器中,`document`对象是`HTMLDocument`(继承自Document类型)的一个实例，表示整个HTML页面，又是`window`的一个属性，可以当作全局对象访问。
+Document节点的特征:
+>nodeType =9 
+nodeName 的值是 "#document"
+nodeValue 的值为null
+parentNode 为null
+ownerDocument 值为null
+其子节点可能是一个DocumentType（最多一个）,Element(最多一个),ProcessingInstruction或Comment
 
+Document类型可以表示HTML页面或者其他基于XML的文档，不过常见作为HTMLDocument的实例document对象
+
+1. 文档的子节点
+`document.documentElement`可取得`<html>`
+`document.body`可取得`<body>`
+`document.doctype`可取的`<!DOCTYPE>`   
+```
+document.documentElement==document.childNodes[0]==document.firstChild==<html>
+```
+2. 文档信息
+```
+document.title //文档标题
+document.url //文档URL
+document.domian //文档域名
+document.referrer //取得来源页面的URL
+```
+特别注意domain设置的限制，如果开始是松散类型的，后面就不可以改成绷紧的:
+```
+document.domain="wrox.com";  //松散
+document.domain="www.wrox.com"; //紧绷的，会出错
+```
+
+3.查找元素
+`getElementById()`和`getElementsByTagName()`分别通过元素的ID（严格大小写匹配）和元素标签名称查找。
+`getElementsByTagName()`返回的是零或者多个元素的NodeList
 
 [TOC]
