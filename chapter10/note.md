@@ -294,7 +294,6 @@ var id=element.attributes["id"].nodeValue'
 ```
 
 `element.attributes.removeNamedItem("特性名称")`与在元素上调用`removeAttribute("特性名")`效果一致，唯一区别是`removeNamedItem("特性名称")`会返回被删除的特性的Attr节点
-
 5. 创建元素
 
 
