@@ -1110,6 +1110,7 @@ MathJax.Hub.Config({
 <li><a href="#_1">节点层次</a><ul>
 <li><a href="#node">Node类型</a></li>
 <li><a href="#document">Document 类型</a></li>
+<li><a href="#element">Element 类型</a></li>
 </ul>
 </li>
 </ul>
@@ -1257,13 +1258,228 @@ document.domain=&quot;www.wrox.com&quot;; //紧绷的，会出错
 </ol>
 <p>3.查找元素<br />
 <code>getElementById()</code>和<code>getElementsByTagName()</code>分别通过元素的ID（严格大小写匹配）和元素标签名称查找。<br />
-<code>getElementsByTagName()</code>返回的是零或者多个元素的NodeList</p>
+<strong><code>getElementsByTagName()</code>返回的是零或者多个元素的NodeList，在HTML中这个方法返回一个HTMLCollection对象，作为“动态”集合。可以通过<code>[]</code>语法或者<code>item()</code>方法访问HTMLcollection中的对象项，这个对象中的数量可以通过<code>length</code>属性取得。</strong><br />
+<div class="codehilite"><pre>var images=document.getElementsByTagName(&quot;img&quot;);
+alert(images.length); //图片数量
+alert(images[0].src);  //第一张图片src
+alert(images.item(0).src);  //第一张图片src
+</pre></div>
+<br />
+HTMLCollection还包含方法<code>namedItem()</code>，通过元素节点的<code>name</code>属性获取元素。<br />
+<div class="codehilite"><pre>&lt;img src=&quot;myimage.gif&quot; name=&quot;myImage&quot;&gt;
+
+var myImg=images.namedItem(&quot;myImage&quot;)； //   **通过id或者name获取元素（当id不存在的时候查找name)**
+</pre></div>
+</p>
+<p>关于HTMLCollection:</p>
+<blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCollection">https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCollection</a><br />
+HTMLCollection.item()<br />
+根据给定的索引（从0开始），返回具体的节点。如果索引超出了范围，则返回 null。<br />
+HTMLCollection.namedItem()<br />
+根据 Id 返回指定节点，或者作为备用，根据字符串所表示的 name 属性来匹配。根据 name 匹配只能作为最后的依赖，并且只有当被引用的元素支持 name 属性时才能被匹配。如果不存在符合给定 name 的节点，则返回 null。</p>
+</blockquote>
+<p><code>getElementsByName()</code>获取特定<code>name</code>的所有元素，最常用的是获取单选按钮：<br />
+<div class="codehilite"><pre><span class="nt">&lt;fieldset&gt;</span>
+    <span class="nt">&lt;legend&gt;</span>Which color do you prefer?<span class="nt">&lt;/legend&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+        <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;color&quot;</span> <span class="na">value=</span><span class="s">&quot;red&quot;</span> <span class="na">id=</span><span class="s">&quot;colorRed&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;colorRed&quot;</span><span class="nt">&gt;</span>Red<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;color&quot;</span> <span class="na">value=</span><span class="s">&quot;green&quot;</span> <span class="na">id=</span><span class="s">&quot;colorGreen&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;colorGreen&quot;</span><span class="nt">&gt;</span>Green<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;color&quot;</span> <span class="na">value=</span><span class="s">&quot;blue&quot;</span> <span class="na">id=</span><span class="s">&quot;colorBlue&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;colorBlue&quot;</span><span class="nt">&gt;</span>Blue<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/fieldset&gt;</span>
+</pre></div>
+<br />
+4.特殊集合<br />
+<code>document</code>对象还有一些特殊集合，都属于<code>HTMLCollection</code>对象：</p>
+<blockquote>
+<p><code>document.anchors</code>：包含所有带<code>name</code>的<code>a</code>元素.<br />
+<code>document.applets</code>：包含所有的<code>applet</code>元素.<br />
+<code>document.forms</code>：包含所有的<code>form</code>元素，与<code>document.getElementsByTagName("form")</code>结果一致<br />
+<code>document.images</code>：包含所有的<code>img</code>元素，与<code>document.getElementsByTagName("img")</code>结果一致<br />
+<code>document.links</code>：包含所有的带<code>href</code>的<code>a</code>元素</p>
+</blockquote>
+<p>5.DOM 一致性检测<br />
+<code>document.implementation</code>实现了对浏览器DOM检测的功能。</p>
+<blockquote>
+<p>DOM1的检测方法: document.implementation.hasFeature(&ldquo;要检测的DOM1的功能名称&rdquo;,&rdquo;对应的功能版本号&rdquo;);如果浏览器支持则返回<code>true</code></p>
+</blockquote>
+<div class="codehilite"><pre>//检测浏览器是否支持DOM1的XML1.0版本
+var hasXmlDom=document.implementation.hasFeature(&quot;XML&quot;,&quot;1.0&quot;);
+</pre></div>
+
+
+<p>可检测的功能和版本号:</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>版本号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core</td>
+<td>1.0 、2.0、3.0</td>
+<td>基本的DOM，用于描述表现文档的节点树</td>
+</tr>
+<tr>
+<td>XML</td>
+<td>1.0、2.0、3.0</td>
+<td>Core的XML扩展，添加了对CDATA、处理指令和实体的支持</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>1.0、2.0</td>
+<td>XML的HTML扩展，添加了对HTML特有元素及实体的支持</td>
+</tr>
+<tr>
+<td>Views</td>
+<td>2.0</td>
+<td>基于某些样式完成文档的格式化</td>
+</tr>
+<tr>
+<td>StyleSheets</td>
+<td>2.0</td>
+<td>将样式表关联到文档</td>
+</tr>
+<tr>
+<td>CSS</td>
+<td>2.0</td>
+<td>对层叠样式表1级的支持</td>
+</tr>
+<tr>
+<td>CSS2</td>
+<td>2.0</td>
+<td>对层叠样式表2级的支持</td>
+</tr>
+<tr>
+<td>Events</td>
+<td>2.0、3.0</td>
+<td>常规的DOM事件</td>
+</tr>
+<tr>
+<td>UIEvents</td>
+<td>2.0、3.0</td>
+<td>用户界面事件</td>
+</tr>
+<tr>
+<td>MouseEvents</td>
+<td>2.0、3.0</td>
+<td>由鼠标引发的事件(click、mouseover等)</td>
+</tr>
+<tr>
+<td>MutationEvents</td>
+<td>2.0、3.0</td>
+<td>DOM树变化时引发的事件</td>
+</tr>
+<tr>
+<td>HTMLEvents</td>
+<td>2.0</td>
+<td>HTML4.01事件</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>2.0</td>
+<td>用于操作DOM树中某个范围ide对象和方法</td>
+</tr>
+<tr>
+<td>Traversal</td>
+<td>2.0</td>
+<td>遍历DOM树的方法</td>
+</tr>
+<tr>
+<td>LS</td>
+<td>3.0</td>
+<td>文件和DOM树之间的同步加载和保存</td>
+</tr>
+<tr>
+<td>LS-Async</td>
+<td>3.0</td>
+<td>文件和DOM树之间的异步加载和保存</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>3.0</td>
+<td>在确保有效的前提下修改DOM树的方法</td>
+</tr>
+</tbody>
+</table>
+<p>6.文档写入<br />
+<div class="codehilite"><pre>document.write();  //原样写入到页面
+document.writeln();   //末尾会添加换行符
+document.open()
+document.close();
+</pre></div>
+<br />
+需要注意转义&rdquo;"</p>
+<h3 id="element"><a name="user-content-element" href="#element" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Element 类型</h3>
+<p>Element类型用于表现XML或HTML元素，具有以下特征:</p>
+<blockquote>
+<p>nodeType = 1<br />
+   nodeName 为元素的标签名<br />
+   nodeValue 值为 null<br />
+   parentNode 可能是Document 或者 ELement<br />
+   其子节点可能是Element、Text、Comment、ProcessingInstruction、CDATASection或者EntityReference</p>
+</blockquote>
+<p>要访问元素可以使用<code>nodeName</code>属性或者<code>tagName</code>属性 </p>
+<p>1.HTML元素<br />
+HTML元素都有的特性:</p>
+<blockquote>
+<p><code>id</code>,元素在文档中的唯一标识<br />
+<code>title</code>,有关元素的附加说明，一般通过工具提示条显示<br />
+<code>lang</code>,元素内容的语言代码，很少用<br />
+<code>dir</code>,语言的方向，值为&rdquo;<code>lrt</code>&ldquo;(left-to-right)或者&rdquo;<code>rtl</code>&ldquo;(right-to-left),很少使用<br />
+<code>className</code>,元素与class特性对应，为元素指定CSS类，由于<code>class</code>是ECMAScript的保留字，所以使用<code>className</code></p>
+</blockquote>
+<p>2.取得特性<br />
+操作元素特性的DOM方法主要有三个:<code>getAttribute()</code>，<code>setAttribute()</code>，<code>removeAttribute()</code></p>
+<p>通过<code>getAttribute()</code>方法也可以取得自定义特性，特性名称不区分大小写,&rdquo;ID&rdquo;和&rdquo;id&rdquo;代表的都是同一个特性。</p>
+<p>3.设置特性<br />
+<div class="codehilite"><pre>setAtttribute(&quot;特性名称&quot;,&quot;特性值&quot;);
+</pre></div>
+<br />
+<strong>如果特性已经存在，则更新特性的值，通过<code>setAttribute()</code>方法即可以操作HTML的特性特可以操作自定义的特性。这个方法会统一将特性名称全部转换为小写。</strong><br />
+通过<code>元素.特性名称=特性值</code>这样的方式添加自定义属性，是无法添加成功的。<br />
+<div class="codehilite"><pre>removeAttribute(&quot;特性名称&quot;);
+</pre></div>
+<br />
+特性和特性值都会彻底被删除</p>
+<p>4.attributes 属性<br />
+<strong>Element类型是使用attributes属性的唯一一个DOM节点类型，其中包含<code>NamedNodeMap</code>与<code>NodeList</code>类似是一个&rdquo;动态&rdquo;集合。<code>NamedNodeMap</code>保存了元素的每个特性，这个特性有<code>Attr</code>节点表示。</strong><br />
+<code>NamedNodemap</code>对象有下列方法：</p>
+<blockquote>
+<p><code>getNamedItem(name)</code>，返回nodeName属性等于name的节点<br />
+<code>removeNamedItem(name)</code>，从列表删除nodeName属性等于name的节点<br />
+<code>setNamedItem(node)</code>，向列表添加节点，以节点的nodeName属性为索引。<br />
+<code>item(pos)</code> ，返回位于数字pos位置处的节点</p>
+</blockquote>
+<p><code>attributes</code>属性包含一系列节点。每个节点的<code>nodeName</code>就是特性的名称，节点的<code>nodeValue</code>就是特性的值<br />
+<div class="codehilite"><pre>//获取ID的值
+var id=element.attributes.getNamedItem(&quot;id&quot;).nodeValue;
+//与下面方法一致
+var id=element.attributes[&quot;id&quot;].nodeValue&#39;
+</pre></div>
+</p>
+<p><code>element.attributes.removeNamedItem("特性名称")</code>与在元素上调用<code>removeAttribute("特性名")</code>效果一致，唯一区别是<code>removeNamedItem("特性名称")</code>会返回被删除的特性的Attr节点</p>
+<p>123</p>
 <div class="toc">
 <ul>
 <li><a href="#dom">DOM</a><ul>
 <li><a href="#_1">节点层次</a><ul>
 <li><a href="#node">Node类型</a></li>
 <li><a href="#document">Document 类型</a></li>
+<li><a href="#element">Element 类型</a></li>
 </ul>
 </li>
 </ul>

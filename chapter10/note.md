@@ -151,6 +151,152 @@ document.domain="www.wrox.com"; //紧绷的，会出错
 
 3.查找元素
 `getElementById()`和`getElementsByTagName()`分别通过元素的ID（严格大小写匹配）和元素标签名称查找。
-`getElementsByTagName()`返回的是零或者多个元素的NodeList
+**`getElementsByTagName()`返回的是零或者多个元素的NodeList，在HTML中这个方法返回一个HTMLCollection对象，作为“动态”集合。可以通过`[]`语法或者`item()`方法访问HTMLcollection中的对象项，这个对象中的数量可以通过`length`属性取得。**
+```
+var images=document.getElementsByTagName("img");
+alert(images.length); //图片数量
+alert(images[0].src);  //第一张图片src
+alert(images.item(0).src);  //第一张图片src
+```
+HTMLCollection还包含方法`namedItem()`，通过元素节点的`name`属性获取元素。
+```
+<img src="myimage.gif" name="myImage">
+
+var myImg=images.namedItem("myImage")； //   **通过id或者name获取元素（当id不存在的时候查找name)**
+
+```
+
+关于HTMLCollection:
+>https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCollection
+HTMLCollection.item()
+根据给定的索引（从0开始），返回具体的节点。如果索引超出了范围，则返回 null。
+HTMLCollection.namedItem()
+根据 Id 返回指定节点，或者作为备用，根据字符串所表示的 name 属性来匹配。根据 name 匹配只能作为最后的依赖，并且只有当被引用的元素支持 name 属性时才能被匹配。如果不存在符合给定 name 的节点，则返回 null。
+
+
+`getElementsByName()`获取特定`name`的所有元素，最常用的是获取单选按钮：
+```
+<fieldset>
+    <legend>Which color do you prefer?</legend>
+    <ul>
+        <li>
+            <input type="radio" name="color" value="red" id="colorRed">
+            <label for="colorRed">Red</label>
+        </li>
+        <li>
+            <input type="radio" name="color" value="green" id="colorGreen">
+            <label for="colorGreen">Green</label>
+        </li>
+        <li>
+            <input type="radio" name="color" value="blue" id="colorBlue">
+            <label for="colorBlue">Blue</label>
+        </li>
+    </ul>
+</fieldset>
+```
+4.特殊集合
+`document`对象还有一些特殊集合，都属于`HTMLCollection`对象：
+>`document.anchors`：包含所有带`name`的`a`元素.
+   `document.applets`：包含所有的`applet`元素.
+   `document.forms`：包含所有的`form`元素，与`document.getElementsByTagName("form")`结果一致
+    `document.images`：包含所有的`img`元素，与`document.getElementsByTagName("img")`结果一致
+    `document.links`：包含所有的带`href`的`a`元素
+
+5.DOM 一致性检测
+`document.implementation`实现了对浏览器DOM检测的功能。
+>DOM1的检测方法: document.implementation.hasFeature("要检测的DOM1的功能名称","对应的功能版本号");如果浏览器支持则返回`true`
+
+```
+//检测浏览器是否支持DOM1的XML1.0版本
+var hasXmlDom=document.implementation.hasFeature("XML","1.0");
+```
+
+可检测的功能和版本号:
+
+| 功能 | 版本号 | 说明 |
+| -- | -- | -- |
+| Core | 1.0 、2.0、3.0 | 基本的DOM，用于描述表现文档的节点树 |
+| XML | 1.0、2.0、3.0 | Core的XML扩展，添加了对CDATA、处理指令和实体的支持 |
+| HTML | 1.0、2.0 | XML的HTML扩展，添加了对HTML特有元素及实体的支持 |
+| Views | 2.0 | 基于某些样式完成文档的格式化 |
+| StyleSheets | 2.0 | 将样式表关联到文档 |
+| CSS | 2.0 | 对层叠样式表1级的支持 |
+| CSS2 | 2.0 | 对层叠样式表2级的支持 |
+| Events | 2.0、3.0 | 常规的DOM事件 |
+| UIEvents | 2.0、3.0 | 用户界面事件 | 
+| MouseEvents | 2.0、3.0 | 由鼠标引发的事件(click、mouseover等) |
+| MutationEvents | 2.0、3.0 | DOM树变化时引发的事件 |
+| HTMLEvents | 2.0 | HTML4.01事件 |
+| Range | 2.0 | 用于操作DOM树中某个范围ide对象和方法 |
+| Traversal | 2.0 | 遍历DOM树的方法 |
+| LS | 3.0 | 文件和DOM树之间的同步加载和保存 |
+| LS-Async | 3.0 | 文件和DOM树之间的异步加载和保存 |
+| Validation | 3.0 | 在确保有效的前提下修改DOM树的方法 |
+
+6.文档写入
+```
+document.write();  //原样写入到页面
+document.writeln();   //末尾会添加换行符
+document.open()
+document.close();
+```
+需要注意转义"\"
+
+### Element 类型
+Element类型用于表现XML或HTML元素，具有以下特征:
+>nodeType = 1
+   nodeName 为元素的标签名
+   nodeValue 值为 null
+   parentNode 可能是Document 或者 ELement
+   其子节点可能是Element、Text、Comment、ProcessingInstruction、CDATASection或者EntityReference
+
+要访问元素可以使用`nodeName`属性或者`tagName`属性 
+
+1.HTML元素
+HTML元素都有的特性:
+>`id`,元素在文档中的唯一标识
+`title`,有关元素的附加说明，一般通过工具提示条显示
+`lang`,元素内容的语言代码，很少用
+`dir`,语言的方向，值为"`lrt`"(left-to-right)或者"`rtl`"(right-to-left),很少使用
+`className`,元素与class特性对应，为元素指定CSS类，由于`class`是ECMAScript的保留字，所以使用`className`
+
+2.取得特性
+操作元素特性的DOM方法主要有三个:`getAttribute()`，`setAttribute()`，`removeAttribute()`
+
+通过`getAttribute()`方法也可以取得自定义特性，特性名称不区分大小写,"ID"和"id"代表的都是同一个特性。
+
+
+3.设置特性
+```
+setAtttribute("特性名称","特性值");
+```
+**如果特性已经存在，则更新特性的值，通过`setAttribute()`方法即可以操作HTML的特性特可以操作自定义的特性。这个方法会统一将特性名称全部转换为小写。**
+通过`元素.特性名称=特性值`这样的方式添加自定义属性，是无法添加成功的。
+```
+removeAttribute("特性名称");
+```
+特性和特性值都会彻底被删除
+
+4.attributes 属性
+**Element类型是使用attributes属性的唯一一个DOM节点类型，其中包含`NamedNodeMap`与`NodeList`类似是一个"动态"集合。`NamedNodeMap`保存了元素的每个特性，这个特性有`Attr`节点表示。**
+`NamedNodemap`对象有下列方法：
+>`getNamedItem(name)`，返回nodeName属性等于name的节点
+`removeNamedItem(name)`，从列表删除nodeName属性等于name的节点
+`setNamedItem(node)`，向列表添加节点，以节点的nodeName属性为索引。
+`item(pos)` ，返回位于数字pos位置处的节点
+
+`attributes`属性包含一系列节点。每个节点的`nodeName`就是特性的名称，节点的`nodeValue`就是特性的值
+```
+//获取ID的值
+var id=element.attributes.getNamedItem("id").nodeValue;
+//与下面方法一致
+var id=element.attributes["id"].nodeValue'
+```
+
+`element.attributes.removeNamedItem("特性名称")`与在元素上调用`removeAttribute("特性名")`效果一致，唯一区别是`removeNamedItem("特性名称")`会返回被删除的特性的Attr节点
+
+5. 创建元素
+
+
 
 [TOC]
