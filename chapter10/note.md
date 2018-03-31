@@ -327,6 +327,53 @@ text节点有以下特征：
 ```
 document.createTextNode("文本内容");
 ```
+新创建的文本节点如果要在页面显示，必须通过`appendChild()`，`insertBefore()`，`replaceChild()`方法。
+```
+var element=document.createElement("div");
+  element.className="message";
+var textNode = document.createTextNode("Hello world!");
+  element.appendChild(textNode);
+var anotherTextNode = document.createTextNode("Yippee!");
+ element.appendChild(anotherTextNode);
+document.body.appendChild(element);
+```
+
+2.规范化文本节点
+在一个包含多个节点的父元素调用`normalize()`，则会把所有文本节点合并为一个:
+```
+var element=document.createElement("div");
+  element.className="message";
+var textNode = document.createTextNode("Hello world!");
+  element.appendChild(textNode);
+var anotherTextNode = document.createTextNode("Yippee!");
+ element.appendChild(anotherTextNode);
+document.body.appendChild(element);
+
+alert(element.childNodes.length);  //2
+
+element.normalize();  //合并文本节点
+alert(element.childNodes.length);  //1
+```
+
+3.分割文本节点
+与`normalize()`相反，`splitText()`方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue):
+**`splitText(index)` 也可以理解为截取的长度**
+```
+var element=document.createElement("div");
+  element.className="message";
+var textNode = document.createTextNode("Hello123world!");
+  element.appendChild(textNode);
+
+document.body.appendChild(element);
+
+var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位置)为一个内容，剩下的为另外一个内容
+//“Hello ”, "world!"
+  alert(element.firstChild.nodeValue);//  "Hello"
+  alert(newNode.nodeValue);  //返回分割后新的文本 "world!"
+  alert(element.childNodes.length);    //2
+
+
+```
 
 
 

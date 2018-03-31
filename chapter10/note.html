@@ -1505,6 +1505,49 @@ var id=element.attributes[&quot;id&quot;].nodeValue&#39;
 <p>1.创建文本节点<br />
 <div class="codehilite"><pre>document.createTextNode(&quot;文本内容&quot;);
 </pre></div>
+<br />
+新创建的文本节点如果要在页面显示，必须通过<code>appendChild()</code>，<code>insertBefore()</code>，<code>replaceChild()</code>方法。<br />
+<div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
+  element.className=&quot;message&quot;;
+var textNode = document.createTextNode(&quot;Hello world!&quot;);
+  element.appendChild(textNode);
+var anotherTextNode = document.createTextNode(&quot;Yippee!&quot;);
+ element.appendChild(anotherTextNode);
+document.body.appendChild(element);
+</pre></div>
+</p>
+<p>2.规范化文本节点<br />
+在一个包含多个节点的父元素调用<code>normalize()</code>，则会把所有文本节点合并为一个:<br />
+<div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
+  element.className=&quot;message&quot;;
+var textNode = document.createTextNode(&quot;Hello world!&quot;);
+  element.appendChild(textNode);
+var anotherTextNode = document.createTextNode(&quot;Yippee!&quot;);
+ element.appendChild(anotherTextNode);
+document.body.appendChild(element);
+
+alert(element.childNodes.length);  //2
+
+element.normalize();  //合并文本节点
+alert(element.childNodes.length);  //1
+</pre></div>
+</p>
+<p>3.分割文本节点<br />
+与<code>normalize()</code>相反，<code>splitText()</code>方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue):<br />
+<strong><code>splitText(index)</code> 也可以理解为截取的长度</strong><br />
+<div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
+  element.className=&quot;message&quot;;
+var textNode = document.createTextNode(&quot;Hello123world!&quot;);
+  element.appendChild(textNode);
+
+document.body.appendChild(element);
+
+var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位置)为一个内容，剩下的为另外一个内容
+//“Hello ”, &quot;world!&quot;
+  alert(element.firstChild.nodeValue);//  &quot;Hello&quot;
+  alert(newNode.nodeValue);  //返回分割后新的文本 &quot;world!&quot;
+  alert(element.childNodes.length);    //2
+</pre></div>
 </p>
 <div class="toc">
 <ul>
