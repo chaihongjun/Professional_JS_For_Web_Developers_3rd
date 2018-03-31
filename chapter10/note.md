@@ -295,6 +295,39 @@ var id=element.attributes["id"].nodeValue'
 
 `element.attributes.removeNamedItem("特性名称")`与在元素上调用`removeAttribute("特性名")`效果一致，唯一区别是`removeNamedItem("特性名称")`会返回被删除的特性的Attr节点
 5. 创建元素
+```
+document.createElement("标签名");
+```
+`createElement`创建的元素同时也设置了`ownerDocument`属性，但是新元素没有被添加到DOM文档树中，需要通过`appendChild()`，`insertBefore()`或者`replaceChild()`方法添加。
+
+6. 元素的子节点
+```
+element.getElementsByTagName("元素名称");
+```
+`getELementsByTagName()`也支持从元素节点开始查找
+
+### Text 类型
+text节点有以下特征：
+>nodeType = 3
+   nodeName 的值为"#text"
+   nodeValue 的值为节点所包含的文本
+   parentNode  是一个Element
+   没有子节点
+   data属性和nodeValue属性一样可以访问Text节点中的文本，而且互相影响。以下方法可以操作节点中的文本
+   `appendData(text)`，将text加到节点的末尾
+   `deleteData(offset,count)`，从`offset`位置开始删除`count`个字符
+   `insertData(offset,text)`，在`offset`位置插入文本`text`
+   `replaceData(offset,count,text)`，用`text`替换从`offset`开始到`offset+count`处的文本
+   `splitText(offset)`，从`offset`位置开始将当前文本节点分成两个文本节点
+    `substringData(offset,count)`，提取从`offset`开始到`offset+count`的字符串
+
+文本节点的`length`属性保存着节点中的字符数
+
+1.创建文本节点
+```
+document.createTextNode("文本内容");
+```
+
 
 
 

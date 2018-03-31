@@ -1111,6 +1111,7 @@ MathJax.Hub.Config({
 <li><a href="#node">Node类型</a></li>
 <li><a href="#document">Document 类型</a></li>
 <li><a href="#element">Element 类型</a></li>
+<li><a href="#text">Text 类型</a></li>
 </ul>
 </li>
 </ul>
@@ -1472,7 +1473,39 @@ var id=element.attributes[&quot;id&quot;].nodeValue&#39;
 </pre></div>
 </p>
 <p><code>element.attributes.removeNamedItem("特性名称")</code>与在元素上调用<code>removeAttribute("特性名")</code>效果一致，唯一区别是<code>removeNamedItem("特性名称")</code>会返回被删除的特性的Attr节点<br />
-5. 创建元素</p>
+5. 创建元素<br />
+<div class="codehilite"><pre>document.createElement(&quot;标签名&quot;);
+</pre></div>
+<br />
+<code>createElement</code>创建的元素同时也设置了<code>ownerDocument</code>属性，但是新元素没有被添加到DOM文档树中，需要通过<code>appendChild()</code>，<code>insertBefore()</code>或者<code>replaceChild()</code>方法添加。</p>
+<ol>
+<li>元素的子节点<br />
+<div class="codehilite"><pre>element.getElementsByTagName(&quot;元素名称&quot;);
+</pre></div>
+<br />
+<code>getELementsByTagName()</code>也支持从元素节点开始查找</li>
+</ol>
+<h3 id="text"><a name="user-content-text" href="#text" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Text 类型</h3>
+<p>text节点有以下特征：</p>
+<blockquote>
+<p>nodeType = 3<br />
+   nodeName 的值为&rdquo;#text&rdquo;<br />
+   nodeValue 的值为节点所包含的文本<br />
+   parentNode  是一个Element<br />
+   没有子节点<br />
+   data属性和nodeValue属性一样可以访问Text节点中的文本，而且互相影响。以下方法可以操作节点中的文本<br />
+<code>appendData(text)</code>，将text加到节点的末尾<br />
+<code>deleteData(offset,count)</code>，从<code>offset</code>位置开始删除<code>count</code>个字符<br />
+<code>insertData(offset,text)</code>，在<code>offset</code>位置插入文本<code>text</code><br />
+<code>replaceData(offset,count,text)</code>，用<code>text</code>替换从<code>offset</code>开始到<code>offset+count</code>处的文本<br />
+<code>splitText(offset)</code>，从<code>offset</code>位置开始将当前文本节点分成两个文本节点<br />
+<code>substringData(offset,count)</code>，提取从<code>offset</code>开始到<code>offset+count</code>的字符串</p>
+</blockquote>
+<p>文本节点的<code>length</code>属性保存着节点中的字符数</p>
+<p>1.创建文本节点<br />
+<div class="codehilite"><pre>document.createTextNode(&quot;文本内容&quot;);
+</pre></div>
+</p>
 <div class="toc">
 <ul>
 <li><a href="#dom">DOM</a><ul>
@@ -1480,6 +1513,7 @@ var id=element.attributes[&quot;id&quot;].nodeValue&#39;
 <li><a href="#node">Node类型</a></li>
 <li><a href="#document">Document 类型</a></li>
 <li><a href="#element">Element 类型</a></li>
+<li><a href="#text">Text 类型</a></li>
 </ul>
 </li>
 </ul>
