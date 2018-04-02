@@ -357,7 +357,7 @@ alert(element.childNodes.length);  //1
 
 3.分割文本节点
 与`normalize()`相反，`splitText()`方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue):
-**`splitText(index)` 也可以理解为截取的长度**
+**`splitText(index)` 其中`index`也可以理解为截取的长度**
 ```
 var element=document.createElement("div");
   element.className="message";
@@ -375,7 +375,12 @@ var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位�
 
 ```
 
-
+### Comment 类型
+> nodeType  = 8
+> nodeName = "#comment"
+> nodeValue  注释的内容
+> parentNode 可能是Document或者Element
+> 不支持子节点
 
 
 [TOC]

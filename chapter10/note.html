@@ -1112,6 +1112,7 @@ MathJax.Hub.Config({
 <li><a href="#document">Document 类型</a></li>
 <li><a href="#element">Element 类型</a></li>
 <li><a href="#text">Text 类型</a></li>
+<li><a href="#comment">Comment 类型</a></li>
 </ul>
 </li>
 </ul>
@@ -1534,7 +1535,7 @@ alert(element.childNodes.length);  //1
 </p>
 <p>3.分割文本节点<br />
 与<code>normalize()</code>相反，<code>splitText()</code>方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue):<br />
-<strong><code>splitText(index)</code> 也可以理解为截取的长度</strong><br />
+<strong><code>splitText(index)</code> 其中<code>index</code>也可以理解为截取的长度</strong><br />
 <div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
   element.className=&quot;message&quot;;
 var textNode = document.createTextNode(&quot;Hello123world!&quot;);
@@ -1549,6 +1550,14 @@ var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位�
   alert(element.childNodes.length);    //2
 </pre></div>
 </p>
+<h3 id="comment"><a name="user-content-comment" href="#comment" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Comment 类型</h3>
+<blockquote>
+<p>nodeType  = 8<br />
+nodeName = &ldquo;#comment&rdquo;<br />
+nodeValue  注释的内容<br />
+parentNode 可能是Document或者Element<br />
+不支持子节点</p>
+</blockquote>
 <div class="toc">
 <ul>
 <li><a href="#dom">DOM</a><ul>
@@ -1557,6 +1566,7 @@ var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位�
 <li><a href="#document">Document 类型</a></li>
 <li><a href="#element">Element 类型</a></li>
 <li><a href="#text">Text 类型</a></li>
+<li><a href="#comment">Comment 类型</a></li>
 </ul>
 </li>
 </ul>
