@@ -356,7 +356,7 @@ alert(element.childNodes.length);  //1
 ```
 
 3.分割文本节点
-与`normalize()`相反，`splitText()`方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue):
+与`normalize()`相反，`splitText()`方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue),返回的是新的文本节点:
 **`splitText(index)` 其中`index`也可以理解为截取的长度**
 ```
 var element=document.createElement("div");
@@ -366,7 +366,7 @@ var textNode = document.createTextNode("Hello123world!");
 
 document.body.appendChild(element);
 
-var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位置)为一个内容，剩下的为另外一个内容
+var newNode =element.firstChild.splitText(5);//  从开头到索引5(不含5位置)为一个内容，剩下的为另外一个内容
 //“Hello ”, "world!"
   alert(element.firstChild.nodeValue);//  "Hello"
   alert(newNode.nodeValue);  //返回分割后新的文本 "world!"
@@ -381,6 +381,68 @@ var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位�
 > nodeValue  注释的内容
 > parentNode 可能是Document或者Element
 > 不支持子节点
+
+Comment和Text类型继承自相同的基类，拥有除了`splitText()`之外的所有字符串操作方法，另外`nodeValue`或`data`可以取得注释的内容
+```
+//注释节点
+document.createComment("注释内容");
+```
+
+### CDATASection 类型
+`CDATASection`类型只针对基于XML的文档，表示的是CDATA区域。CDATASection类型继承自Text类型。所以拥有除了`splitText()`之外的所有字符串操作方法。
+`CDATASection`节点特征：
+>nodeType = 4
+   nodeName 值是 "#cdata-section"
+   nodeValue的值是CDATA区域中的内容
+  parentNode 可能是Document或者Element
+  没有子节点
+
+由于CDATA区域只出现在XML文档中，所以多数浏览器把CDATA解析为Comment或者Element
+
+
+### DocumentType 类型
+DocumentType包含doctype相关信息：
+>nodeType = 10
+   nodeName 的值是 doctype的名称
+   nodeValue 的值是null
+   parentNode 是Document
+   没有子节点
+
+
+
+### DocumentFragment 类型
+DOM 规定文档片段（document fragment）是一种"轻量级"文档，可以包含和控制节点，但不会像完整的文档占用额外的资源:
+>nodeType = 11
+   nodeName 的值"#document-fragment"
+   nodeValue 的值 null
+   parentNode 的值null
+   子节点：可以是Element、ProcessingInstruction、Comment、Text、CDATASection或者EntityReference
+
+
+### Attr类型
+元素的attributes在DOM中以 `Attr`类型表示，存在于attributes属性节点中。特性节点的特征:
+>nodeType =2
+   nodeName 的值是特效的名称
+   nodeValue 值是特性的值
+  parentNode 值为null
+   在XML中子节点可以是Text或者EntityReference
+
+
+  Attr类型有3个属性:`name`、`value`、`specified` 分别表示特性的名称（与nodeName值相同）特性的值（与nodeValue值相同）和 一个布尔值，用于区别特性是在代码中指定的还是默认的
+
+```
+  //创建特性
+  var attr = document.createAttribute("align");
+  attr.value = "left";
+  element.setAttributeNode(attr);
+alert(element.attriutes["align"].value); //"left"
+alert(alement.getAttributeNode("align").value);//  "left"
+alert(element.getAttribute("align"));  //"left"
+```
+
+
+## DOM操作技术
+### 动态脚本
 
 
 [TOC]

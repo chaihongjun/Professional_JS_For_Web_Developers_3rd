@@ -1,6 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
-  /* max-width: 980px; */
-  width:80%; 
+  max-width: 980px;
   border: 1px solid #ddd;
   outline: 1300px solid #fff;
   margin: 16px auto;
@@ -1015,96 +1014,7 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*github*/
-.codehilite {background-color:#fff;color:#333333;}
-.codehilite .hll {background-color:#ffffcc;}
-.codehilite .c{color:#999988;font-style:italic}
-.codehilite .err{color:#a61717;background-color:#e3d2d2}
-.codehilite .k{font-weight:bold}
-.codehilite .o{font-weight:bold}
-.codehilite .cm{color:#999988;font-style:italic}
-.codehilite .cp{color:#999999;font-weight:bold}
-.codehilite .c1{color:#999988;font-style:italic}
-.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
-.codehilite .gd{color:#000000;background-color:#ffdddd}
-.codehilite .ge{font-style:italic}
-.codehilite .gr{color:#aa0000}
-.codehilite .gh{color:#999999}
-.codehilite .gi{color:#000000;background-color:#ddffdd}
-.codehilite .go{color:#888888}
-.codehilite .gp{color:#555555}
-.codehilite .gs{font-weight:bold}
-.codehilite .gu{color:#800080;font-weight:bold}
-.codehilite .gt{color:#aa0000}
-.codehilite .kc{font-weight:bold}
-.codehilite .kd{font-weight:bold}
-.codehilite .kn{font-weight:bold}
-.codehilite .kp{font-weight:bold}
-.codehilite .kr{font-weight:bold}
-.codehilite .kt{color:#445588;font-weight:bold}
-.codehilite .m{color:#009999}
-.codehilite .s{color:#dd1144}
-.codehilite .n{color:#333333}
-.codehilite .na{color:teal}
-.codehilite .nb{color:#0086b3}
-.codehilite .nc{color:#445588;font-weight:bold}
-.codehilite .no{color:teal}
-.codehilite .ni{color:purple}
-.codehilite .ne{color:#990000;font-weight:bold}
-.codehilite .nf{color:#990000;font-weight:bold}
-.codehilite .nn{color:#555555}
-.codehilite .nt{color:navy}
-.codehilite .nv{color:teal}
-.codehilite .ow{font-weight:bold}
-.codehilite .w{color:#bbbbbb}
-.codehilite .mf{color:#009999}
-.codehilite .mh{color:#009999}
-.codehilite .mi{color:#009999}
-.codehilite .mo{color:#009999}
-.codehilite .sb{color:#dd1144}
-.codehilite .sc{color:#dd1144}
-.codehilite .sd{color:#dd1144}
-.codehilite .s2{color:#dd1144}
-.codehilite .se{color:#dd1144}
-.codehilite .sh{color:#dd1144}
-.codehilite .si{color:#dd1144}
-.codehilite .sx{color:#dd1144}
-.codehilite .sr{color:#009926}
-.codehilite .s1{color:#dd1144}
-.codehilite .ss{color:#990073}
-.codehilite .bp{color:#999999}
-.codehilite .vc{color:teal}
-.codehilite .vg{color:teal}
-.codehilite .vi{color:teal}
-.codehilite .il{color:#009999}
-.codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX"],
-  tex2jax: {
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: false
-  },
-  TeX: {
-    extensions: ["AMSmath.js", "AMSsymbols.js"],
-    TagSide: "right",
-    TagIndent: ".8em",
-    MultLineWidth: "85%",
-    equationNumbers: {
-      autoNumber: "AMS",
-    },
-    unicode: {
-      fonts: "STIXGeneral,'Arial Unicode MS'"
-    }
-  },
-  showProcessingMessages: false
-});
-</script>
-<title>note</title></head><body><article class="markdown-body"><div class="toc">
+</style><title>note</title></head><body><article class="markdown-body"><div class="toc">
 <ul>
 <li><a href="#dom">DOM</a><ul>
 <li><a href="#_1">节点层次</a><ul>
@@ -1113,6 +1023,14 @@ MathJax.Hub.Config({
 <li><a href="#element">Element 类型</a></li>
 <li><a href="#text">Text 类型</a></li>
 <li><a href="#comment">Comment 类型</a></li>
+<li><a href="#cdatasection">CDATASection 类型</a></li>
+<li><a href="#documenttype">DocumentType 类型</a></li>
+<li><a href="#documentfragment">DocumentFragment 类型</a></li>
+<li><a href="#attr">Attr类型</a></li>
+</ul>
+</li>
+<li><a href="#dom_1">DOM操作技术</a><ul>
+<li><a href="#_2">动态脚本</a></li>
 </ul>
 </li>
 </ul>
@@ -1129,7 +1047,7 @@ MathJax.Hub.Config({
 <h3 id="node"><a name="user-content-node" href="#node" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Node类型</h3>
 <p>DOM1定义Node接口，该接口将有DOM中的所有节点类型实现。<br />
 12种节点：<br />
-<div class="codehilite"><pre>Node.ELEMENT_NODE(1);  //元素节点
+<pre><code>Node.ELEMENT_NODE(1);  //元素节点
 Node.ATTROBUTE_NODE(2);  //元素属性节点
 Node.TEXT_NODE(3);  //文本节点
 Node.CDATA_SECTION_NODE(4);  //CDATA节点  
@@ -1141,25 +1059,22 @@ Node.DOCUMENT_NODE(9);  //文档节点
 Node.DOCUMENT_TYPE_NODE(10);  //文档类型节点
 Node.DOCUMENT_FRAGMENT_NODE(11);  //文档片段节点
 Node.NOTATION_NODE(12);  //DTD声明节点
-</pre></div>
-</p>
+</code></pre></p>
 <p>兼容IE的判断节点类型方法:<br />
-<div class="codehilite"><pre>//IE  没有公开Node的构造函数
+<pre><code>//IE  没有公开Node的构造函数
 if (someNode.nodeType==1){
         alert(someNode is an element!);
 }
-</pre></div>
-<br />
+</code></pre><br />
 1. nodeName和nodeValue值<br />
 分别表示节点的名称和值。对于元素节点，nodeName保存元素的标签名，nodeValue的值始终是null。<br />
 2. 节点关系<br />
 每个节点都有<code>childNodes</code>属性，保存着<code>NodeList</code>对象。<code>NodeList</code>是类数组对象，保存一组有序的节点，并且是动态变化的，基于DOM结构动态执行查询的结果。<br />
 访问<code>NodeList</code>中保存的节点，可以通过<code>[]</code>语法访问，也可以通过<code>item()</code>方法:<br />
-<div class="codehilite"><pre>var firstChild =someNode.childNodes[0];
+<pre><code>var firstChild =someNode.childNodes[0];
 var secondChild =someNode.childNodes.item(1);
 var count = someNode.childNodes.length;   //包含的子节点数量
-</pre></div>
-<br />
+</code></pre><br />
 <strong>关于<code>childNodes</code>节点的几个属性:</strong></p>
 <blockquote>
 <p><code>parentNode</code>:指向当前节点的父节点<br />
@@ -1173,22 +1088,20 @@ var count = someNode.childNodes.length;   //包含的子节点数量
 <p>所有节点都有属性<code>ownerDocument</code>，指向文档节点。通过这个属性可以不必回溯到顶端而直接访问文档节点<br />
 3. 操作节点<br />
 <strong>向childNodes列表末尾添加节点<code>appendChild()</code>,添加之后childNodes新增节点，父节点等之间的关系指针都有相应的更新。<code>appendChild()</code>返回新增的节点</strong><br />
-<div class="codehilite"><pre>var returnedNode =someNode.appendChild(newNode);
+<pre><code>var returnedNode =someNode.appendChild(newNode);
 alert(returnedNode == newNode) ;//true
 alert(someNode.lastChild==newNode); //true   ,childNodes最后添加了一个新的节点
-</pre></div>
-<br />
+</code></pre><br />
 <strong>如果<code>appendChild()</code>操作的是旧的节点，则会将旧的节点移动到新的位置</strong>:<br />
-<div class="codehilite"><pre>//someNode有多个子节点
+<pre><code>//someNode有多个子节点
 var returnedNode=someNode.appendChild(someNode.firstChild);  //移动someNode的第一子节点到someNode.childNodes的末尾
 alert(returnedNode == someNode.firstChild);//false
 alert(returnedNode == someNode.lastChild);//true    
-</pre></div>
-<br />
+</code></pre><br />
 <strong>如果想把节点放在childNodes的某个特定位置，可以使用<code>inserBefore()</code>方法，该方法接收两个参数，要插入的节点和参照的节点。</strong><br />
 <strong>插入新的节点之后，新的节点会成为参照节点的前一个同胞节点(<code>previousSibling</code>),同时返回这个新的节点</strong><br />
 <strong>如果参照节点是<code>null</code>，则<code>inserBefore()</code>和<code>appendChild()</code>是一样的。</strong><br />
-<div class="codehilite"><pre>//插入后成为最后一个子节点
+<pre><code>//插入后成为最后一个子节点
 returnedNode = someNode.insertBefore(newNode,null); //在最后null之前插入
 alert(newNode=someNode.lastChild); //true
 
@@ -1199,30 +1112,26 @@ alert(newNode=someNode.firstChild); //true
 //插入到最后一个子节点前面
 var returnedNode=someNode.insertBefore(newNode,someNode.lastChild);
 alert(newNode==someNode.childNodes[someNode.childNodes.length-2]);//true
-</pre></div>
-</p>
+</code></pre></p>
 <p><strong><code>replaceChild()</code>可以用新节点替换旧的节点，第一个参数是要插入的节点，第二个参数是要被替换的节点。要被替换的节点将从文档树中移除。</strong><br />
-<div class="codehilite"><pre>//替换第一个子节点
+<pre><code>//替换第一个子节点
 var returnedNode=someNode.replaceChild(newNode,someNode.firstChild);
 //替换最后一个子节点
 var returnedNode = someNode.replaceChild(newNode,someNode.lastChild);
-</pre></div>
-<br />
+</code></pre><br />
 <strong><code>removeChild()</code>可以移除节点，参数为要被移出的节点</strong><br />
-<div class="codehilite"><pre>//移除第一个子节点
+<pre><code>//移除第一个子节点
 var formerFirstChild=someNode.removeChild(someNode.firstChild);
 //移除最后一个子节点
 var formerLastChild=someNode.removeChild(someNode.lastChild);
-</pre></div>
-<br />
+</code></pre><br />
 <strong>无论是<code>replaceChild()</code>替换掉的节点还是<code>removeChild()</code>删除的节点，仍然为文档所有，只是在文档树中没有位置。</strong></p>
 <p><strong>以上4个操作方法<code>appendChild(newNode)</code>,<code>insertBefore(newNode,oldNode)</code>,<code>replaceChild(newNode,oldNode)</code>和<code>removeChild(oldNode)</code>都是通过父节点(<code>parentNode</code>)操作，且必须是包子节点类型的节点上</strong><br />
 4. 其他方法<br />
 <strong><code>cloneNode()</code>，创建调用某个节点的副本，可选参数类为布尔值，表示是否是深度复制，返回的节点属于文档所有，但是没有父节点</strong><br />
-<div class="codehilite"><pre>someNode.cloneNode(true); //深度复制，复制本身节点和其子节点（如果有的话）
+<pre><code>someNode.cloneNode(true); //深度复制，复制本身节点和其子节点（如果有的话）
 someNode.cloneNode();// 只复制节点本身，不复制其子节点（如果有的话）
-</pre></div>
-<br />
+</code></pre><br />
 <strong>注意，<code>cloneNode()</code>只复制DOM节点，不会复制添加到节点上的Javascript属性，IE则会负责事件处理程序，因此建议在复制前，最好先移出事件处理程序</strong></p>
 <p><strong><code>normalize()</code>方法处理文档树中的文本节点，对于空的文本节点则删除，对于连续出现的文本节点则合并。</strong></p>
 <h3 id="document"><a name="user-content-document" href="#document" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Document 类型</h3>
@@ -1242,37 +1151,33 @@ ownerDocument 值为null<br />
 <code>document.documentElement</code>可取得<code>&lt;html&gt;</code><br />
 <code>document.body</code>可取得<code>&lt;body&gt;</code><br />
 <code>document.doctype</code>可取的<code>&lt;!DOCTYPE&gt;</code> <br />
-<div class="codehilite"><pre>document.documentElement==document.childNodes[0]==document.firstChild==&lt;html&gt;
-</pre></div>
-</li>
+<pre><code>document.documentElement==document.childNodes[0]==document.firstChild==&lt;html&gt;
+</code></pre></li>
 <li>文档信息<br />
-<div class="codehilite"><pre>document.title //文档标题
+<pre><code>document.title //文档标题
 document.url //文档URL
 document.domian //文档域名
 document.referrer //取得来源页面的URL
-</pre></div>
-<br />
+</code></pre><br />
 特别注意domain设置的限制，如果开始是松散类型的，后面就不可以改成绷紧的:<br />
-<div class="codehilite"><pre>document.domain=&quot;wrox.com&quot;;  //松散
+<pre><code>document.domain=&quot;wrox.com&quot;;  //松散
 document.domain=&quot;www.wrox.com&quot;; //紧绷的，会出错
-</pre></div>
-</li>
+</code></pre></li>
 </ol>
 <p>3.查找元素<br />
 <code>getElementById()</code>和<code>getElementsByTagName()</code>分别通过元素的ID（严格大小写匹配）和元素标签名称查找。<br />
 <strong><code>getElementsByTagName()</code>返回的是零或者多个元素的NodeList，在HTML中这个方法返回一个HTMLCollection对象，作为“动态”集合。可以通过<code>[]</code>语法或者<code>item()</code>方法访问HTMLcollection中的对象项，这个对象中的数量可以通过<code>length</code>属性取得。</strong><br />
-<div class="codehilite"><pre>var images=document.getElementsByTagName(&quot;img&quot;);
+<pre><code>var images=document.getElementsByTagName(&quot;img&quot;);
 alert(images.length); //图片数量
 alert(images[0].src);  //第一张图片src
 alert(images.item(0).src);  //第一张图片src
-</pre></div>
-<br />
+</code></pre><br />
 HTMLCollection还包含方法<code>namedItem()</code>，通过元素节点的<code>name</code>属性获取元素。<br />
-<div class="codehilite"><pre>&lt;img src=&quot;myimage.gif&quot; name=&quot;myImage&quot;&gt;
+<pre><code>&lt;img src=&quot;myimage.gif&quot; name=&quot;myImage&quot;&gt;
 
 var myImg=images.namedItem(&quot;myImage&quot;)； //   **通过id或者name获取元素（当id不存在的时候查找name)**
-</pre></div>
-</p>
+
+</code></pre></p>
 <p>关于HTMLCollection:</p>
 <blockquote>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCollection">https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCollection</a><br />
@@ -1282,25 +1187,24 @@ HTMLCollection.namedItem()<br />
 根据 Id 返回指定节点，或者作为备用，根据字符串所表示的 name 属性来匹配。根据 name 匹配只能作为最后的依赖，并且只有当被引用的元素支持 name 属性时才能被匹配。如果不存在符合给定 name 的节点，则返回 null。</p>
 </blockquote>
 <p><code>getElementsByName()</code>获取特定<code>name</code>的所有元素，最常用的是获取单选按钮：<br />
-<div class="codehilite"><pre><span class="nt">&lt;fieldset&gt;</span>
-    <span class="nt">&lt;legend&gt;</span>Which color do you prefer?<span class="nt">&lt;/legend&gt;</span>
-    <span class="nt">&lt;ul&gt;</span>
-        <span class="nt">&lt;li&gt;</span>
-            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;color&quot;</span> <span class="na">value=</span><span class="s">&quot;red&quot;</span> <span class="na">id=</span><span class="s">&quot;colorRed&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;colorRed&quot;</span><span class="nt">&gt;</span>Red<span class="nt">&lt;/label&gt;</span>
-        <span class="nt">&lt;/li&gt;</span>
-        <span class="nt">&lt;li&gt;</span>
-            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;color&quot;</span> <span class="na">value=</span><span class="s">&quot;green&quot;</span> <span class="na">id=</span><span class="s">&quot;colorGreen&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;colorGreen&quot;</span><span class="nt">&gt;</span>Green<span class="nt">&lt;/label&gt;</span>
-        <span class="nt">&lt;/li&gt;</span>
-        <span class="nt">&lt;li&gt;</span>
-            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;color&quot;</span> <span class="na">value=</span><span class="s">&quot;blue&quot;</span> <span class="na">id=</span><span class="s">&quot;colorBlue&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;colorBlue&quot;</span><span class="nt">&gt;</span>Blue<span class="nt">&lt;/label&gt;</span>
-        <span class="nt">&lt;/li&gt;</span>
-    <span class="nt">&lt;/ul&gt;</span>
-<span class="nt">&lt;/fieldset&gt;</span>
-</pre></div>
-<br />
+<pre><code>&lt;fieldset&gt;
+    &lt;legend&gt;Which color do you prefer?&lt;/legend&gt;
+    &lt;ul&gt;
+        &lt;li&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;color&quot; value=&quot;red&quot; id=&quot;colorRed&quot;&gt;
+            &lt;label for=&quot;colorRed&quot;&gt;Red&lt;/label&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;color&quot; value=&quot;green&quot; id=&quot;colorGreen&quot;&gt;
+            &lt;label for=&quot;colorGreen&quot;&gt;Green&lt;/label&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;color&quot; value=&quot;blue&quot; id=&quot;colorBlue&quot;&gt;
+            &lt;label for=&quot;colorBlue&quot;&gt;Blue&lt;/label&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/fieldset&gt;
+</code></pre><br />
 4.特殊集合<br />
 <code>document</code>对象还有一些特殊集合，都属于<code>HTMLCollection</code>对象：</p>
 <blockquote>
@@ -1315,10 +1219,9 @@ HTMLCollection.namedItem()<br />
 <blockquote>
 <p>DOM1的检测方法: document.implementation.hasFeature(&ldquo;要检测的DOM1的功能名称&rdquo;,&rdquo;对应的功能版本号&rdquo;);如果浏览器支持则返回<code>true</code></p>
 </blockquote>
-<div class="codehilite"><pre>//检测浏览器是否支持DOM1的XML1.0版本
+<pre><code>//检测浏览器是否支持DOM1的XML1.0版本
 var hasXmlDom=document.implementation.hasFeature(&quot;XML&quot;,&quot;1.0&quot;);
-</pre></div>
-
+</code></pre>
 
 <p>可检测的功能和版本号:</p>
 <table>
@@ -1418,12 +1321,11 @@ var hasXmlDom=document.implementation.hasFeature(&quot;XML&quot;,&quot;1.0&quot;
 </tbody>
 </table>
 <p>6.文档写入<br />
-<div class="codehilite"><pre>document.write();  //原样写入到页面
+<pre><code>document.write();  //原样写入到页面
 document.writeln();   //末尾会添加换行符
 document.open()
 document.close();
-</pre></div>
-<br />
+</code></pre><br />
 需要注意转义&rdquo;"</p>
 <h3 id="element"><a name="user-content-element" href="#element" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Element 类型</h3>
 <p>Element类型用于表现XML或HTML元素，具有以下特征:</p>
@@ -1448,14 +1350,12 @@ HTML元素都有的特性:</p>
 操作元素特性的DOM方法主要有三个:<code>getAttribute()</code>，<code>setAttribute()</code>，<code>removeAttribute()</code></p>
 <p>通过<code>getAttribute()</code>方法也可以取得自定义特性，特性名称不区分大小写,&rdquo;ID&rdquo;和&rdquo;id&rdquo;代表的都是同一个特性。</p>
 <p>3.设置特性<br />
-<div class="codehilite"><pre>setAtttribute(&quot;特性名称&quot;,&quot;特性值&quot;);
-</pre></div>
-<br />
+<pre><code>setAtttribute(&quot;特性名称&quot;,&quot;特性值&quot;);
+</code></pre><br />
 <strong>如果特性已经存在，则更新特性的值，通过<code>setAttribute()</code>方法即可以操作HTML的特性特可以操作自定义的特性。这个方法会统一将特性名称全部转换为小写。</strong><br />
 通过<code>元素.特性名称=特性值</code>这样的方式添加自定义属性，是无法添加成功的。<br />
-<div class="codehilite"><pre>removeAttribute(&quot;特性名称&quot;);
-</pre></div>
-<br />
+<pre><code>removeAttribute(&quot;特性名称&quot;);
+</code></pre><br />
 特性和特性值都会彻底被删除</p>
 <p>4.attributes 属性<br />
 <strong>Element类型是使用attributes属性的唯一一个DOM节点类型，其中包含<code>NamedNodeMap</code>与<code>NodeList</code>类似是一个&rdquo;动态&rdquo;集合。<code>NamedNodeMap</code>保存了元素的每个特性，这个特性有<code>Attr</code>节点表示。</strong><br />
@@ -1467,23 +1367,20 @@ HTML元素都有的特性:</p>
 <code>item(pos)</code> ，返回位于数字pos位置处的节点</p>
 </blockquote>
 <p><code>attributes</code>属性包含一系列节点。每个节点的<code>nodeName</code>就是特性的名称，节点的<code>nodeValue</code>就是特性的值<br />
-<div class="codehilite"><pre>//获取ID的值
+<pre><code>//获取ID的值
 var id=element.attributes.getNamedItem(&quot;id&quot;).nodeValue;
 //与下面方法一致
-var id=element.attributes[&quot;id&quot;].nodeValue&#39;
-</pre></div>
-</p>
+var id=element.attributes[&quot;id&quot;].nodeValue'
+</code></pre></p>
 <p><code>element.attributes.removeNamedItem("特性名称")</code>与在元素上调用<code>removeAttribute("特性名")</code>效果一致，唯一区别是<code>removeNamedItem("特性名称")</code>会返回被删除的特性的Attr节点<br />
 5. 创建元素<br />
-<div class="codehilite"><pre>document.createElement(&quot;标签名&quot;);
-</pre></div>
-<br />
+<pre><code>document.createElement(&quot;标签名&quot;);
+</code></pre><br />
 <code>createElement</code>创建的元素同时也设置了<code>ownerDocument</code>属性，但是新元素没有被添加到DOM文档树中，需要通过<code>appendChild()</code>，<code>insertBefore()</code>或者<code>replaceChild()</code>方法添加。</p>
 <ol>
 <li>元素的子节点<br />
-<div class="codehilite"><pre>element.getElementsByTagName(&quot;元素名称&quot;);
-</pre></div>
-<br />
+<pre><code>element.getElementsByTagName(&quot;元素名称&quot;);
+</code></pre><br />
 <code>getELementsByTagName()</code>也支持从元素节点开始查找</li>
 </ol>
 <h3 id="text"><a name="user-content-text" href="#text" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Text 类型</h3>
@@ -1504,22 +1401,20 @@ var id=element.attributes[&quot;id&quot;].nodeValue&#39;
 </blockquote>
 <p>文本节点的<code>length</code>属性保存着节点中的字符数</p>
 <p>1.创建文本节点<br />
-<div class="codehilite"><pre>document.createTextNode(&quot;文本内容&quot;);
-</pre></div>
-<br />
+<pre><code>document.createTextNode(&quot;文本内容&quot;);
+</code></pre><br />
 新创建的文本节点如果要在页面显示，必须通过<code>appendChild()</code>，<code>insertBefore()</code>，<code>replaceChild()</code>方法。<br />
-<div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
+<pre><code>var element=document.createElement(&quot;div&quot;);
   element.className=&quot;message&quot;;
 var textNode = document.createTextNode(&quot;Hello world!&quot;);
   element.appendChild(textNode);
 var anotherTextNode = document.createTextNode(&quot;Yippee!&quot;);
  element.appendChild(anotherTextNode);
 document.body.appendChild(element);
-</pre></div>
-</p>
+</code></pre></p>
 <p>2.规范化文本节点<br />
 在一个包含多个节点的父元素调用<code>normalize()</code>，则会把所有文本节点合并为一个:<br />
-<div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
+<pre><code>var element=document.createElement(&quot;div&quot;);
   element.className=&quot;message&quot;;
 var textNode = document.createTextNode(&quot;Hello world!&quot;);
   element.appendChild(textNode);
@@ -1531,25 +1426,25 @@ alert(element.childNodes.length);  //2
 
 element.normalize();  //合并文本节点
 alert(element.childNodes.length);  //1
-</pre></div>
-</p>
+</code></pre></p>
 <p>3.分割文本节点<br />
-与<code>normalize()</code>相反，<code>splitText()</code>方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue):<br />
+与<code>normalize()</code>相反，<code>splitText()</code>方法将一个文本节点分成两个文本节点(按照指定的位置分割nodeValue),返回的是新的文本节点:<br />
 <strong><code>splitText(index)</code> 其中<code>index</code>也可以理解为截取的长度</strong><br />
-<div class="codehilite"><pre>var element=document.createElement(&quot;div&quot;);
+<pre><code>var element=document.createElement(&quot;div&quot;);
   element.className=&quot;message&quot;;
 var textNode = document.createTextNode(&quot;Hello123world!&quot;);
   element.appendChild(textNode);
 
 document.body.appendChild(element);
 
-var newNode =element.firstChild.splitText(8);//  从开头到索引5(不含5位置)为一个内容，剩下的为另外一个内容
+var newNode =element.firstChild.splitText(5);//  从开头到索引5(不含5位置)为一个内容，剩下的为另外一个内容
 //“Hello ”, &quot;world!&quot;
   alert(element.firstChild.nodeValue);//  &quot;Hello&quot;
   alert(newNode.nodeValue);  //返回分割后新的文本 &quot;world!&quot;
   alert(element.childNodes.length);    //2
-</pre></div>
-</p>
+
+
+</code></pre></p>
 <h3 id="comment"><a name="user-content-comment" href="#comment" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Comment 类型</h3>
 <blockquote>
 <p>nodeType  = 8<br />
@@ -1558,6 +1453,60 @@ nodeValue  注释的内容<br />
 parentNode 可能是Document或者Element<br />
 不支持子节点</p>
 </blockquote>
+<p>Comment和Text类型继承自相同的基类，拥有除了<code>splitText()</code>之外的所有字符串操作方法，另外<code>nodeValue</code>或<code>data</code>可以取得注释的内容<br />
+<pre><code>//注释节点
+document.createComment(&quot;注释内容&quot;);
+</code></pre></p>
+<h3 id="cdatasection"><a name="user-content-cdatasection" href="#cdatasection" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>CDATASection 类型</h3>
+<p><code>CDATASection</code>类型只针对基于XML的文档，表示的是CDATA区域。CDATASection类型继承自Text类型。所以拥有除了<code>splitText()</code>之外的所有字符串操作方法。<br />
+<code>CDATASection</code>节点特征：</p>
+<blockquote>
+<p>nodeType = 4<br />
+   nodeName 值是 &ldquo;#cdata-section&rdquo;<br />
+   nodeValue的值是CDATA区域中的内容<br />
+  parentNode 可能是Document或者Element<br />
+  没有子节点</p>
+</blockquote>
+<p>由于CDATA区域只出现在XML文档中，所以多数浏览器把CDATA解析为Comment或者Element</p>
+<h3 id="documenttype"><a name="user-content-documenttype" href="#documenttype" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DocumentType 类型</h3>
+<p>DocumentType包含doctype相关信息：</p>
+<blockquote>
+<p>nodeType = 10<br />
+   nodeName 的值是 doctype的名称<br />
+   nodeValue 的值是null<br />
+   parentNode 是Document<br />
+   没有子节点</p>
+</blockquote>
+<h3 id="documentfragment"><a name="user-content-documentfragment" href="#documentfragment" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DocumentFragment 类型</h3>
+<p>DOM 规定文档片段（document fragment）是一种&rdquo;轻量级&rdquo;文档，可以包含和控制节点，但不会像完整的文档占用额外的资源:</p>
+<blockquote>
+<p>nodeType = 11<br />
+   nodeName 的值&rdquo;#document-fragment&rdquo;<br />
+   nodeValue 的值 null<br />
+   parentNode 的值null<br />
+   子节点：可以是Element、ProcessingInstruction、Comment、Text、CDATASection或者EntityReference</p>
+</blockquote>
+<h3 id="attr"><a name="user-content-attr" href="#attr" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Attr类型</h3>
+<p>元素的attributes在DOM中以 <code>Attr</code>类型表示，存在于attributes属性节点中。特性节点的特征:</p>
+<blockquote>
+<p>nodeType =2<br />
+   nodeName 的值是特效的名称<br />
+   nodeValue 值是特性的值<br />
+  parentNode 值为null<br />
+   在XML中子节点可以是Text或者EntityReference</p>
+</blockquote>
+<p>Attr类型有3个属性:<code>name</code>、<code>value</code>、<code>specified</code> 分别表示特性的名称（与nodeName值相同）特性的值（与nodeValue值相同）和 一个布尔值，用于区别特性是在代码中指定的还是默认的</p>
+<pre><code>  //创建特性
+  var attr = document.createAttribute(&quot;align&quot;);
+  attr.value = &quot;left&quot;;
+  element.setAttributeNode(attr);
+alert(element.attriutes[&quot;align&quot;].value); //&quot;left&quot;
+alert(alement.getAttributeNode(&quot;align&quot;).value);//  &quot;left&quot;
+alert(element.getAttribute(&quot;align&quot;));  //&quot;left&quot;
+</code></pre>
+
+<h2 id="dom_1"><a name="user-content-dom_1" href="#dom_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM操作技术</h2>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>动态脚本</h3>
 <div class="toc">
 <ul>
 <li><a href="#dom">DOM</a><ul>
@@ -1567,6 +1516,14 @@ parentNode 可能是Document或者Element<br />
 <li><a href="#element">Element 类型</a></li>
 <li><a href="#text">Text 类型</a></li>
 <li><a href="#comment">Comment 类型</a></li>
+<li><a href="#cdatasection">CDATASection 类型</a></li>
+<li><a href="#documenttype">DocumentType 类型</a></li>
+<li><a href="#documentfragment">DocumentFragment 类型</a></li>
+<li><a href="#attr">Attr类型</a></li>
+</ul>
+</li>
+<li><a href="#dom_1">DOM操作技术</a><ul>
+<li><a href="#_2">动态脚本</a></li>
 </ul>
 </li>
 </ul>
