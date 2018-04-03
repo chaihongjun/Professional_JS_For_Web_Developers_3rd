@@ -443,6 +443,125 @@ alert(element.getAttribute("align"));  //"left"
 
 ## DOM操作技术
 ### 动态脚本
+页面加载时不存在，但将来某一时刻通过修改DOM动态添加的脚本。添加动态脚本两种方式:
+
+```
+//方法1：直接插入外部文件
+var script=document.createElement("script");
+script.src="client.js";
+document.body.appendChild(script);
+
+//封装一下
+function loadScript(url){
+      var script=document.createElement("script");
+      script.src=url;
+      document.body.appendChild(script);
+}
+//然后再调用
+loadScript("client.js");
+
+//方法2：另外根据兼容性,行内方式直接插入代码
+var script=document.createElement("script");
+script.text="function sayHi(){alert('hi'); }";
+document.body.appendChild(script);
+
+//方法2扩展，兼容IE
+var script=document.createElement("script");
+var code ="function sayHi(){alert('hi'); }";
+try{
+          //除了IE的浏览器
+            script.appendChild(document.createTextNode(code));
+}catch(ex){
+             //IE，IE禁止访问<script>的子节点
+            script.text=code;     //通过text属性访问设置js代码
+}
+
+document.body.appendChild(script);
+```
+
+### 动态样式
+在页面加载的时候不存在样式，页面加载完成后动态添加到页面中。
+```
+var link=document.createElement("link");
+link.rel="stylesheet";
+link.type="text/css";
+link.href="style.css";
+var head=document.getElementsByTagName("head")[0];
+head.appendChild(link);
+
+//或者<style>包裹方式
+var style=document.createElement("style");
+style.type="text/css";
+style.appendChild(document.createTextNode("body{background-color:red}"));
+var head=document.getElementsByTagName("head")[0];
+head.appendChild(style);
+
+//兼容IE的写法
+var style=document.createElement("style");
+style.type="text/css";
+try{
+     style.appendChild(document.createTextNode("body{background-color:red}"));
+}catch(ex){
+        //兼容IE
+        style.styleSheet.cssText="body{background-color:red}";
+}
+```
+
+### 操作表格
+HTML DOM针对<table> <tbody><tr>添加了一些属性方法便于创建表格。
+为`<table>`元素添加了的属性和方法：
+>`caption` 保存对`<caption>`元素的指针
+    `tBodies`是`<tbody>`元素的HTMLCollection
+    `tFoot`保存对`<tfoot>`元素的指针
+    `tHead`保存对`<thead>`元素的指针
+    `rows`是一个表格中所有行的HTMLCollection
+    `createThead()` 创建`<thead>`并放到表格中，返回引用
+    `createTFoot()` 创建`<tfoot>`并放到表格中，返回引用
+    `createCaption()` 创建`<caption>`并放到表格中，返回引用
+    `deleteTHead()` 删除`<thead>`元素
+    `deleteTFoot()` 删除`<tfoot>`元素
+    `deleteCaption()` 删除`<caption>`元素
+    `deleteRow(pos)` 删除`指定位置的行
+    `insertRow(pos)` 向rows集合中指定位置插入一行
+
+为`<tbody>`添加的属性和方法：
+  >`rows` 保存了`<tbody>`元素中行的HTMLCollection
+    `deleteRow(pos)` 删除指定位置的行
+    `insertRow(pos)` 向rows集合中指定位置插入一行，返回对新插入行的引用
+
+
+为`<tr>`添加的属性和方法：
+  >`cells` 保存了`<tr>`元素中单元格的HTMLCollection
+    `deleteCell(pos)` 删除指定位置的单元格
+    `insertCell(pos)` 向cells集合中指定位置插入一个单元格，返回对新插入单元格的引用
+
+```
+// 急速 创建table
+var table=document.createElement("table");
+table.border=1;
+table.width="100%";
+
+//创建tbody
+var tbody=document.createElement("tbody");
+table.appendChild(tbody);
+
+//创建第一行
+tbody.insertRow(0);
+tbody.rows[0].insertCell(0);  //第一个单元格
+tbody.rows[0].cells[0].appendChild(document.createTextNode("cell 1,1"));
+
+```
+
+### 使用NodeList
+`NodeList`和`NamedNodeMap`，`HTMLCollection`都是"动态的"，当文档结构发生变化了也会更新。
+`NodeList` 对象是节点的集合，由 `Node.childNodes`和`document.querySelectorAll`返回的
+
+### 小结
+DOM 是语言中立的API，用于访问HTML和XML文档。DOM1将HTML和XML文档看成一个层次化的节点数，可以使用JS操作这个节点数，进而改变底层文档的外观和结构。
+DOM的基本节点类型是Node，抽象表示文档中一个独立的部分，所有其他类型都继承自Node。
+Document类型表示文档，是一组分层节点的根节点。在JavaScript中document对象是Document类型的实例。
+Element节点表示文档中所有HTML或者XML元素
+另外还有一些节点类型，分别表示文本内容，注释，文档类型，CDATA区域和文档片段
 
 
 [TOC]
