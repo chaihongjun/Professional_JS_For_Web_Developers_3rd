@@ -159,3 +159,19 @@ element.scrollIntoView(false);
 ##  专有扩展
 ###文档模式
 `document mode`4种文档模式
+....
+
+### children 属性
+`children`属性是`HTMLCollection`的实例，包含元素中同样还是元素的子节点。
+当childNodes里面全部是元素节点的时候，与`children`一致
+
+
+### contains() 方法
+```
+parentNode.contains(childNode);
+```
+如果父节点包含子节点，则返回`true`,否则是`false`
+
+
+### 插入文本
+1.innerText 属性 

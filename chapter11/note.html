@@ -1126,6 +1126,9 @@ MathJax.Hub.Config({
 </li>
 <li><a href="#_6">专有扩展</a><ul>
 <li><a href="#_7">文档模式</a></li>
+<li><a href="#children">children 属性</a></li>
+<li><a href="#contains">contains() 方法</a></li>
+<li><a href="#_8">插入文本</a></li>
 </ul>
 </li>
 </ul>
@@ -1280,4 +1283,15 @@ element.scrollIntoView(false);
 </p>
 <h2 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>专有扩展</h2>
 <h3 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>文档模式</h3>
-<p><code>document mode</code>4种文档模式</p></article></body></html>
+<p><code>document mode</code>4种文档模式<br />
+....</p>
+<h3 id="children"><a name="user-content-children" href="#children" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>children 属性</h3>
+<p><code>children</code>属性是<code>HTMLCollection</code>的实例，包含元素中同样还是元素的子节点。<br />
+当childNodes里面全部是元素节点的时候，与<code>children</code>一致</p>
+<h3 id="contains"><a name="user-content-contains" href="#contains" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>contains() 方法</h3>
+<p><div class="codehilite"><pre>parentNode.contains(childNode);
+</pre></div>
+<br />
+如果父节点包含子节点，则返回<code>true</code>,否则是<code>false</code></p>
+<h3 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>插入文本</h3>
+<p>1.innerText 属性 </p></article></body></html>
