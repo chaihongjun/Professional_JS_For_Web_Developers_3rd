@@ -130,8 +130,8 @@ div.dataset.myname="Michael";
 
 ### 插入标记
 1.innerHTML 属性
-在读模式下，`innerHTML`属性返回调用元素的所有子节点（包含元素、注释和文本节点）对应的HTML标记。
-在写模式下，`innerHTML`属性根据指定的值创建新的DOM树，然后用这个新的DOM树替换调用元素原先的所有子节点。
+在读模式下，`innerHTML`属性返回调用元素的所有`子节点`（包含元素、注释和文本节点）对应的HTML标记。
+在写模式下，`innerHTML`属性根据指定的值创建新的DOM树，然后用这个新的DOM树替换调用元素原先的所有`子节点`牌牌琦。
 不支持`innerHTML`属性的元素:`<col>`、`<colgroup>`、`<frameset>`、`<head>`、`<html>`、`<style>`、`<table>`、`<tbody>`、`<thead>`、`<tfoot>`、`<tr>`
 2. outerHTML 属性
 在读模式下，`outerHTML`返回调用它的元素及所有子节点的HTML标签。
@@ -175,3 +175,64 @@ parentNode.contains(childNode);
 
 ### 插入文本
 1.innerText 属性 
+操作元素中包含的所有文本内容，包括子文档树中的文本。
+
+FireFox不支持`innerText`，但是有类似的属性`textContent`。兼容函数调用:
+```
+//获取元素节点内的文本
+function getInnerText(element){
+            return (typeof element.textContent=="string")?element.textContent:element.innerText;
+}
+
+//设置元素内的文本节点
+function settInnerText(element,text){
+           if(typeof element.textContent=="string"){
+                    element.textContent =text;
+           }else{
+                    element.innerText=text;
+           }
+}
+```
+>`innerText`和`textContent` 返回内容不完全一样，`innerText`会忽略行内样式，`textContent`则保留行内样式和脚本
+
+2. outerText 属性
+`outerText`与`innerText`基本类似，只是扩大到了调用它的节点。
+读取模式下,`outerText`和`innerText`一致。
+在写模式下,`outerText`会替换整合元素（包含子节点），`innerText`只替换子节点.
+
+**实际上新的节点会替换掉调用outerText的元素**
+```
+document.body.outerText="";  //相当于将Body及其子元素全部删除了
+```
+
+
+### 滚动
+`scrollIntoViewIfNeeded()`方法将元素滚动到视口中可见，如果元素已经在可见区域内，则什么都不做。
+
+`scrollByLines(lineCount)` 方法将元素的内容滚动指定的行高，`lineCount`的值可以是正值和负值
+
+`scrollByPages(pageCount)` 将元素内容滚动指定的页面高度，具体高度由元素高度决定 
+
+**`scrollIntoView()` 和`scrollIntoViewIfNeeded()`的作用对象是元素容器
+`scrollByLines(lineCount)` 和`scrollByPages(pageCount)`的作用对象是元素本身**
+
+```
+//页面主体滚动5行
+document.body.scrollBylines(5);
+
+//在当前元素不可见的时候，让它进入浏览器的视口
+document.images[0].scrollIntoViewNeeded();
+
+//让页面主体往回滚动1页
+document.body.scrollByPages(-1);
+```
+
+### 小结
+
+1. Selector API 定义了两个基于CSS选择权从DOM中取得元素的方法:`querySelector()`和`querySelectorAll()`
+2. Element Traversal,元素遍历方便从一个元素跳到另外一个元素
+3. HTML5 扩展了`innerHTML`等属性以及焦点管理，字符集设置，页面滚动等扩展API
+
+
+
+[TOC]
