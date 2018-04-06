@@ -1112,6 +1112,11 @@ MathJax.Hub.Config({
 <li><a href="#_1">其他方面的变化</a></li>
 </ul>
 </li>
+<li><a href="#_2">样式</a><ul>
+<li><a href="#_3">访问元素的样式</a></li>
+<li><a href="#_4">操作样式表</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1202,4 +1207,69 @@ setNamedItemNS(node) 添加node ，这个节点事先指定了命名空间
 document.doctype.systemId
 document.doctype.internalSubset
 </pre></div>
-</p></article></body></html>
+</p>
+<h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>样式</h2>
+<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>访问元素的样式</h3>
+<p>任何支持<code>style特性</code>的HTML元素在JavaScript中都有一个对应的<code>style属性</code>。这个<code>style</code>对象是<code>CSSStyleDeclaration</code>的实例，包含通过HTML的style特性指定额度所有样式信息，但不包含外部样式表和嵌入样式表层叠的样式。<br />
+在HTML元素的style特性中指定的CSS属性，都有JavaScript的Style对象属性一一对应。使用短划线的CSS属性名，将会转化为驼峰大小写形式:</p>
+<table>
+<thead>
+<tr>
+<th>CSS属性</th>
+<th>JavaScript属性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bakground-image</td>
+<td>style.backgroundImage</td>
+</tr>
+<tr>
+<td>color</td>
+<td>style.color</td>
+</tr>
+<tr>
+<td>display</td>
+<td>style.display</td>
+</tr>
+<tr>
+<td>font-family</td>
+<td>style.fontFamily</td>
+</tr>
+<tr>
+<td>float</td>
+<td>style.cssFloat</td>
+</tr>
+</tbody>
+</table>
+<p>由于<code>float</code>在JavaScript中山保留字，所以这里对应的JavaScript属性名是<code>cssFLoat</code>,(IE支持的是<code>styleFloat</code>)</p>
+<ol>
+<li>DOM样式属性和方法<br />
+DOM2 Level Style 规范为style对象定义了属性和方法：<br />
+<div class="codehilite"><pre>cssText：可以获取style特性中的CSS代码
+length：元素的CSS属性数量
+parentRule：CSS信息的CSSRule对象。
+getPropertyCSSValue(propertyName) 返回给定属性的CSSValue对象
+getPropertyPriority(propertyName) 如果给定的属性使用了`!important` ，则返回`important` 否则返回空字符串
+getPropertyValue(propertyName) 返回给定属性的字符串值
+item(index) 返回给定位置的CSS属性名称
+removeProperty(propertyName) 从样式中删除给定的属性
+setProperty(propertyName,value,priority)将给定的属性设置相应的值，并加上优先权标志(!important或者看字符串)
+</pre></div>
+<br />
+Style对象实际相当于一个集合，可以通过<code>[]</code>或者<code>item(index)</code> 访问给定位置的CSS属性(获取的是CSS属性名):</li>
+</ol>
+<div class="codehilite"><pre>for(var i=0,len=myDiv.style.length; i&lt;len; i++){
+            alert(myDiv.style[i]); // 或者 myDiv.style.item(i)
+}
+</pre></div>
+
+
+<ol>
+<li>计算的样式</li>
+</ol>
+<div class="codehilite"><pre>document.defaultView.getComputedStyle(元素,伪元素字符串/null)
+</pre></div>
+
+
+<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>操作样式表</h3></article></body></html>

@@ -87,6 +87,54 @@ document.doctype.internalSubset
 ```
 
 
+## 样式
+
+### 访问元素的样式
+
+任何支持`style特性`的HTML元素在JavaScript中都有一个对应的`style属性`。这个`style`对象是`CSSStyleDeclaration`的实例，包含通过HTML的style特性指定额度所有样式信息，但不包含外部样式表和嵌入样式表层叠的样式。
+在HTML元素的style特性中指定的CSS属性，都有JavaScript的Style对象属性一一对应。使用短划线的CSS属性名，将会转化为驼峰大小写形式:
+
+| CSS属性 |  JavaScript属性 |
+| - | - |
+| bakground-image | style.backgroundImage |
+| color | style.color |
+| display | style.display |
+| font-family | style.fontFamily |
+| float | style.cssFloat |
+
+由于`float`在JavaScript中山保留字，所以这里对应的JavaScript属性名是`cssFLoat`,(IE支持的是`styleFloat`)
+
+1. DOM样式属性和方法
+DOM2 Level Style 规范为style对象定义了属性和方法：
+```
+cssText：可以获取style特性中的CSS代码
+length：元素的CSS属性数量
+parentRule：CSS信息的CSSRule对象。
+getPropertyCSSValue(propertyName) 返回给定属性的CSSValue对象
+getPropertyPriority(propertyName) 如果给定的属性使用了`!important` ，则返回`important` 否则返回空字符串
+getPropertyValue(propertyName) 返回给定属性的字符串值
+item(index) 返回给定位置的CSS属性名称
+removeProperty(propertyName) 从样式中删除给定的属性
+setProperty(propertyName,value,priority)将给定的属性设置相应的值，并加上优先权标志(!important或者看字符串)
+```
+Style对象实际相当于一个集合，可以通过`[]`或者`item(index)` 访问给定位置的CSS属性(获取的是CSS属性名):
+
+```
+for(var i=0,len=myDiv.style.length; i<len; i++){
+            alert(myDiv.style[i]); // 或者 myDiv.style.item(i)
+}
+```
+
+2. 计算的样式
+
+
+```
+document.defaultView.getComputedStyle(元素,伪元素字符串/null)
+
+```
+
+
+### 操作样式表
 
 
 
