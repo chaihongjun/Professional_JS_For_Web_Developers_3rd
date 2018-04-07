@@ -135,6 +135,131 @@ document.defaultView.getComputedStyle(元素,伪元素字符串/null)
 
 
 ### 操作样式表
+应用于文档的所有样式表`CSSStyleSheet通过`document.styleSheets`集合表示，通过集合的`length`属性可知道文档中样式表的数量，通过`[]`或者`item()`可以访问每一个指定的样式表。
+`CSSStyleSheet` 继承自`StyleSheet` ，继承的属性:
+
+```
+disabled，表示是否禁用样式表
+href，样式表URL
+media，当前样式表支持的所有媒体集合
+ownerNode，指向拥有当前样式表的节点的指针。样式表可能是在HTML中通过 `<link>`或者`<style>` 引入的
+parentStyleSheet，当前样式表如果是通过@import导入的，则这个属性指向导入它的样式表的指针
+title，ownerNode中的title属性值
+type，表示样式表类型的字符串。对CSS来说就是"type/css"
+cssRules，样式表中包含的样式规则集合。IE有一个类似的rules属性。
+ownerRule，若样式表是通过@import导入的，则这个属性指向导入的规则
+deleteRule(index)，删除cssRules集合中指定位置的规则。IE有一个类似的removeRule()方法
+insertRule(rule,index) ，向cssRules集合指定位置插入rule字符串。IE有一个类似的addRule()方法
+
+```
+
+```
+//返回当前文档的所有样式表的href
+var sheet=null;
+for (var i=0,len=document.styleSheets.length;i<len;i++){
+        sheet=document.styleSheets[i];
+        alert(sheet.href);         
+}
+```
+DOM规定了一个包含CSSStyleSheet对象的属性`sheet`,可以访问的CSSStyleSheet对象:
+```
+//非IE
+document.getELementsByTagName("link")[0].sheet;
+//IE
+document.getELementsByTagName("link")[0].styleSheet;
+```
+
+1. CSS规则
+`cssRule`对象表示样式表中的每一条规则。CSSRule是一个供其他多种类型继承的基类型，其中最常见的CSSStyleRule类型表示样式信息。
+`CSSStyleRule`包含以下属性:
+```
+cssText，返回整条规则对应的文本，包含选择器和规则内容
+parentRule，如果当前规则是导入的规则，则这个属性引用的就是导入规则
+parentStyleSheet，当前规则所属的样式表
+selectorText，返回当前规则的选择符文本
+style，CSSStyleDeclaration对象，可以设置和取得规则中特定的样式值
+type，表示规则类型的常量值，样式规则值为1
+```
+```
+div.box{
+    background-color: blue;
+    width: 100px;
+    height: 200px;
+}
+
+var sheet =document.styleSheets[0]; //获取第一条css文件资源
+var rules =sheet.cssRules || sheet.rules;   //兼容写法，获取第一条CSS文件的所有规则列表
+var rule= rules[0];  //获取第一条记录
+alert(rule.selectorText);
+alert(rule.style.cssText);
+alert(rule.style.backgroundColor);
+
+//当然也可以修改规则
+rule.style.width="200px;";  //修改了div.box的宽度
+```
+
+2. 创建规则
+DOM规定向现有的样式表中添加规则需要使用`insertRule(cssRule,index)`
+```
+//cssRule 表示具体的规则，index表示在哪个位置插入规则
+document.styleSheet[0].insertRule(cssRule,index);
+
+//IE的方法
+document.styleSheet[0].addRule(cssSelector,rules,index);
+```
+
+```
+//兼容性方法
+// selectorText CSS选择器
+// cssText 规则内容
+//postion 要添加的位置
+var sheet =document.styleSheet[0];
+function insertRule(sheet,selectorText,cssText,position){
+        if(sheet.insertRule){
+              sheet.insertRule(selectorText+"{"+cssText+"}",position);
+        }else if(sheet.addRule){
+              sheet.addRule(selectorText,cssText,position);
+        }
+}
+```
+
+3. 删除规则
+```
+//删除第一个样式表中的第一条规则
+document.styleSheet[0].deleteRule(0);   //DOM方法
+
+document.styleSheet[0].removeRule(0);   //IE方法
+```
+```
+//删除样式规则的兼容写法
+//sheet为样式表指针
+//index 要删除的规则索引
+var sheet=document.styleSheet[0];
+function deleteRule(sheet,index){
+      if(sheet.deleteRule){
+              sheet.deleteRule(index);
+      }else if (sheet.removeRule){
+              sheet.removeRule(index);
+      }
+}
+```
+
+
+### 元素大小 
+内容不属于DOM Level 2 Style 规范，但是主流浏览器都支持
+
+1. 偏移量（offset dimention），包括元素在屏幕上占用的所有可见空间（高度，宽度，内边距，滚动条，边框）
+```
+offsetHeight，元素在垂直方向上占用的空间大小，像素单位。包括元素的高度、（可见的）水平滚动条高度、上边框高度和下边框高度
+offsetWidth，元素在水平方向上占用的空间大小，像素单位。包括元素的宽度、（可见的）垂直滚动条宽度、左边框宽度和右边框宽度
+offsetLeft，元素的左外边框至包含元素的左内边框之间的像素距离
+offsetTop，元素的上外边框至包含元素的上内边框之间的像素距离
+```
+参阅 https://www.cnblogs.com/xiaohuochai/p/5828369.html
+
+
+
+
 
 
 

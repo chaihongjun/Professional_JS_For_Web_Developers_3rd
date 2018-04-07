@@ -1115,6 +1115,7 @@ MathJax.Hub.Config({
 <li><a href="#_2">样式</a><ul>
 <li><a href="#_3">访问元素的样式</a></li>
 <li><a href="#_4">操作样式表</a></li>
+<li><a href="#_5">元素大小</a></li>
 </ul>
 </li>
 </ul>
@@ -1272,4 +1273,126 @@ Style对象实际相当于一个集合，可以通过<code>[]</code>或者<code>
 </pre></div>
 
 
-<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>操作样式表</h3></article></body></html>
+<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>操作样式表</h3>
+<p>应用于文档的所有样式表<code>CSSStyleSheet通过</code>document.styleSheets<code>集合表示，通过集合的</code>length<code>属性可知道文档中样式表的数量，通过</code>[]<code>或者</code>item()<code>可以访问每一个指定的样式表。</code>CSSStyleSheet<code>继承自</code>StyleSheet` ，继承的属性:</p>
+<div class="codehilite"><pre>disabled，表示是否禁用样式表
+href，样式表URL
+media，当前样式表支持的所有媒体集合
+ownerNode，指向拥有当前样式表的节点的指针。样式表可能是在HTML中通过 `&lt;link&gt;`或者`&lt;style&gt;` 引入的
+parentStyleSheet，当前样式表如果是通过@import导入的，则这个属性指向导入它的样式表的指针
+title，ownerNode中的title属性值
+type，表示样式表类型的字符串。对CSS来说就是&quot;type/css&quot;
+cssRules，样式表中包含的样式规则集合。IE有一个类似的rules属性。
+ownerRule，若样式表是通过@import导入的，则这个属性指向导入的规则
+deleteRule(index)，删除cssRules集合中指定位置的规则。IE有一个类似的removeRule()方法
+insertRule(rule,index) ，向cssRules集合指定位置插入rule字符串。IE有一个类似的addRule()方法
+</pre></div>
+
+
+<p><div class="codehilite"><pre>//返回当前文档的所有样式表的href
+var sheet=null;
+for (var i=0,len=document.styleSheets.length;i&lt;len;i++){
+        sheet=document.styleSheets[i];
+        alert(sheet.href);         
+}
+</pre></div>
+<br />
+DOM规定了一个包含CSSStyleSheet对象的属性<code>sheet</code>,可以访问的CSSStyleSheet对象:<br />
+<div class="codehilite"><pre>//非IE
+document.getELementsByTagName(&quot;link&quot;)[0].sheet;
+//IE
+document.getELementsByTagName(&quot;link&quot;)[0].styleSheet;
+</pre></div>
+</p>
+<ol>
+<li>
+<p>CSS规则<br />
+<code>cssRule</code>对象表示样式表中的每一条规则。CSSRule是一个供其他多种类型继承的基类型，其中最常见的CSSStyleRule类型表示样式信息。<br />
+<code>CSSStyleRule</code>包含以下属性:<br />
+<div class="codehilite"><pre>cssText，返回整条规则对应的文本，包含选择器和规则内容
+parentRule，如果当前规则是导入的规则，则这个属性引用的就是导入规则
+parentStyleSheet，当前规则所属的样式表
+selectorText，返回当前规则的选择符文本
+style，CSSStyleDeclaration对象，可以设置和取得规则中特定的样式值
+type，表示规则类型的常量值，样式规则值为1
+</pre></div>
+<br />
+<div class="codehilite"><pre><span class="nt">div</span><span class="nc">.box</span><span class="p">{</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">100px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">var</span> <span class="nt">sheet</span> <span class="o">=</span><span class="nt">document</span><span class="nc">.styleSheets</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span> <span class="o">//</span><span class="nt">获取第一条css文件资源</span>
+<span class="nt">var</span> <span class="nt">rules</span> <span class="o">=</span><span class="nt">sheet</span><span class="nc">.cssRules</span> <span class="o">||</span> <span class="nt">sheet</span><span class="nc">.rules</span><span class="o">;</span>   <span class="o">//</span><span class="nt">兼容写法</span><span class="err">，</span><span class="nt">获取第一条CSS文件的所有规则列表</span>
+<span class="nt">var</span> <span class="nt">rule</span><span class="o">=</span> <span class="nt">rules</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span>  <span class="o">//</span><span class="nt">获取第一条记录</span>
+<span class="nt">alert</span><span class="o">(</span><span class="nt">rule</span><span class="nc">.selectorText</span><span class="o">);</span>
+<span class="nt">alert</span><span class="o">(</span><span class="nt">rule</span><span class="nc">.style.cssText</span><span class="o">);</span>
+<span class="nt">alert</span><span class="o">(</span><span class="nt">rule</span><span class="nc">.style.backgroundColor</span><span class="o">);</span>
+
+<span class="o">//</span><span class="nt">当然也可以修改规则</span>
+<span class="nt">rule</span><span class="nc">.style.width</span><span class="o">=</span><span class="s2">&quot;200px;&quot;</span><span class="o">;</span>  <span class="o">//</span><span class="nt">修改了div</span><span class="nc">.box的宽度</span>
+</pre></div>
+</p>
+</li>
+<li>
+<p>创建规则<br />
+DOM规定向现有的样式表中添加规则需要使用<code>insertRule(cssRule,index)</code><br />
+<div class="codehilite"><pre>//cssRule 表示具体的规则，index表示在哪个位置插入规则
+document.styleSheet[0].insertRule(cssRule,index);
+
+//IE的方法
+document.styleSheet[0].addRule(cssSelector,rules,index);
+</pre></div>
+</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span class="c1">//兼容性方法</span>
+<span class="c1">// selectorText CSS选择器</span>
+<span class="c1">// cssText 规则内容</span>
+<span class="c1">//postion 要添加的位置</span>
+<span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheet</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">insertRule</span><span class="p">(</span><span class="nx">sheet</span><span class="p">,</span><span class="nx">selectorText</span><span class="p">,</span><span class="nx">cssText</span><span class="p">,</span><span class="nx">position</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">insertRule</span><span class="p">){</span>
+              <span class="nx">sheet</span><span class="p">.</span><span class="nx">insertRule</span><span class="p">(</span><span class="nx">selectorText</span><span class="o">+</span><span class="s2">&quot;{&quot;</span><span class="o">+</span><span class="nx">cssText</span><span class="o">+</span><span class="s2">&quot;}&quot;</span><span class="p">,</span><span class="nx">position</span><span class="p">);</span>
+        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">addRule</span><span class="p">){</span>
+              <span class="nx">sheet</span><span class="p">.</span><span class="nx">addRule</span><span class="p">(</span><span class="nx">selectorText</span><span class="p">,</span><span class="nx">cssText</span><span class="p">,</span><span class="nx">position</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<ol>
+<li>删除规则<br />
+<div class="codehilite"><pre>//删除第一个样式表中的第一条规则
+document.styleSheet[0].deleteRule(0);   //DOM方法
+
+document.styleSheet[0].removeRule(0);   //IE方法
+</pre></div>
+<br />
+<div class="codehilite"><pre><span class="c1">//删除样式规则的兼容写法</span>
+<span class="c1">//sheet为样式表指针</span>
+<span class="c1">//index 要删除的规则索引</span>
+<span class="kd">var</span> <span class="nx">sheet</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheet</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">deleteRule</span><span class="p">(</span><span class="nx">sheet</span><span class="p">,</span><span class="nx">index</span><span class="p">){</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">deleteRule</span><span class="p">){</span>
+              <span class="nx">sheet</span><span class="p">.</span><span class="nx">deleteRule</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
+      <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">removeRule</span><span class="p">){</span>
+              <span class="nx">sheet</span><span class="p">.</span><span class="nx">removeRule</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
+      <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+</ol>
+<h3 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>元素大小</h3>
+<p>内容不属于DOM Level 2 Style 规范，但是主流浏览器都支持</p>
+<ol>
+<li>偏移量（offset dimention），包括元素在屏幕上占用的所有可见空间（高度，宽度，内边距，滚动条，边框）<br />
+<div class="codehilite"><pre>offsetHeight，元素在垂直方向上占用的空间大小，像素单位。包括元素的高度、（可见的）水平滚动条高度、上边框高度和下边框高度
+offsetWidth，元素在水平方向上占用的空间大小，像素单位。包括元素的宽度、（可见的）垂直滚动条宽度、左边框宽度和右边框宽度
+offsetLeft，元素的左外边框至包含元素的左内边框之间的像素距离
+offsetTop，元素的上外边框至包含元素的上内边框之间的像素距离
+</pre></div>
+<br />
+参阅 <a href="https://www.cnblogs.com/xiaohuochai/p/5828369.html">https://www.cnblogs.com/xiaohuochai/p/5828369.html</a></li>
+</ol></article></body></html>
