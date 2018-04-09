@@ -257,6 +257,9 @@ offsetTop，元素的上外边框至包含元素的上内边框之间的像素�
 ```
 参阅 https://www.cnblogs.com/xiaohuochai/p/5828369.html
 
+![关于offsetparent](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/offset.jpg)
+以上4个关于偏移量的内容都与`offsetparent`(定位父级相关)
+`offsetparent`：与当前元素最近的经过定位（position不是static）的父级元素
 
 
 
