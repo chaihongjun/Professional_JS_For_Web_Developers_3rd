@@ -251,15 +251,61 @@ function deleteRule(sheet,index){
 1. 偏移量（offset dimention），包括元素在屏幕上占用的所有可见空间（高度，宽度，内边距，滚动条，边框）
 ```
 offsetHeight，元素在垂直方向上占用的空间大小，像素单位。包括元素的高度、（可见的）水平滚动条高度、上边框高度和下边框高度
+offsetHeight =  border-top-height + padding-top + height + padding-bottom + border-bottom-height
 offsetWidth，元素在水平方向上占用的空间大小，像素单位。包括元素的宽度、（可见的）垂直滚动条宽度、左边框宽度和右边框宽度
+offsetWidth =  border-left-width + padding-left + width + padding-right + border-right-width
 offsetLeft，元素的左外边框至包含元素的左内边框之间的像素距离
 offsetTop，元素的上外边框至包含元素的上内边框之间的像素距离
 ```
 参阅 https://www.cnblogs.com/xiaohuochai/p/5828369.html
 
 ![关于offsetparent](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/offset.jpg)
-以上4个关于偏移量的内容都与`offsetparent`(定位父级相关)
-`offsetparent`：与当前元素最近的经过定位（position不是static）的父级元素
+
+以上4个关于偏移量的内容都与`offsetparent`(定位父级)相关
+`offsetparent`的定义：与当前元素最近的经过定位（position不是static）的父级元素.
+
+一个元素的定位父级和这个元素本身的定位属性有关:
+当元素自身的定位是`fixed`，则这个元素的定位父级是`null`
+当元素自身没有`fixed`，而且这个元素的父级没有定位，则这个元素的定位父级是`<body>`
+ 当元素自身没有`fixed`，而父元素存在定位，则`offsetparent`是离这个元素最近的经过定位的元素
+
+**可以看出元素的`offsetParent`是逐级向上查找，如果这个元素本身是`fixed`定位的，则它的offsetParent是null，如果这个元素定位不是`fixed`，则从元素层级向DOM树上层找到有定位属性的元素，这个有定位属性的元素就是前一个元素的offsetParent,否则就是`<body>`了。**
+
+```
+//获取元素的偏移
+function getElementLeft(element){
+                var acrualLeft =element.offsetLeft;
+                var current=element.offsetParent;
+
+                while(current!==null){
+                               actualLeft+=current.offsetLeft;
+                               current=current.offsetParent; 
+                }
+    
+            return actualLeft;
+}
+
+ function getElementTop(element){
+            var actualTop = element.offsetTop;
+            var current = element.offsetParent;
+
+            while(current!==null){
+                    actualTop+=current.offsetTop;
+                    current=current.offsetParent;
+            }
+           return  actualTop; 
+ }
+    
+2. 客户区大小
+客户区大小(client dimension)指元素内容和内边距占据的空间大小。
+```
+clientWidth :元素内容宽度+左内边距+右内边距
+clientHeight :元素内容高度+上内边距+下内边距
+```
+client dimension不含滚动条所占用的空间
+```
+
+![client dimension](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/Dimensions-client.png)
 
 
 

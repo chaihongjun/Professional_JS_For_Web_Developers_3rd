@@ -1389,12 +1389,54 @@ document.styleSheet[0].removeRule(0);   //IE方法
 <ol>
 <li>偏移量（offset dimention），包括元素在屏幕上占用的所有可见空间（高度，宽度，内边距，滚动条，边框）<br />
 <div class="codehilite"><pre>offsetHeight，元素在垂直方向上占用的空间大小，像素单位。包括元素的高度、（可见的）水平滚动条高度、上边框高度和下边框高度
+offsetHeight =  border-top-height + padding-top + height + padding-bottom + border-bottom-height
 offsetWidth，元素在水平方向上占用的空间大小，像素单位。包括元素的宽度、（可见的）垂直滚动条宽度、左边框宽度和右边框宽度
+offsetWidth =  border-left-width + padding-left + width + padding-right + border-right-width
 offsetLeft，元素的左外边框至包含元素的左内边框之间的像素距离
 offsetTop，元素的上外边框至包含元素的上内边框之间的像素距离
 </pre></div>
 <br />
 参阅 <a href="https://www.cnblogs.com/xiaohuochai/p/5828369.html">https://www.cnblogs.com/xiaohuochai/p/5828369.html</a></li>
 </ol>
-<p><img alt="关于offsetparent" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/offset.jpg" /><br />
-以上4个关于偏移量的内容都与<code>offsetparent</code>(定位父级相关)</p></article></body></html>
+<p><img alt="关于offsetparent" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/offset.jpg" /></p>
+<p>以上4个关于偏移量的内容都与<code>offsetparent</code>(定位父级)相关<br />
+<code>offsetparent</code>的定义：与当前元素最近的经过定位（position不是static）的父级元素.</p>
+<p>一个元素的定位父级和这个元素本身的定位属性有关:<br />
+当元素自身的定位是<code>fixed</code>，则这个元素的定位父级是<code>null</code><br />
+当元素自身没有<code>fixed</code>，而且这个元素的父级没有定位，则这个元素的定位父级是<code>&lt;body&gt;</code><br />
+ 当元素自身没有<code>fixed</code>，而父元素存在定位，则<code>offsetparent</code>是离这个元素最近的经过定位的元素</p>
+<p><strong>可以看出元素的<code>offsetParent</code>是逐级向上查找，如果这个元素本身是<code>fixed</code>定位的，则它的offsetParent是null，如果这个元素定位不是<code>fixed</code>，则从元素层级向DOM树上层找到有定位属性的元素，这个有定位属性的元素就是前一个元素的offsetParent,否则就是<code>&lt;body&gt;</code>了。</strong></p>
+<p><div class="codehilite"><pre><span class="c1">//获取元素的偏移</span>
+<span class="kd">function</span> <span class="nx">getElementLeft</span><span class="p">(</span><span class="nx">element</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">acrualLeft</span> <span class="o">=</span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetLeft</span><span class="p">;</span>
+                <span class="kd">var</span> <span class="nx">current</span><span class="o">=</span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
+
+                <span class="k">while</span><span class="p">(</span><span class="nx">current</span><span class="o">!==</span><span class="kc">null</span><span class="p">){</span>
+                               <span class="nx">actualLeft</span><span class="o">+=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetLeft</span><span class="p">;</span>
+                               <span class="nx">current</span><span class="o">=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span> 
+                <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nx">actualLeft</span><span class="p">;</span>
+<span class="p">}</span>
+
+ <span class="kd">function</span> <span class="nx">getElementTop</span><span class="p">(</span><span class="nx">element</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">actualTop</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
+
+            <span class="k">while</span><span class="p">(</span><span class="nx">current</span><span class="o">!==</span><span class="kc">null</span><span class="p">){</span>
+                    <span class="nx">actualTop</span><span class="o">+=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
+                    <span class="nx">current</span><span class="o">=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
+            <span class="p">}</span>
+           <span class="k">return</span>  <span class="nx">actualTop</span><span class="p">;</span> 
+ <span class="p">}</span>
+
+<span class="mi">2</span><span class="p">.</span> <span class="nx">客户区大小</span>
+<span class="nx">客户区大小</span><span class="p">(</span><span class="nx">client</span> <span class="nx">dimension</span><span class="p">)</span><span class="nx">指元素内容和内边距占据的空间大小</span><span class="err">。</span>
+</pre></div>
+<br />
+clientWidth :元素内容宽度+左内边距+右内边距<br />
+clientHeight :元素内容高度+上内边距+下内边距<br />
+<div class="codehilite"><pre>client dimension不含滚动条所占用的空间
+</pre></div>
+</p>
+<p><img alt="client dimension" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/Dimensions-client.png" /></p></article></body></html>
