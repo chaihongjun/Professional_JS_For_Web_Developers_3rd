@@ -1436,7 +1436,19 @@ offsetTop，元素的上外边框至包含元素的上内边框之间的像素�
 <br />
 clientWidth :元素内容宽度+左内边距+右内边距<br />
 clientHeight :元素内容高度+上内边距+下内边距<br />
-<div class="codehilite"><pre>client dimension不含滚动条所占用的空间
+<div class="codehilite"><pre><span class="o">**</span><span class="n">client</span> <span class="n">dimension不含滚动条所占用的空间</span><span class="o">**</span>
+
+
+<span class="o">!</span><span class="p">[</span><span class="n">client</span> <span class="n">dimension</span><span class="p">](</span><span class="nl">https</span><span class="p">:</span><span class="c1">//chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/Dimensions-client.png)</span>
+
+<span class="mf">3.</span> <span class="err">滚动大小</span>
+<span class="err">滚动大小</span><span class="p">(</span><span class="n">scroll</span> <span class="n">dimension</span><span class="p">)</span> <span class="err">包含滚动内容的元素的大小。有些元素比如`</span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span><span class="err">`即使没执行任何代码也可以自动添加滚动条。其他的需要通过</span><span class="n">CSS的overflow属性设置</span>
+<span class="err">与滚动条相关的属性</span><span class="o">:</span>
 </pre></div>
-</p>
-<p><img alt="client dimension" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/Dimensions-client.png" /></p></article></body></html>
+<br />
+scrollHeight：没有滚动条的情况下元素内容的总高度<br />
+scrollWidth：没有滚动条的情况下元素内容的总宽度<br />
+scrollLeft：被隐藏在内容区域做出的像素数，设置可改变元素的滚动位置<br />
+scrollTop：被隐藏在内容区域上方的像素数，设置可改变元素的滚动位置<br />
+```<br />
+<img alt="scroll" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/scroll.jpg" /></p></article></body></html>

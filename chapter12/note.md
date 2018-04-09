@@ -302,13 +302,21 @@ function getElementLeft(element){
 clientWidth :元素内容宽度+左内边距+右内边距
 clientHeight :元素内容高度+上内边距+下内边距
 ```
-client dimension不含滚动条所占用的空间
-```
+**client dimension不含滚动条所占用的空间**
+
 
 ![client dimension](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/Dimensions-client.png)
 
-
-
+3. 滚动大小
+滚动大小(scroll dimension) 包含滚动内容的元素的大小。有些元素比如`<html>`即使没执行任何代码也可以自动添加滚动条。其他的需要通过CSS的overflow属性设置
+与滚动条相关的属性:
+```
+scrollHeight：没有滚动条的情况下元素内容的总高度
+scrollWidth：没有滚动条的情况下元素内容的总宽度
+scrollLeft：被隐藏在内容区域做出的像素数，设置可改变元素的滚动位置
+scrollTop：被隐藏在内容区域上方的像素数，设置可改变元素的滚动位置
+```
+![scroll](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/scroll.jpg)
 
 
 
