@@ -12,5 +12,6 @@
 9. [第九章 客户端检测](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter9/note.html){:target="_blank"}
 10.  [第十章 DOM](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter10/note.html){:target="_blank"}
 11. [第十一章 DOM扩展](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter11/note.html){:target="_blank"}
+12. [第十二章 DOM2和DOM3](https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/note.html){:target="_blank"}
 
 
