@@ -1106,353 +1106,164 @@ MathJax.Hub.Config({
 </script>
 <title>note</title></head><body><article class="markdown-body"><div class="toc">
 <ul>
-<li><a href="#dom2dom3">DOM2和DOM3</a><ul>
-<li><a href="#dom">DOM变化</a><ul>
-<li><a href="#xml">针对XML命名空间的变化</a></li>
-<li><a href="#_1">其他方面的变化</a></li>
+<li><a href="#_1">事件</a><ul>
+<li><a href="#_2">事件流</a><ul>
+<li><a href="#_3">事件冒泡</a></li>
+<li><a href="#_4">事件捕获</a></li>
+<li><a href="#dom">DOM事件流</a></li>
 </ul>
 </li>
-<li><a href="#_2">样式</a><ul>
-<li><a href="#_3">访问元素的样式</a></li>
-<li><a href="#_4">操作样式表</a></li>
-<li><a href="#_5">元素大小</a></li>
+<li><a href="#_5">事件处理程序</a><ul>
+<li><a href="#html">HTML事件处理程序</a></li>
+<li><a href="#dom0">DOM0级事件处理程序</a></li>
+<li><a href="#dom2">DOM2级事件处理程序</a></li>
+<li><a href="#ie">IE事件处理程序</a></li>
+<li><a href="#_6">跨浏览器的事件处理程序</a></li>
 </ul>
 </li>
-<li><a href="#_6">遍历</a></li>
+<li><a href="#_7">事件对象</a><ul>
+<li><a href="#dom_1">DOM中的事件对象</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
-<h1 id="dom2dom3"><a name="user-content-dom2dom3" href="#dom2dom3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM2和DOM3</h1>
-<p>DOM1主要定义的是XML和HTML的文档底层结构<br />
-DOM2和DOM3 引入更多的交互能力，所以DOM2和DOM3分为许多模块：</p>
-<div class="codehilite"><pre>DOM Level 2 Core:在DOM1的基础上为节点添加了更多方法和属性
-DOM level 2 Views:为文档定义了基于样式信息的不同视图
-DOM Level 2 Events:说明了如何使事件和DOM文档交互
-DOM Level 2Style: 定义了如何以编程方式来访问和改变CSS样式信息
-DOM Level 2 Traversal and Range:引入遍历DOM文档和选择其特定部分的新接口
-DOM Level 2 HTML:在DOM1 HTML基础上构建添加了更多属性方法和接口
+<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件</h1>
+<h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件流</h2>
+<p>描述的是从页面中接收事件的顺序。IE的事件流是冒泡流，Netscape的是捕获事件流</p>
+<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件冒泡</h3>
+<p>IE的事件流叫事件冒泡(event bubbing),事件开始由最具体的元素（文档中嵌套层次最深的节点）接收，然后逐级向上传播到较为不具体的节点（文档）。</p>
+<p>所有浏览器都支持事件冒泡，但实现有差异。现代浏览器冒泡到<code>Window</code>对象</p>
+<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件捕获</h3>
+<p>与事件冒泡相反，不太具体的节点更早接收到事件，然后具体的节点最后接收到事件。意义在于事件到达预定目标之前先捕获它。由于老版本浏览器不支持事件捕获，所以建议使用事件冒泡，特殊情况用事件捕获。</p>
+<h3 id="dom"><a name="user-content-dom" href="#dom" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM事件流</h3>
+<p><strong>DOM2事件流包括三个阶段：<code>事件捕获</code>，<code>处于目标阶段</code>和<code>事件冒泡阶段</code>.</strong><br />
+首先发生的是事件捕获为截获事件提供机会，然后是实际的目标接收事件，最后一个阶段是冒泡阶段，可以在这个阶段对事件作出响应。</p>
+<p><img alt="DOM事件流" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter13/eventflow.svg" /></p>
+<h2 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件处理程序</h2>
+<p><code>事件</code>：用户或者浏览器自身执行的动作。<br />
+响应某个事件的函数叫<code>事件处理程序</code>（<code>事件侦听器</code>）<br />
+事件处理程序的名字以<code>on</code>开头:<br />
+<div class="codehilite"><pre>onclick
+onload
 </pre></div>
-
-
-<h2 id="dom"><a name="user-content-dom" href="#dom" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM变化</h2>
-<p>DOM2没有引入新类型，只是增加了新方法和新属性，DOM3既增强了现有的类型又新增了一些新类型</p>
-<h3 id="xml"><a name="user-content-xml" href="#xml" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>针对XML命名空间的变化</h3>
-<ol>
-<li>Node类型的变化<br />
-DOM2级中，Node类型包含下列特定于命名空间的属性:</li>
-</ol>
-<blockquote>
-<p><code>localName</code>，不带命名空间前缀的节点名称<br />
-<code>namesapceURI</code> ，命名空间URI或者null<br />
-<code>prefix</code>，命名空间前缀或者null</p>
-</blockquote>
-<p>当节点使用了命名空间前缀时，<code>nodeName=prefix+"："+localName</code>：<br />
-<div class="codehilite"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;head&gt;</span>
-                <span class="nt">&lt;title&gt;</span>Example xhtml page<span class="nt">&lt;/title&gt;</span>
-     <span class="nt">&lt;/head&gt;</span>
-            <span class="nt">&lt;body&gt;</span>
-                        <span class="nt">&lt;s:svg</span> <span class="na">xmlns:s=</span><span class="s">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="na">version=</span><span class="s">&quot;1.1&quot;</span> <span class="na">viewBox=</span><span class="s">&quot;0 0 100 100&quot;</span> <span class="na">style=</span><span class="s">&quot;width:100%;height:100%&quot;</span><span class="nt">&gt;</span>
-                            <span class="nt">&lt;s:rect</span> <span class="na">x=</span><span class="s">&quot;0&quot;</span> <span class="na">y=</span><span class="s">&quot;0&quot;</span> <span class="na">width=</span><span class="s">&quot;100&quot;</span> <span class="na">height=</span><span class="s">&quot;100&quot;</span> <span class="na">style=</span><span class="s">&quot;fill:red&quot;</span> <span class="nt">/&gt;</span>
-                         <span class="nt">&lt;/s:svg&gt;</span>
-              <span class="nt">&lt;/body&gt;</span> 
-      <span class="nt">&lt;/html&gt;</span>                                
+</p>
+<h3 id="html"><a name="user-content-html" href="#html" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>HTML事件处理程序</h3>
+<p>某个HTML元素支持的每种事件，都可以使用一个与相应事件处理程序同名的HTML特性来指定，这个特性可以执行JS代码。<br />
+<div class="codehilite"><pre>&lt;input type=&quot;button&quot; value=&quot;click&quot; onclick=&quot;alert(&#39;clicked&#39;)&quot;&gt;
 </pre></div>
 <br />
-以上对于<code>&lt;html&gt;</code>来说，它的<code>nodeName</code>和<code>tagName</code>就是<code>html</code>，<code>namespaceURI</code>就是<code>http://www.w3.org/199/xhtml</code>，<code>prefix</code>是null<br />
-对于<code>&lt;s:svg&gt;</code>元素，<code>tagName</code>是<code>s:svg</code>，<code>prefix</code>是s，<code>localName</code>是svg</p>
-<p>与命名空间相关的方法:<br />
-<div class="codehilite"><pre>isDefaultNamespace(namspaceURI) 判断给定的namespaceURI是否是当前节点默认命名空间
-lookupNamespaceURI(prefix) 返回给定prefix的命名空间
-lookupPrefix(namespaceURI) 返回给定命名空间的前缀
-</pre></div>
-</p>
-<ol>
-<li>
-<p>Document类型的变化<br />
-包含下列与命名空间相关的方法<br />
-<div class="codehilite"><pre>createElementNS(namespaceURI,tagName) 创建一个属于命名空间namespaceURI的tagName元素
-createAttributeNs(namespaceURI,attributeName) 创建一个属于命名空间namespaceURI的新的特性
-getElementsByTagNameNS(namespaceURI,tagName) 返回属于命名空间namespaceURI的tagName元素NodeList
-</pre></div>
-</p>
-</li>
-<li>
-<p>Element类型的变化<br />
-新增方法:<br />
-<div class="codehilite"><pre>getAttributeNS(namespaceURI,localName) 返回属于命名空间namespaceURI的localName的特性
-getAttributeNodeNS(namespaceURI,localName) 返回属于命名空间namespaceURI的localName的特性节点
-getElementsByTagNameNS(namespaceURI,tagName) 返回属于命名空间namespaceUR的tagName元素的NodeList
-hasAttributeNS(namespaceURI,localName) 确认当前元素是否有一个名为localName的特性，并且该特性属于命名空间namespaceURI
-removeAttributeNS(namespaceURI,localName) 删除属于命名空间namespaceURI的名为localName的特性
-setAttributeNS(namespaceURI,qualifiedName,value) 设置属于命名空间namespaceURI，特性名为qualifiedName，值为value的特性
-setAttributeNodeNS(attNode) 设置属于命名空间namespaceURI，特性名为qualifiedName，值为value的特性
-</pre></div>
-</p>
-</li>
-<li>
-<p>NamedNodeMap 类型变化<br />
-<div class="codehilite"><pre>getNamedItemNS(namespaceURI,localName) 取得命名空间namespaceURI的localName项
-removeNamedItemNS(namespaceURI,localName)  删除属于命名空间namespaceURI的localName项
-setNamedItemNS(node) 添加node ，这个节点事先指定了命名空间
-</pre></div>
-</p>
-</li>
-</ol>
-<h3 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>其他方面的变化</h3>
-<ol>
-<li>DocumentType类型的变化</li>
-</ol>
-<p>新增3个属性<code>publicId</code>、<code>systemId</code>和<code>internalSubset</code><br />
-<div class="codehilite"><pre>document.doctype.publicId
-document.doctype.systemId
-document.doctype.internalSubset
-</pre></div>
-</p>
-<h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>样式</h2>
-<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>访问元素的样式</h3>
-<p>任何支持<code>style特性</code>的HTML元素在JavaScript中都有一个对应的<code>style属性</code>。这个<code>style</code>对象是<code>CSSStyleDeclaration</code>的实例，包含通过HTML的style特性指定额度所有样式信息，但不包含外部样式表和嵌入样式表层叠的样式。<br />
-在HTML元素的style特性中指定的CSS属性，都有JavaScript的Style对象属性一一对应。使用短划线的CSS属性名，将会转化为驼峰大小写形式:</p>
-<table>
-<thead>
-<tr>
-<th>CSS属性</th>
-<th>JavaScript属性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bakground-image</td>
-<td>style.backgroundImage</td>
-</tr>
-<tr>
-<td>color</td>
-<td>style.color</td>
-</tr>
-<tr>
-<td>display</td>
-<td>style.display</td>
-</tr>
-<tr>
-<td>font-family</td>
-<td>style.fontFamily</td>
-</tr>
-<tr>
-<td>float</td>
-<td>style.cssFloat</td>
-</tr>
-</tbody>
-</table>
-<p>由于<code>float</code>在JavaScript中山保留字，所以这里对应的JavaScript属性名是<code>cssFLoat</code>,(IE支持的是<code>styleFloat</code>)</p>
-<ol>
-<li>DOM样式属性和方法<br />
-DOM2 Level Style 规范为style对象定义了属性和方法：<br />
-<div class="codehilite"><pre>cssText：可以获取style特性中的CSS代码
-length：元素的CSS属性数量
-parentRule：CSS信息的CSSRule对象。
-getPropertyCSSValue(propertyName) 返回给定属性的CSSValue对象
-getPropertyPriority(propertyName) 如果给定的属性使用了`!important` ，则返回`important` 否则返回空字符串
-getPropertyValue(propertyName) 返回给定属性的字符串值
-item(index) 返回给定位置的CSS属性名称
-removeProperty(propertyName) 从样式中删除给定的属性
-setProperty(propertyName,value,priority)将给定的属性设置相应的值，并加上优先权标志(!important或者看字符串)
-</pre></div>
-<br />
-Style对象实际相当于一个集合，可以通过<code>[]</code>或者<code>item(index)</code> 访问给定位置的CSS属性(获取的是CSS属性名):</li>
-</ol>
-<div class="codehilite"><pre>for(var i=0,len=myDiv.style.length; i&lt;len; i++){
-            alert(myDiv.style[i]); // 或者 myDiv.style.item(i)
-}
-</pre></div>
+<code>click</code>事件对应的事件处理程序<code>onclick</code>，在HTML元素对应的特性也是<code>onclick</code>。<br />
+事件处理程序中的代码在执行时，有权访问全局作用域中的代码</p>
+<h3 id="dom0"><a name="user-content-dom0" href="#dom0" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM0级事件处理程序</h3>
+<p><div class="codehilite"><pre><span class="c1">//指定事件处理程序</span>
+<span class="nx">要操作的对象引用</span><span class="p">.</span><span class="nx">事件处理程序属性</span><span class="o">=</span><span class="nx">事件函数</span>
 
-
-<ol>
-<li>计算的样式</li>
-</ol>
-<div class="codehilite"><pre>document.defaultView.getComputedStyle(元素,伪元素字符串/null)
-</pre></div>
-
-
-<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>操作样式表</h3>
-<p>应用于文档的所有样式表<code>CSSStyleSheet通过</code>document.styleSheets<code>集合表示，通过集合的</code>length<code>属性可知道文档中样式表的数量，通过</code>[]<code>或者</code>item()<code>可以访问每一个指定的样式表。</code>CSSStyleSheet<code>继承自</code>StyleSheet` ，继承的属性:</p>
-<div class="codehilite"><pre>disabled，表示是否禁用样式表
-href，样式表URL
-media，当前样式表支持的所有媒体集合
-ownerNode，指向拥有当前样式表的节点的指针。样式表可能是在HTML中通过 `&lt;link&gt;`或者`&lt;style&gt;` 引入的
-parentStyleSheet，当前样式表如果是通过@import导入的，则这个属性指向导入它的样式表的指针
-title，ownerNode中的title属性值
-type，表示样式表类型的字符串。对CSS来说就是&quot;type/css&quot;
-cssRules，样式表中包含的样式规则集合。IE有一个类似的rules属性。
-ownerRule，若样式表是通过@import导入的，则这个属性指向导入的规则
-deleteRule(index)，删除cssRules集合中指定位置的规则。IE有一个类似的removeRule()方法
-insertRule(rule,index) ，向cssRules集合指定位置插入rule字符串。IE有一个类似的addRule()方法
-</pre></div>
-
-
-<p><div class="codehilite"><pre>//返回当前文档的所有样式表的href
-var sheet=null;
-for (var i=0,len=document.styleSheets.length;i&lt;len;i++){
-        sheet=document.styleSheets[i];
-        alert(sheet.href);         
-}
-</pre></div>
-<br />
-DOM规定了一个包含CSSStyleSheet对象的属性<code>sheet</code>,可以访问的CSSStyleSheet对象:<br />
-<div class="codehilite"><pre>//非IE
-document.getELementsByTagName(&quot;link&quot;)[0].sheet;
-//IE
-document.getELementsByTagName(&quot;link&quot;)[0].styleSheet;
-</pre></div>
-</p>
-<ol>
-<li>
-<p>CSS规则<br />
-<code>cssRule</code>对象表示样式表中的每一条规则。CSSRule是一个供其他多种类型继承的基类型，其中最常见的CSSStyleRule类型表示样式信息。<br />
-<code>CSSStyleRule</code>包含以下属性:<br />
-<div class="codehilite"><pre>cssText，返回整条规则对应的文本，包含选择器和规则内容
-parentRule，如果当前规则是导入的规则，则这个属性引用的就是导入规则
-parentStyleSheet，当前规则所属的样式表
-selectorText，返回当前规则的选择符文本
-style，CSSStyleDeclaration对象，可以设置和取得规则中特定的样式值
-type，表示规则类型的常量值，样式规则值为1
-</pre></div>
-<br />
-<div class="codehilite"><pre><span class="nt">div</span><span class="nc">.box</span><span class="p">{</span>
-    <span class="k">background-color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
-    <span class="k">width</span><span class="o">:</span> <span class="m">100px</span><span class="p">;</span>
-    <span class="k">height</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Clicked&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nt">var</span> <span class="nt">sheet</span> <span class="o">=</span><span class="nt">document</span><span class="nc">.styleSheets</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span> <span class="o">//</span><span class="nt">获取第一条css文件资源</span>
-<span class="nt">var</span> <span class="nt">rules</span> <span class="o">=</span><span class="nt">sheet</span><span class="nc">.cssRules</span> <span class="o">||</span> <span class="nt">sheet</span><span class="nc">.rules</span><span class="o">;</span>   <span class="o">//</span><span class="nt">兼容写法</span><span class="err">，</span><span class="nt">获取第一条CSS文件的所有规则列表</span>
-<span class="nt">var</span> <span class="nt">rule</span><span class="o">=</span> <span class="nt">rules</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">;</span>  <span class="o">//</span><span class="nt">获取第一条记录</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">rule</span><span class="nc">.selectorText</span><span class="o">);</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">rule</span><span class="nc">.style.cssText</span><span class="o">);</span>
-<span class="nt">alert</span><span class="o">(</span><span class="nt">rule</span><span class="nc">.style.backgroundColor</span><span class="o">);</span>
-
-<span class="o">//</span><span class="nt">当然也可以修改规则</span>
-<span class="nt">rule</span><span class="nc">.style.width</span><span class="o">=</span><span class="s2">&quot;200px;&quot;</span><span class="o">;</span>  <span class="o">//</span><span class="nt">修改了div</span><span class="nc">.box的宽度</span>
-</pre></div>
-</p>
-</li>
-<li>
-<p>创建规则<br />
-DOM规定向现有的样式表中添加规则需要使用<code>insertRule(cssRule,index)</code><br />
-<div class="codehilite"><pre>//cssRule 表示具体的规则，index表示在哪个位置插入规则
-document.styleSheet[0].insertRule(cssRule,index);
-
-//IE的方法
-document.styleSheet[0].addRule(cssSelector,rules,index);
-</pre></div>
-</p>
-</li>
-</ol>
-<div class="codehilite"><pre><span class="c1">//兼容性方法</span>
-<span class="c1">// selectorText CSS选择器</span>
-<span class="c1">// cssText 规则内容</span>
-<span class="c1">//postion 要添加的位置</span>
-<span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheet</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">;</span>
-<span class="kd">function</span> <span class="nx">insertRule</span><span class="p">(</span><span class="nx">sheet</span><span class="p">,</span><span class="nx">selectorText</span><span class="p">,</span><span class="nx">cssText</span><span class="p">,</span><span class="nx">position</span><span class="p">){</span>
-        <span class="k">if</span><span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">insertRule</span><span class="p">){</span>
-              <span class="nx">sheet</span><span class="p">.</span><span class="nx">insertRule</span><span class="p">(</span><span class="nx">selectorText</span><span class="o">+</span><span class="s2">&quot;{&quot;</span><span class="o">+</span><span class="nx">cssText</span><span class="o">+</span><span class="s2">&quot;}&quot;</span><span class="p">,</span><span class="nx">position</span><span class="p">);</span>
-        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">addRule</span><span class="p">){</span>
-              <span class="nx">sheet</span><span class="p">.</span><span class="nx">addRule</span><span class="p">(</span><span class="nx">selectorText</span><span class="p">,</span><span class="nx">cssText</span><span class="p">,</span><span class="nx">position</span><span class="p">);</span>
-        <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<ol>
-<li>删除规则<br />
-<div class="codehilite"><pre>//删除第一个样式表中的第一条规则
-document.styleSheet[0].deleteRule(0);   //DOM方法
-
-document.styleSheet[0].removeRule(0);   //IE方法
+<span class="c1">//要操作的对象引用: btn</span>
+<span class="c1">//事件处理程序属性: onclick</span>
+<span class="c1">//事件函数 :  function(){alert(&quot;Clicked&quot;);}</span>
 </pre></div>
 <br />
-<div class="codehilite"><pre><span class="c1">//删除样式规则的兼容写法</span>
-<span class="c1">//sheet为样式表指针</span>
-<span class="c1">//index 要删除的规则索引</span>
-<span class="kd">var</span> <span class="nx">sheet</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheet</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">;</span>
-<span class="kd">function</span> <span class="nx">deleteRule</span><span class="p">(</span><span class="nx">sheet</span><span class="p">,</span><span class="nx">index</span><span class="p">){</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">deleteRule</span><span class="p">){</span>
-              <span class="nx">sheet</span><span class="p">.</span><span class="nx">deleteRule</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
-      <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">sheet</span><span class="p">.</span><span class="nx">removeRule</span><span class="p">){</span>
-              <span class="nx">sheet</span><span class="p">.</span><span class="nx">removeRule</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
-      <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</li>
-</ol>
-<h3 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>元素大小</h3>
-<p>内容不属于DOM Level 2 Style 规范，但是主流浏览器都支持</p>
-<ol>
-<li>偏移量（offset dimention），包括元素在屏幕上占用的所有可见空间（高度，宽度，内边距，滚动条，边框）<br />
-<div class="codehilite"><pre>offsetHeight，元素在垂直方向上占用的空间大小，像素单位。包括元素的高度、（可见的）水平滚动条高度、上边框高度和下边框高度
-offsetHeight =  border-top-height + padding-top + height + padding-bottom + border-bottom-height
-offsetWidth，元素在水平方向上占用的空间大小，像素单位。包括元素的宽度、（可见的）垂直滚动条宽度、左边框宽度和右边框宽度
-offsetWidth =  border-left-width + padding-left + width + padding-right + border-right-width
-offsetLeft，元素的左外边框至包含元素的左内边框之间的像素距离
-offsetTop，元素的上外边框至包含元素的上内边框之间的像素距离
+该方式添加的事件处理程序会在事件冒泡阶段被处理<br />
+<div class="codehilite"><pre>btn.onclick=null;   //删除事件处理程序
 </pre></div>
 <br />
-参阅 <a href="https://www.cnblogs.com/xiaohuochai/p/5828369.html">https://www.cnblogs.com/xiaohuochai/p/5828369.html</a></li>
-</ol>
-<p><img alt="关于offsetparent" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/offset.jpg" /></p>
-<p>以上4个关于偏移量的内容都与<code>offsetparent</code>(定位父级)相关<br />
-<code>offsetparent</code>的定义：与当前元素最近的经过定位（position不是static）的父级元素.</p>
-<p>一个元素的定位父级和这个元素本身的定位属性有关:<br />
-当元素自身的定位是<code>fixed</code>，则这个元素的定位父级是<code>null</code><br />
-当元素自身没有<code>fixed</code>，而且这个元素的父级没有定位，则这个元素的定位父级是<code>&lt;body&gt;</code><br />
- 当元素自身没有<code>fixed</code>，而父元素存在定位，则<code>offsetparent</code>是离这个元素最近的经过定位的元素</p>
-<p><strong>可以看出元素的<code>offsetParent</code>是逐级向上查找，如果这个元素本身是<code>fixed</code>定位的，则它的offsetParent是null，如果这个元素定位不是<code>fixed</code>，则从元素层级向DOM树上层找到有定位属性的元素，这个有定位属性的元素就是前一个元素的offsetParent,否则就是<code>&lt;body&gt;</code>了。</strong></p>
-<p><div class="codehilite"><pre><span class="c1">//获取元素的偏移</span>
-<span class="kd">function</span> <span class="nx">getElementLeft</span><span class="p">(</span><span class="nx">element</span><span class="p">){</span>
-                <span class="kd">var</span> <span class="nx">acrualLeft</span> <span class="o">=</span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetLeft</span><span class="p">;</span>
-                <span class="kd">var</span> <span class="nx">current</span><span class="o">=</span><span class="nx">element</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
+<strong>事件处理程序的作用域为所属元素的作用域</strong></p>
+<h3 id="dom2"><a name="user-content-dom2" href="#dom2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM2级事件处理程序</h3>
+<p>DOM2级事件定义了两个方法<code>addEventListener()</code>和<code>removeEventListener()</code>，所有DOM节点都有这两个方法：<br />
+<div class="codehilite"><pre><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;事件名称&quot;</span><span class="p">,</span><span class="s2">&quot;事件处理函数&quot;</span><span class="p">,</span><span class="nx">布尔值</span><span class="p">);</span>
+<span class="nx">removeEventListener</span><span class="p">(</span><span class="s2">&quot;事件名称&quot;</span><span class="p">,</span><span class="s2">&quot;事件处理函数&quot;</span><span class="p">,</span><span class="nx">布尔值</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
 
-                <span class="k">while</span><span class="p">(</span><span class="nx">current</span><span class="o">!==</span><span class="kc">null</span><span class="p">){</span>
-                               <span class="nx">actualLeft</span><span class="o">+=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetLeft</span><span class="p">;</span>
-                               <span class="nx">current</span><span class="o">=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span> 
+    <span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+</pre></div>
+<br />
+通过<code>addEventListener()</code>添加的事件只能通过<code>removeEventListener()</code>移除，而且参数必须一致。<br />
+<strong>所以通过<code>addEventListener()</code>添加的匿名事件函数将无法通过<code>removeEventListener()</code>移除</strong></p>
+<p><code>addEventListener()</code> 可以为一个元素添加多个事件，执行顺序则是按照添加顺序而来:<br />
+<div class="codehilite"><pre><span class="c1">//点击按钮之后先弹出按钮ID，再弹出hellow world</span>
+<span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+ <span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+                    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+    <span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+
+     <span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+                    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello world!&quot;</span><span class="p">);</span>
+    <span class="p">},</span><span class="kc">false</span><span class="p">);</span>
+</pre></div>
+</p>
+<h3 id="ie"><a name="user-content-ie" href="#ie" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>IE事件处理程序</h3>
+<p>IE对应的两个方法<code>attachEvent()</code>和<code>detachEvent()</code><br />
+<div class="codehilite"><pre>attachEvent(&quot;事件处理程序名称&quot;,&quot;事件处理程序函数&quot;)
+detachEvent(&quot;事件处理程序名称&quot;,&quot;事件处理程序函数&quot;)
+</pre></div>
+<br />
+<strong>这里的是<code>事件处理程序名称</code>而非<code>事件名称</code>,因此，如果是点击事件，则应该是<code>onclick</code>而不是<code>click</code></strong><br />
+<strong><code>attachEvent()</code>的事件处理程序作用域为全局:</strong><br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+        <span class="nx">btn</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onclick&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+                    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="o">===</span><span class="nb">window</span><span class="p">)</span> <span class="p">;</span><span class="c1">// true</span>
+            <span class="p">});</span>
+</pre></div>
+<br />
+<strong><code>attachEvent()</code> 与 <code>addEventListener</code>类似，但是执行顺序是相反的，最后添加的，最先执行</strong><br />
+IE事件的移除<code>detachEvent()</code>与<code>removeEventListener()</code>类似，必须和<code>attachEvent()</code>参数一致，才可以移除事件。</p>
+<h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>跨浏览器的事件处理程序</h3>
+<p><div class="codehilite"><pre><span class="kd">var</span> <span class="nx">EventUtil</span> <span class="o">=</span><span class="p">{</span>
+                <span class="nx">addHandler</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">){</span>
+                            <span class="k">if</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">){</span>
+                                        <span class="nx">element</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+                            <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">){</span>
+                                        <span class="nx">element</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">);</span>
+                            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                                        <span class="nx">element</span><span class="cp">[</span><span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="k">type</span><span class="cp">]</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
+                            <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="nx">removeHandler</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">){</span>
+                                <span class="k">if</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">){</span>
+                                            <span class="nx">element</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+                                <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">detachEvent</span><span class="p">){</span>
+                                        <span class="nx">element</span><span class="p">.</span><span class="nx">detachEvent</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">);</span>
+                            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                                        <span class="nx">element</span><span class="cp">[</span><span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="k">type</span><span class="cp">]</span><span class="o">=</span><span class="kc">null</span><span class="p">;</span>
+                            <span class="p">}</span>
                 <span class="p">}</span>
-
-            <span class="k">return</span> <span class="nx">actualLeft</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<br />
+首先检测是否支持DOM2级方法，如果不支持可能是IE系列，如果也不支持，则使用DOM0级方法。<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">handler</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;CLicked&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">EventUtil</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">(</span><span class="nx">btn</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="nx">handler</span><span class="p">);</span>
+<span class="nx">EventUtil</span><span class="p">.</span><span class="nx">removeHandler</span><span class="p">(</span><span class="nx">btn</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="nx">handler</span><span class="p">);</span>
+</pre></div>
+</p>
+<h2 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件对象</h2>
+<p>触发DOM上的某个事件的时候，会产生一个事件对象<code>event</code>，这个对象包含了所有与事件相关的信息，包括导致事件的元素，事件的类型，和其他与特定事件相关的信息。<br />
+浏览器都支持<code>event</code>对象，但方式不同。</p>
+<h3 id="dom_1"><a name="user-content-dom_1" href="#dom_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>DOM中的事件对象</h3>
+<p>兼容DOM的浏览器会将一个<code>event</code>传入事件处理程序中，无论是DOM0还是DOM2:<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElemetById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>  <span class="c1">//&quot;click&quot;</span>
 <span class="p">}</span>
 
- <span class="kd">function</span> <span class="nx">getElementTop</span><span class="p">(</span><span class="nx">element</span><span class="p">){</span>
-            <span class="kd">var</span> <span class="nx">actualTop</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
-            <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
-
-            <span class="k">while</span><span class="p">(</span><span class="nx">current</span><span class="o">!==</span><span class="kc">null</span><span class="p">){</span>
-                    <span class="nx">actualTop</span><span class="o">+=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
-                    <span class="nx">current</span><span class="o">=</span><span class="nx">current</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
-            <span class="p">}</span>
-           <span class="k">return</span>  <span class="nx">actualTop</span><span class="p">;</span> 
- <span class="p">}</span>
-
-<span class="mi">2</span><span class="p">.</span> <span class="nx">客户区大小</span>
-<span class="nx">客户区大小</span><span class="p">(</span><span class="nx">client</span> <span class="nx">dimension</span><span class="p">)</span><span class="nx">指元素内容和内边距占据的空间大小</span><span class="err">。</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                   <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>  <span class="c1">//&quot;click&quot;</span>
+    <span class="p">},</span><span class="kc">false</span><span class="p">)</span>
 </pre></div>
 <br />
-clientWidth :元素内容宽度+左内边距+右内边距<br />
-clientHeight :元素内容高度+上内边距+下内边距<br />
-<div class="codehilite"><pre><span class="o">**</span><span class="n">client</span> <span class="n">dimension不含滚动条所占用的空间</span><span class="o">**</span>
-
-
-<span class="o">!</span><span class="p">[</span><span class="n">client</span> <span class="n">dimension</span><span class="p">](</span><span class="nl">https</span><span class="p">:</span><span class="c1">//chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/Dimensions-client.png)</span>
-
-<span class="mf">3.</span> <span class="err">滚动大小</span>
-<span class="err">滚动大小</span><span class="p">(</span><span class="n">scroll</span> <span class="n">dimension</span><span class="p">)</span> <span class="err">包含滚动内容的元素的大小。有些元素比如`</span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span><span class="err">`即使没执行任何代码也可以自动添加滚动条。其他的需要通过</span><span class="n">CSS的overflow属性设置</span>
-<span class="err">与滚动条相关的属性</span><span class="o">:</span>
+<div class="codehilite"><pre>&lt;input type=&quot;button&quot; value=&quot;Click Me&quot; onclick=&quot;alert(event.type)&quot;&gt;
 </pre></div>
 <br />
-scrollHeight：没有滚动条的情况下元素内容的总高度<br />
-scrollWidth：没有滚动条的情况下元素内容的总宽度<br />
-scrollLeft：被隐藏在内容区域做出的像素数，设置可改变元素的滚动位置<br />
-scrollTop：被隐藏在内容区域上方的像素数，设置可改变元素的滚动位置<br />
-```<br />
-<img alt="scroll" src="https://chaihongjun.github.io/Professional_JS_For_Web_Developers_3rd/chapter12/scroll.jpg" /></p>
-<p>4.确定元素大小</p>
-<h2 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>遍历</h2>
-<p>(to be continued)</p></article></body></html>
+通过HTML特性指定的事件处理程序，变量<code>event</code>保存着<code>event</code>对象</p></article></body></html>
