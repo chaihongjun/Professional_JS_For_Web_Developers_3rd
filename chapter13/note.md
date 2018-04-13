@@ -159,7 +159,67 @@ btn.addEventListener("click",function(event){
                    alert(event.type);  //"click"
     },false)
 ```
+通过HTML特性指定的事件处理程序，变量`event`保存着`event`对象
 ```
 <input type="button" value="Click Me" onclick="alert(event.type)">
 ```
-通过HTML特性指定的事件处理程序，变量`event`保存着`event`对象
+
+`event`事件对象包含的属性方法:
+
+| 属性/方法 | 类型 |  读/写 | 说明 |
+| - | -| - | - |
+| bubbles | Boolean | 只读 | 表明事件是否冒泡 |
+| cancelable | Boolean | 只读 | 表明是否可以取消事件的默认行为 |
+| currentTarget | Element | 只读 | 其事件处理程序当前正在处理事件的那个元素 |
+| defaultPrevented | Boolean | 只读 | 为true表示已经调用了preventDefault()(DOM3级事件中新增) |
+| detail | Integer | 只读 | 与事件相关的细节信息 |
+| eventPhase | Integer | 只读 | 调用事件处理程序的阶段:1 表示捕获阶段 2 表示处于目标阶段 3表示冒泡阶段 |
+| preventDefault() | Function | 只读 | 取消事件的默认行为。如果cancelable是true。则可以使用这个方法 |
+| stopImmediatePropagation() | Function | 只读 | 取消事件的进一步捕获或者冒泡，同时阻止任何事件处理程序被调用(DOM3级事件中新增) |
+| stopPropagation() | Function | 只读 | 取消事件的进一步捕获或冒泡。如果bubble为true，则可以使用这个方法 |
+| target | Element | 只读 | 事件的目标 |
+| trusted | Boolean | 只读 | 为true表示事件是浏览器生成的。为false表示事件是由开发人员通过JavaScript创建的(DOM3新增) |
+| type | String | 只读 | 被触发的事件的类型 |
+| view | AbstractView | 只读 | 与事件关联的抽象视图。等同于发生事件的Window对象 |
+
+**事件处理程序内部，对象`this`始终等于`currentTarget`，而`target`则只包含事件的实际目标。**
+如果直接将事件处理程序指定给力目标元素，则`this`，`currentTarget`，`target`包含相同的值：
+```
+var btn=document.getElementById("myBtn");
+    btn.onclick=function(event){
+                alert(event.currentTarget===this);//true
+                alert(event.target===this); //true
+    }
+```
+由于是按钮点击触发点击事件。所以`this`指向按钮,`currentTarget`指向按钮,事件目标`target`也是按钮
+如果事件处理函数在按钮的父节点:
+```
+document.body.onclick=function(event){
+            alert(event.currentTarget===document.body);//true
+            alert(this===document.body);//true;
+            alert(event.target===document.getElementById("myBtn")); //true
+}
+```
+`this`和`currentTarget`都指向事件处理程序绑定的目标body上，但是实际点击事件是按钮触发的，所以`target`指向的是按钮
+如果通过一个函数处理多个事件，可以使用`type`属性:
+```
+var btn=document.getElementById("myBtn");
+var handler=function(event){
+            switch(event.type){
+                        case "click":
+                         alert("Clicked");
+                         break;
+                         case "mouseover":
+                         event.target.style.backgroundColor="red";
+                         break;
+                         case "mouseout":
+                         event.target.style.backgroundColor="";
+                         break;
+
+            }
+}； 
+
+btn.onclick=handler;
+btn.onmouseover=handler;
+btn.onmouseout=handler;
+```

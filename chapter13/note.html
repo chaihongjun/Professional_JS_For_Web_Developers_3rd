@@ -1263,7 +1263,139 @@ IE事件的移除<code>detachEvent()</code>与<code>removeEventListener()</code>
     <span class="p">},</span><span class="kc">false</span><span class="p">)</span>
 </pre></div>
 <br />
+通过HTML特性指定的事件处理程序，变量<code>event</code>保存着<code>event</code>对象<br />
 <div class="codehilite"><pre>&lt;input type=&quot;button&quot; value=&quot;Click Me&quot; onclick=&quot;alert(event.type)&quot;&gt;
 </pre></div>
+</p>
+<p><code>event</code>事件对象包含的属性方法:</p>
+<table>
+<thead>
+<tr>
+<th>属性/方法</th>
+<th>类型</th>
+<th>读/写</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bubbles</td>
+<td>Boolean</td>
+<td>只读</td>
+<td>表明事件是否冒泡</td>
+</tr>
+<tr>
+<td>cancelable</td>
+<td>Boolean</td>
+<td>只读</td>
+<td>表明是否可以取消事件的默认行为</td>
+</tr>
+<tr>
+<td>currentTarget</td>
+<td>Element</td>
+<td>只读</td>
+<td>其事件处理程序当前正在处理事件的那个元素</td>
+</tr>
+<tr>
+<td>defaultPrevented</td>
+<td>Boolean</td>
+<td>只读</td>
+<td>为true表示已经调用了preventDefault()(DOM3级事件中新增)</td>
+</tr>
+<tr>
+<td>detail</td>
+<td>Integer</td>
+<td>只读</td>
+<td>与事件相关的细节信息</td>
+</tr>
+<tr>
+<td>eventPhase</td>
+<td>Integer</td>
+<td>只读</td>
+<td>调用事件处理程序的阶段:1 表示捕获阶段 2 表示处于目标阶段 3表示冒泡阶段</td>
+</tr>
+<tr>
+<td>preventDefault()</td>
+<td>Function</td>
+<td>只读</td>
+<td>取消事件的默认行为。如果cancelable是true。则可以使用这个方法</td>
+</tr>
+<tr>
+<td>stopImmediatePropagation()</td>
+<td>Function</td>
+<td>只读</td>
+<td>取消事件的进一步捕获或者冒泡，同时阻止任何事件处理程序被调用(DOM3级事件中新增)</td>
+</tr>
+<tr>
+<td>stopPropagation()</td>
+<td>Function</td>
+<td>只读</td>
+<td>取消事件的进一步捕获或冒泡。如果bubble为true，则可以使用这个方法</td>
+</tr>
+<tr>
+<td>target</td>
+<td>Element</td>
+<td>只读</td>
+<td>事件的目标</td>
+</tr>
+<tr>
+<td>trusted</td>
+<td>Boolean</td>
+<td>只读</td>
+<td>为true表示事件是浏览器生成的。为false表示事件是由开发人员通过JavaScript创建的(DOM3新增)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>只读</td>
+<td>被触发的事件的类型</td>
+</tr>
+<tr>
+<td>view</td>
+<td>AbstractView</td>
+<td>只读</td>
+<td>与事件关联的抽象视图。等同于发生事件的Window对象</td>
+</tr>
+</tbody>
+</table>
+<p><strong>事件处理程序内部，对象<code>this</code>始终等于<code>currentTarget</code>，而<code>target</code>则只包含事件的实际目标。</strong><br />
+如果直接将事件处理程序指定给力目标元素，则<code>this</code>，<code>currentTarget</code>，<code>target</code>包含相同的值：<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+    <span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="o">===</span><span class="k">this</span><span class="p">);</span><span class="c1">//true</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="o">===</span><span class="k">this</span><span class="p">);</span> <span class="c1">//true</span>
+    <span class="p">}</span>
+</pre></div>
 <br />
-通过HTML特性指定的事件处理程序，变量<code>event</code>保存着<code>event</code>对象</p></article></body></html>
+由于是按钮点击触发点击事件。所以<code>this</code>指向按钮,<code>currentTarget</code>指向按钮,事件目标<code>target</code>也是按钮<br />
+如果事件处理函数在按钮的父节点:<br />
+<div class="codehilite"><pre><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="o">===</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span><span class="c1">//true</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="o">===</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span><span class="c1">//true;</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="o">===</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">));</span> <span class="c1">//true</span>
+<span class="p">}</span>
+</pre></div>
+<br />
+<code>this</code>和<code>currentTarget</code>都指向事件处理程序绑定的目标body上，但是实际点击事件是按钮触发的，所以<code>target</code>指向的是按钮<br />
+如果通过一个函数处理多个事件，可以使用<code>type</code>属性:<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">handler</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="k">switch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">){</span>
+                        <span class="k">case</span> <span class="s2">&quot;click&quot;</span><span class="o">:</span>
+                         <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Clicked&quot;</span><span class="p">);</span>
+                         <span class="k">break</span><span class="p">;</span>
+                         <span class="k">case</span> <span class="s2">&quot;mouseover&quot;</span><span class="o">:</span>
+                         <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">;</span>
+                         <span class="k">break</span><span class="p">;</span>
+                         <span class="k">case</span> <span class="s2">&quot;mouseout&quot;</span><span class="o">:</span>
+                         <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+                         <span class="k">break</span><span class="p">;</span>
+
+            <span class="p">}</span>
+<span class="p">}</span><span class="err">；</span>
+
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onmouseover</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onmouseout</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
+</pre></div>
+</p></article></body></html>
