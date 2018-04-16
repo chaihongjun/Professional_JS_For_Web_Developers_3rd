@@ -31,6 +31,7 @@ IE的事件流叫事件冒泡(event bubbing),事件开始由最具体的元素�
 ```
 onclick
 onload
+...
 ```
 
 ###HTML事件处理程序
@@ -222,4 +223,111 @@ var handler=function(event){
 btn.onclick=handler;
 btn.onmouseover=handler;
 btn.onmouseout=handler;
+```
+以上代码针对事件的不同类型(`event.type`)，鼠标点击，鼠标移入经过，以及鼠标的离开，分别对事件对象作出相应改变。
+**如果想阻止事件的特定默认行为，可以在事件的`cancelable`为`true`的时候，使用`preventDefault`属性**
+```
+var link=document.getElementById("myLink");
+link.onclick=function(event){
+            event.preventDefault();
+}
+```
+```
+avr btn=document.getElementById("myBtn");
+btn.onclick=function(event){
+            alert("Clicked");
+            event.stopPropagation();
+};
+
+document.body.onclick=function(event){
+            alert("Body clicked");
+}
+```
+body监听点击事件，但是由于按钮阻止了事件的传播。
+事件对象的`eventPhase`属性，分别用数字`1,2,3`来确定事件当前处于事件流的哪个阶段（捕获，目标对象，冒泡？）
+```
+var btn=document.getElemetById("myBtn");
+btn.onclick=function(event){
+            alert(event.eventPhase); // 2，事件目标对象上
+}；
+
+document.body.addEventListener("click",function(event){
+            alert(event.eventPhase); //1,  监听捕获阶段
+    },true);
+
+document.body.onclick=function(event){
+            alert(event.eventPhase);//3 ,事件冒泡阶段
+}
+
+```
+**`event`对象只在事件处理程序执行期间存在，事件处理执行完毕之后就`event`对象将被销毁**
+
+
+###　IE中的事件对象
+访问IE中的`event`对象有几种不同方式，取决于指定事件处理程序的方法。
+```
+//1
+//DOM0
+//window.event 可以直接方法
+var btn=document.getElementById("myBtn");
+btn.onclick=function(){
+        var event=window.event;
+            alert(event.type); //click
+}
+
+//2
+//attachEvent
+则有一个`event`对象传入时间处理函数中
+var btn=document.getElementById("myBtn");
+btn.attacheEvent("onclick",function(event){
+                alert(event.type); //"click"
+    })
+
+//3
+//通过HTML特性指定事件处理程序(通过变量event访问event对象)
+<input type="button" value="Click Me" onclick="alert(event.type)">
+
+```
+IE的`event`对象包含的属性和方法:
+
+| 属性/方法 | 类型 | 读/写 | 说明 |
+| - | - | - | - |
+| cancelBubble | Boolean | 读/写 | 默认值是false，设置为true可以取消冒泡（与stopPropagation作用相同）|
+| returnValue | Boolean | 读/写 | 默认值为true,设置为false可以取消事件的默认行为（与preventDefault作用相同）|
+| srcElement | Element | 只读 | 事件的目标(与target相同) |
+| type | String | 只读 | 被触发的事件类型 |
+
+由于事件处理程序的作用域是根据指定它的方式来确定的，所以`this`不一定等于事件目标。`event.srcElement`始终指向事件目标
+
+
+### 跨浏览器的事件对象
+```
+var EventUtil ={
+        addHandler : function(element,type,handler){
+             //省略
+        },
+        getEvent:function(event){
+                return event?event :window.event;
+        },
+       getTarget :function(event){
+                    return event.target||event.srcElement;
+       },
+       preventDefault:function(event){
+                    if(event.preventDefault){
+                            event.preventDefault();
+                    }else {
+                            event.returnValue=false;
+                    }
+       }
+    
+        stopPropagation:function(event){
+                if(event.stopPropagation){
+                        event.stopPropagation();
+                }else{
+                        event.cancelBubble=true;
+                }
+        }
+    
+
+}
 ```

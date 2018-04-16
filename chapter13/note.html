@@ -1123,6 +1123,8 @@ MathJax.Hub.Config({
 </li>
 <li><a href="#_7">事件对象</a><ul>
 <li><a href="#dom_1">DOM中的事件对象</a></li>
+<li><a href="#ie_1">IE中的事件对象</a></li>
+<li><a href="#_8">跨浏览器的事件对象</a></li>
 </ul>
 </li>
 </ul>
@@ -1147,6 +1149,7 @@ MathJax.Hub.Config({
 事件处理程序的名字以<code>on</code>开头:<br />
 <div class="codehilite"><pre>onclick
 onload
+...
 </pre></div>
 </p>
 <h3 id="html"><a name="user-content-html" href="#html" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>HTML事件处理程序</h3>
@@ -1392,10 +1395,138 @@ IE事件的移除<code>detachEvent()</code>与<code>removeEventListener()</code>
                          <span class="k">break</span><span class="p">;</span>
 
             <span class="p">}</span>
-<span class="p">}</span><span class="err">；</span>
+<span class="p">}</span><span class="err">；</span> 
 
 <span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
 <span class="nx">btn</span><span class="p">.</span><span class="nx">onmouseover</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
 <span class="nx">btn</span><span class="p">.</span><span class="nx">onmouseout</span><span class="o">=</span><span class="nx">handler</span><span class="p">;</span>
 </pre></div>
-</p></article></body></html>
+<br />
+以上代码针对事件的不同类型(<code>event.type</code>)，鼠标点击，鼠标移入经过，以及鼠标的离开，分别对事件对象作出相应改变。<br />
+<strong>如果想阻止事件的特定默认行为，可以在事件的<code>cancelable</code>为<code>true</code>的时候，使用<code>preventDefault</code>属性</strong><br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">link</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myLink&quot;</span><span class="p">);</span>
+<span class="nx">link</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<br />
+<div class="codehilite"><pre><span class="nx">avr</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Clicked&quot;</span><span class="p">);</span>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Body clicked&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<br />
+body监听点击事件，但是由于按钮阻止了事件的传播。<br />
+事件对象的<code>eventPhase</code>属性，分别用数字<code>1,2,3</code>来确定事件当前处于事件流的哪个阶段（捕获，目标对象，冒泡？）<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElemetById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">eventPhase</span><span class="p">);</span> <span class="c1">// 2，事件目标对象上</span>
+<span class="p">}</span><span class="err">；</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">eventPhase</span><span class="p">);</span> <span class="c1">//1,  监听捕获阶段</span>
+    <span class="p">},</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">eventPhase</span><span class="p">);</span><span class="c1">//3 ,事件冒泡阶段</span>
+<span class="p">}</span>
+</pre></div>
+<br />
+<strong><code>event</code>对象只在事件处理程序执行期间存在，事件处理执行完毕之后就<code>event</code>对象将被销毁</strong></p>
+<h3 id="ie_1"><a name="user-content-ie_1" href="#ie_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>IE中的事件对象</h3>
+<p>访问IE中的<code>event</code>对象有几种不同方式，取决于指定事件处理程序的方法。<br />
+<div class="codehilite"><pre><span class="c1">//1</span>
+<span class="c1">//DOM0</span>
+<span class="c1">//window.event 可以直接方法</span>
+<span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">event</span><span class="o">=</span><span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">;</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span> <span class="c1">//click</span>
+<span class="p">}</span>
+
+<span class="c1">//2</span>
+<span class="c1">//attachEvent</span>
+<span class="nx">则有一个</span><span class="err">`</span><span class="nx">event</span><span class="err">`</span><span class="nx">对象传入时间处理函数中</span>
+<span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myBtn&quot;</span><span class="p">);</span>
+<span class="nx">btn</span><span class="p">.</span><span class="nx">attacheEvent</span><span class="p">(</span><span class="s2">&quot;onclick&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span> <span class="c1">//&quot;click&quot;</span>
+    <span class="p">})</span>
+
+<span class="c1">//3</span>
+<span class="c1">//通过HTML特性指定事件处理程序(通过变量event访问event对象)</span>
+<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Click Me&quot;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;alert(event.type)&quot;</span><span class="o">&gt;</span>
+</pre></div>
+<br />
+IE的<code>event</code>对象包含的属性和方法:</p>
+<table>
+<thead>
+<tr>
+<th>属性/方法</th>
+<th>类型</th>
+<th>读/写</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cancelBubble</td>
+<td>Boolean</td>
+<td>读/写</td>
+<td>默认值是false，设置为true可以取消冒泡（与stopPropagation作用相同）</td>
+</tr>
+<tr>
+<td>returnValue</td>
+<td>Boolean</td>
+<td>读/写</td>
+<td>默认值为true,设置为false可以取消事件的默认行为（与preventDefault作用相同）</td>
+</tr>
+<tr>
+<td>srcElement</td>
+<td>Element</td>
+<td>只读</td>
+<td>事件的目标(与target相同)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>只读</td>
+<td>被触发的事件类型</td>
+</tr>
+</tbody>
+</table>
+<p>由于事件处理程序的作用域是根据指定它的方式来确定的，所以<code>this</code>不一定等于事件目标。<code>event.srcElement</code>始终指向事件目标</p>
+<h3 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>跨浏览器的事件对象</h3>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">EventUtil</span> <span class="o">=</span><span class="p">{</span>
+        <span class="nx">addHandler</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span><span class="nx">type</span><span class="p">,</span><span class="nx">handler</span><span class="p">){</span>
+             <span class="c1">//省略</span>
+        <span class="p">},</span>
+        <span class="nx">getEvent</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">event</span><span class="o">?</span><span class="nx">event</span> <span class="o">:</span><span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">;</span>
+        <span class="p">},</span>
+       <span class="nx">getTarget</span> <span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="o">||</span><span class="nx">event</span><span class="p">.</span><span class="nx">srcElement</span><span class="p">;</span>
+       <span class="p">},</span>
+       <span class="nx">preventDefault</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">){</span>
+                            <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+                    <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                            <span class="nx">event</span><span class="p">.</span><span class="nx">returnValue</span><span class="o">=</span><span class="kc">false</span><span class="p">;</span>
+                    <span class="p">}</span>
+       <span class="p">}</span>
+
+        <span class="nx">stopPropagation</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">){</span>
+                        <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                        <span class="nx">event</span><span class="p">.</span><span class="nx">cancelBubble</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+
+<span class="p">}</span>
+</pre></div></article></body></html>
