@@ -331,3 +331,88 @@ var EventUtil ={
 
 }
 ```
+
+## 事件类型
+DOM3 事件
+>UI(User Interface) 事件，用户与页面上的元素交互时发生
+焦点事件，当元素获得或失去焦点时触发
+鼠标事件，用户通过鼠标在页面上执行操作时触发
+滚轮事件，使用鼠标滚轮（或类似设备）时触发
+文本事件，在文档中输入文本时触发
+键盘事件，用户通过键盘在页面上执行操作时触发
+合成事件，当为IME（Input Method Editor输入法编辑器）输入字符时触发
+变动（mutation）事件，当底层DOM结构发生变化时触发
+变动名称事件，当元素或属性名变动时触发。（已经废弃）
+
+###　UI事件
+不一定是与用户操作有关的事件
+>`DOMActive` 表示元素已经被用户操作（通过鼠标或键盘）激活。DOM3被废弃
+`load`：当页面完全加载后在`window`上面触发，当所有的框架都加载完毕时在框架集上面触发，当图片加载完毕时在`<img>`元素上面触发，或者当嵌入的内容加载完毕时在`<object>`元素上面触发
+`unload`：当页面完全卸载后在`window`上面触发，当所有的框架都卸载后在框架集上面触发，或者当嵌入的内容卸载完毕后`<object>`元素上面触发。
+`abort`：在用户停止下载过程时，如果嵌入的内容没有加载完，则`<object>`元素上面触发。
+`error`： 当发生JavaScript错误时在Window上面触发，当无法加载图像时`<img>` 元素上面触发，当无法加载嵌入内容时在`<object>`元素上面触发
+`select`：当用户选择文本框（`<input>`或者`<textarea>`）中的一个或者多个字符时触发。
+`resize`：当窗口或者框架的大小发生变化是在window或者框架集上触发
+`scroll`：用户滚动带滚动条的元素中的内容时，在该元素上面触发。`<body>`元素中包含所加载页面的滚动条    
+
+1. load 事件
+页面加载完后（包括图像，JavaScript文件，CSS文件等外部资源）就会在window上触发。定义`onload`事件处理程序的两种方法:
+```
+//1.
+EventUtil.addHandler(window,"load",function(event){
+                        alert("Loaded!");
+    });
+
+
+ //2.
+ <body onlick="alert('Loaded!')">   
+```
+2. unload 事件
+与`load`事件对应，在文档被完全卸载之后触发。用户从一个页面切换到另外一个页面就触发
+3. resize 事件
+在`window`上面触发。由于浏览器触发resize机制不同，因此不应该在该事件内加入大量的计算。
+4. scroll 事件
+在`window`上面触发，但实际表示的是页面中相应元素的变化
+```
+EventUtil.addHandler(window,"scroll",function(event){
+            if(document.compatMode=="CSS1Compat"){
+                        alert(document.documentElement.scrollTop);
+            }else{
+                        alert(document.body.scrollTop);
+            }
+    });
+```
+
+### 焦点事件
+在页面元素失去或者获得焦点时触发。与`document.hasFocus()`方法和`document.activeElement`属性配合可以知晓用户行踪
+>`blur`：元素失去焦点时触发，这个事件不冒泡
+`DOMFocusIn`：元素获得焦点时触发，与HTML的`focus`事件等价，冒泡。DOM3废弃
+`DOMFocusOut`：元素失去焦点时触发，与HTML的`blur`等价，DOM3废弃
+`focus`：元素获得焦点时触发，不会冒泡
+`focusin`：元素获得焦点时触发，会冒泡，与HTML的`focus`等价
+`focusout`：元素失去焦点时触发，与HTML的`blur`等价
+
+**当焦点从页面的一个元素移到另外一个元素会依次触发以下事件:**
+1.`focusout` 在失去焦点的元素上触发
+2. `focusin` 在获得焦点的元素上触发
+3.  `blur` 在失去焦点的元素上触发
+4.  `DOMFocusOut` 在失去焦点的元素上触发
+5.  `focus` 在获得焦点的元素上触发
+6.  `DOMFocusIn` 在获得焦点的元素上触发
+
+
+
+###　鼠标与滚轮事件
+DOM3　９个鼠标事件：
+>`click`，用户单击鼠标，或者按下后回车。
+`dbclick`，用户双击鼠标
+`mousedown`，用户按下任意鼠标按钮，不能通过键盘触发
+`mouseenter`，鼠标光标从元素外部首次移动到元素范围内时触发。该事件不冒泡，而且光标移动到后代元素上不触发。
+`mouseleave`，在元素上方的鼠标光标移到到元素范围之外时触发。该事件不冒泡，而且光标移到到后代元素不触发。
+`mousemove`，鼠标指针在元素内部移动时重复触发.
+`mouseout`，鼠标指针位于一个元素上方，用户将其移入另外一个元素时触发。又移入的另外一个元素可能位于前一个元素的外部，也可能是这个元素的子元素
+`mouseover`，鼠标指针位于一个元素外部，然后用户将其首次移入另外一个元素边界之内时触发.
+`mouseup`，用户释放鼠标按钮时触发
+
+
+`mouseenter`和`mouseleave`不冒泡，其他鼠标事件都冒泡

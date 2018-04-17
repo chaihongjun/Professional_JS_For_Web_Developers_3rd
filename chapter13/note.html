@@ -1127,6 +1127,12 @@ MathJax.Hub.Config({
 <li><a href="#_8">跨浏览器的事件对象</a></li>
 </ul>
 </li>
+<li><a href="#_9">事件类型</a><ul>
+<li><a href="#ui">UI事件</a></li>
+<li><a href="#_10">焦点事件</a></li>
+<li><a href="#_11">鼠标与滚轮事件</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1529,4 +1535,91 @@ IE的<code>event</code>对象包含的属性和方法:</p>
 
 
 <span class="p">}</span>
-</pre></div></article></body></html>
+</pre></div>
+
+
+<h2 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>事件类型</h2>
+<p>DOM3 事件</p>
+<blockquote>
+<p>UI(User Interface) 事件，用户与页面上的元素交互时发生<br />
+焦点事件，当元素获得或失去焦点时触发<br />
+鼠标事件，用户通过鼠标在页面上执行操作时触发<br />
+滚轮事件，使用鼠标滚轮（或类似设备）时触发<br />
+文本事件，在文档中输入文本时触发<br />
+键盘事件，用户通过键盘在页面上执行操作时触发<br />
+合成事件，当为IME（Input Method Editor输入法编辑器）输入字符时触发<br />
+变动（mutation）事件，当底层DOM结构发生变化时触发<br />
+变动名称事件，当元素或属性名变动时触发。（已经废弃）</p>
+</blockquote>
+<h3 id="ui"><a name="user-content-ui" href="#ui" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>UI事件</h3>
+<p>不一定是与用户操作有关的事件</p>
+<blockquote>
+<p><code>DOMActive</code> 表示元素已经被用户操作（通过鼠标或键盘）激活。DOM3被废弃<br />
+<code>load</code>：当页面完全加载后在<code>window</code>上面触发，当所有的框架都加载完毕时在框架集上面触发，当图片加载完毕时在<code>&lt;img&gt;</code>元素上面触发，或者当嵌入的内容加载完毕时在<code>&lt;object&gt;</code>元素上面触发<br />
+<code>unload</code>：当页面完全卸载后在<code>window</code>上面触发，当所有的框架都卸载后在框架集上面触发，或者当嵌入的内容卸载完毕后<code>&lt;object&gt;</code>元素上面触发。<br />
+<code>abort</code>：在用户停止下载过程时，如果嵌入的内容没有加载完，则<code>&lt;object&gt;</code>元素上面触发。<br />
+<code>error</code>： 当发生JavaScript错误时在Window上面触发，当无法加载图像时<code>&lt;img&gt;</code> 元素上面触发，当无法加载嵌入内容时在<code>&lt;object&gt;</code>元素上面触发<br />
+<code>select</code>：当用户选择文本框（<code>&lt;input&gt;</code>或者<code>&lt;textarea&gt;</code>）中的一个或者多个字符时触发。<br />
+<code>resize</code>：当窗口或者框架的大小发生变化是在window或者框架集上触发<br />
+<code>scroll</code>：用户滚动带滚动条的元素中的内容时，在该元素上面触发。<code>&lt;body&gt;</code>元素中包含所加载页面的滚动条    </p>
+</blockquote>
+<ol>
+<li>load 事件<br />
+页面加载完后（包括图像，JavaScript文件，CSS文件等外部资源）就会在window上触发。定义<code>onload</code>事件处理程序的两种方法:<br />
+<div class="codehilite"><pre><span class="c1">//1.</span>
+<span class="nx">EventUtil</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span><span class="s2">&quot;load&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Loaded!&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+
+
+ <span class="c1">//2.</span>
+ <span class="o">&lt;</span><span class="nx">body</span> <span class="nx">onlick</span><span class="o">=</span><span class="s2">&quot;alert(&#39;Loaded!&#39;)&quot;</span><span class="o">&gt;</span>   
+</pre></div>
+</li>
+<li>unload 事件<br />
+与<code>load</code>事件对应，在文档被完全卸载之后触发。用户从一个页面切换到另外一个页面就触发</li>
+<li>resize 事件<br />
+在<code>window</code>上面触发。由于浏览器触发resize机制不同，因此不应该在该事件内加入大量的计算。</li>
+<li>scroll 事件<br />
+在<code>window</code>上面触发，但实际表示的是页面中相应元素的变化<br />
+<div class="codehilite"><pre><span class="nx">EventUtil</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">compatMode</span><span class="o">==</span><span class="s2">&quot;CSS1Compat&quot;</span><span class="p">){</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">);</span>
+            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">);</span>
+            <span class="p">}</span>
+    <span class="p">});</span>
+</pre></div>
+</li>
+</ol>
+<h3 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>焦点事件</h3>
+<p>在页面元素失去或者获得焦点时触发。与<code>document.hasFocus()</code>方法和<code>document.activeElement</code>属性配合可以知晓用户行踪</p>
+<blockquote>
+<p><code>blur</code>：元素失去焦点时触发，这个事件不冒泡<br />
+<code>DOMFocusIn</code>：元素获得焦点时触发，与HTML的<code>focus</code>事件等价，冒泡。DOM3废弃<br />
+<code>DOMFocusOut</code>：元素失去焦点时触发，与HTML的<code>blur</code>等价，DOM3废弃<br />
+<code>focus</code>：元素获得焦点时触发，不会冒泡<br />
+<code>focusin</code>：元素获得焦点时触发，会冒泡，与HTML的<code>focus</code>等价<br />
+<code>focusout</code>：元素失去焦点时触发，与HTML的<code>blur</code>等价</p>
+</blockquote>
+<p><strong>当焦点从页面的一个元素移到另外一个元素会依次触发以下事件:</strong><br />
+1.<code>focusout</code> 在失去焦点的元素上触发<br />
+2. <code>focusin</code> 在获得焦点的元素上触发<br />
+3.  <code>blur</code> 在失去焦点的元素上触发<br />
+4.  <code>DOMFocusOut</code> 在失去焦点的元素上触发<br />
+5.  <code>focus</code> 在获得焦点的元素上触发<br />
+6.  <code>DOMFocusIn</code> 在获得焦点的元素上触发</p>
+<h3 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>鼠标与滚轮事件</h3>
+<p>DOM3　９个鼠标事件：</p>
+<blockquote>
+<p><code>click</code>，用户单击鼠标，或者按下后回车。<br />
+<code>dbclick</code>，用户双击鼠标<br />
+<code>mousedown</code>，用户按下任意鼠标按钮，不能通过键盘触发<br />
+<code>mouseenter</code>，鼠标光标从元素外部首次移动到元素范围内时触发。该事件不冒泡，而且光标移动到后代元素上不触发。<br />
+<code>mouseleave</code>，在元素上方的鼠标光标移到到元素范围之外时触发。该事件不冒泡，而且光标移到到后代元素不触发。<br />
+<code>mousemove</code>，鼠标指针在元素内部移动时重复触发.<br />
+<code>mouseout</code>，鼠标指针位于一个元素上方，用户将其移入另外一个元素时触发。又移入的另外一个元素可能位于前一个元素的外部，也可能是这个元素的子元素<br />
+<code>mouseover</code>，鼠标指针位于一个元素外部，然后用户将其首次移入另外一个元素边界之内时触发.<br />
+<code>mouseup</code>，用户释放鼠标按钮时触发</p>
+</blockquote>
+<p><code>mouseenter</code>和<code>mouseleave</code>不冒泡，其他鼠标事件都冒泡</p></article></body></html>
