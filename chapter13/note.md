@@ -416,3 +416,52 @@ DOM3　９个鼠标事件：
 
 
 `mouseenter`和`mouseleave`不冒泡，其他鼠标事件都冒泡
+
+
+1. 客户区坐标位置
+鼠标事件在浏览器视口中的位置信息保存在事件对象的`clientX`和`clientY`属性中
+```
+//距离视口左边距离
+event.clientX 
+//距离视口顶部距离
+event.clientY
+```
+**`clientX`和`clientY`可以知道鼠标在视口(viewpoint)的位置**
+
+2. 页面左边位置
+**页面坐标通过事件对象的`pageX`和`pageY`可以知道鼠标在页面的哪个位置**
+
+在页面没有滚动的情况下`pageX`和`pageY`与`clientX`和`clientY`相等
+
+
+3.  屏幕坐标位置
+`screenX`和`screenY`分别表示相对屏幕的位置
+
+4. 修改键
+```
+var div=document.getElementById("myDiv");
+EventUtil.addHandler(div,"click",function(event){
+                    event=EventUtil.getEvent(event);
+                    var keys=new Array();
+
+                    if(event.shiftKey){
+                            keys.push("shift");
+                    }
+
+                    if(event.ctrKey){
+                            keys.push("ctrl");
+                    }
+
+                    if(event.altKey){
+                              keys.push("alt");  
+                    }
+
+                    if(event.metaKey){
+                                keys.push("meta");
+                    }
+                alert("keys:"+keys.join(","));    
+    });
+```
+
+5. 相关元素
+DOM的事件对象属性`event.relatedTarget`提供事件对象相关元素信息，只对`mouseover`和`mouseout`事件有效

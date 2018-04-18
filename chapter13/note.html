@@ -1622,4 +1622,55 @@ IE的<code>event</code>对象包含的属性和方法:</p>
 <code>mouseover</code>，鼠标指针位于一个元素外部，然后用户将其首次移入另外一个元素边界之内时触发.<br />
 <code>mouseup</code>，用户释放鼠标按钮时触发</p>
 </blockquote>
-<p><code>mouseenter</code>和<code>mouseleave</code>不冒泡，其他鼠标事件都冒泡</p></article></body></html>
+<p><code>mouseenter</code>和<code>mouseleave</code>不冒泡，其他鼠标事件都冒泡</p>
+<ol>
+<li>
+<p>客户区坐标位置<br />
+鼠标事件在浏览器视口中的位置信息保存在事件对象的<code>clientX</code>和<code>clientY</code>属性中<br />
+<div class="codehilite"><pre>//距离视口左边距离
+event.clientX 
+//距离视口顶部距离
+event.clientY
+</pre></div>
+<br />
+<strong><code>clientX</code>和<code>clientY</code>可以知道鼠标在视口(viewpoint)的位置</strong></p>
+</li>
+<li>
+<p>页面左边位置<br />
+<strong>页面坐标通过事件对象的<code>pageX</code>和<code>pageY</code>可以知道鼠标在页面的哪个位置</strong></p>
+</li>
+</ol>
+<p>在页面没有滚动的情况下<code>pageX</code>和<code>pageY</code>与<code>clientX</code>和<code>clientY</code>相等</p>
+<ol>
+<li>
+<p>屏幕坐标位置<br />
+<code>screenX</code>和<code>screenY</code>分别表示相对屏幕的位置</p>
+</li>
+<li>
+<p>修改键<br />
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">div</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myDiv&quot;</span><span class="p">);</span>
+<span class="nx">EventUtil</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">(</span><span class="nx">div</span><span class="p">,</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+                    <span class="nx">event</span><span class="o">=</span><span class="nx">EventUtil</span><span class="p">.</span><span class="nx">getEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+                    <span class="kd">var</span> <span class="nx">keys</span><span class="o">=</span><span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+
+                    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">shiftKey</span><span class="p">){</span>
+                            <span class="nx">keys</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;shift&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+
+                    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">ctrKey</span><span class="p">){</span>
+                            <span class="nx">keys</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;ctrl&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+
+                    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">altKey</span><span class="p">){</span>
+                              <span class="nx">keys</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;alt&quot;</span><span class="p">);</span>  
+                    <span class="p">}</span>
+
+                    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">metaKey</span><span class="p">){</span>
+                                <span class="nx">keys</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;keys:&quot;</span><span class="o">+</span><span class="nx">keys</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">));</span>    
+    <span class="p">});</span>
+</pre></div>
+</p>
+</li>
+</ol></article></body></html>
