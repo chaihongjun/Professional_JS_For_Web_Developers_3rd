@@ -465,3 +465,26 @@ EventUtil.addHandler(div,"click",function(event){
 
 5. 相关元素
 DOM的事件对象属性`event.relatedTarget`提供事件对象相关元素信息，只对`mouseover`和`mouseout`事件有效
+
+6. 鼠标按钮
+DOM的button属性值`0`代表鼠标左键，`1`代表中间键（滚轮），`2`代表右键
+
+7. 更多的事件信息
+`event.detail` 给出事件的更多信息，对鼠标事件而言给出的是点击的次数
+
+8. 鼠标滚轮事件
+`mousewheel` 可以在页面任何元素上触发，最终冒泡到`document`(IE8)或`window`(IE9，及其他)
+**`mousewheel`事件对象包含属性`wheelDelta`，向前滚动的时候wheelDelta是120的倍数，往后滚动则是-120的倍数**
+
+
+9. 触摸设备
+不支持`dbclick`事件，双击会导致窗口放大画面
+轻击可单击元素触发`mousemove`事件，如果内容发生变化，则不会再发生其他事件，如果屏幕没有变化，则依次发生`mousedown`,`mouseup`和`click`事件
+轻击不可单击元素不会触发任何事件。
+`mousemove`事件也会触发`mouseover`和`mouseout`事件
+两根手指在屏幕上移动会触发`mousewheel`和`scroll`事件
+
+### 键盘与文本事件
+`keydown` 键盘任意键按下的时候触发，如果按住不放，事件重复触发
+`keypress` 键盘上的字符键被按下时触发，如果按住不放，事件重复触发
+`keyup` 用户释放键盘上的键的时候发生

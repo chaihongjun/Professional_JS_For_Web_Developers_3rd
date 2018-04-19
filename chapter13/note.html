@@ -1131,6 +1131,7 @@ MathJax.Hub.Config({
 <li><a href="#ui">UI事件</a></li>
 <li><a href="#_10">焦点事件</a></li>
 <li><a href="#_11">鼠标与滚轮事件</a></li>
+<li><a href="#_12">键盘与文本事件</a></li>
 </ul>
 </li>
 </ul>
@@ -1673,4 +1674,33 @@ event.clientY
 </pre></div>
 </p>
 </li>
-</ol></article></body></html>
+<li>
+<p>相关元素<br />
+DOM的事件对象属性<code>event.relatedTarget</code>提供事件对象相关元素信息，只对<code>mouseover</code>和<code>mouseout</code>事件有效</p>
+</li>
+<li>
+<p>鼠标按钮<br />
+DOM的button属性值<code>0</code>代表鼠标左键，<code>1</code>代表中间键（滚轮），<code>2</code>代表右键</p>
+</li>
+<li>
+<p>更多的事件信息<br />
+<code>event.detail</code> 给出事件的更多信息，对鼠标事件而言给出的是点击的次数</p>
+</li>
+<li>
+<p>鼠标滚轮事件<br />
+<code>mousewheel</code> 可以在页面任何元素上触发，最终冒泡到<code>document</code>(IE8)或<code>window</code>(IE9，及其他)<br />
+<strong><code>mousewheel</code>事件对象包含属性<code>wheelDelta</code>，向前滚动的时候wheelDelta是120的倍数，往后滚动则是-120的倍数</strong></p>
+</li>
+<li>
+<p>触摸设备<br />
+不支持<code>dbclick</code>事件，双击会导致窗口放大画面<br />
+轻击可单击元素触发<code>mousemove</code>事件，如果内容发生变化，则不会再发生其他事件，如果屏幕没有变化，则依次发生<code>mousedown</code>,<code>mouseup</code>和<code>click</code>事件<br />
+轻击不可单击元素不会触发任何事件。<br />
+<code>mousemove</code>事件也会触发<code>mouseover</code>和<code>mouseout</code>事件<br />
+两根手指在屏幕上移动会触发<code>mousewheel</code>和<code>scroll</code>事件</p>
+</li>
+</ol>
+<h3 id="_12"><a name="user-content-_12" href="#_12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>键盘与文本事件</h3>
+<p><code>keydown</code> 键盘任意键按下的时候触发，如果按住不放，事件重复触发<br />
+<code>keypress</code> 键盘上的字符键被按下时触发，如果按住不放，事件重复触发<br />
+<code>keyup</code> 用户释放键盘上的键的时候发生</p></article></body></html>
